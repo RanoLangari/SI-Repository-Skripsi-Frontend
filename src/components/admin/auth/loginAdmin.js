@@ -45,12 +45,6 @@ const LoginAdmin = () => {
       });
     }
   };
-  useEffect(() => {
-    const token = localStorage.getItem("token");
-    if (token) {
-      navigate("/admin/dashboard");
-    }
-  }, []);
 
   return (
     <div className="flex items-center justify-center h-screen bg-gray-200">
