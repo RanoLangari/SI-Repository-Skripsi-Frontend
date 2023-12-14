@@ -33,9 +33,9 @@ const LoginMhs = () => {
           showConfirmButton: false,
           timer: 1000,
         });
-        console.log(response.data);
-        localStorage.setItem("token", response.data.token);
-        navigate("/mahasiswa/dashboard");
+        localStorage.clear();
+        localStorage.setItem("token", response.data.data.token);
+        navigate("/mhs/dashboard");
       }
     } catch (error) {
       Swal.fire({

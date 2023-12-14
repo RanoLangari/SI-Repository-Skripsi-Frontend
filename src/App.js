@@ -14,8 +14,8 @@ function App() {
           <Route path="/login-mhs" element={<LoginMhs />} />
           <Route path="/login-admin" element={<LoginAdmin />} />
           <Route path="/register-mhs" element={<RegisterMahasiswa />} />
-          <Route path="/dashboard" element={<Dashboard />} />
-          <Route path="/upload-skripsi" element={<UploadSkripsi />} />
+          <Route path="/mhs/dashboard" element={<Dashboard />} />
+          <Route path="/mhs/upload-skripsi" element={<UploadSkripsi />} />
         </Routes>
       </BrowserRouter>
     </div>

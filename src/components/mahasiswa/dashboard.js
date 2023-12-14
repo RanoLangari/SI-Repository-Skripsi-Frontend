@@ -1,7 +1,10 @@
-import React, { useState } from "react";
+import React, { useState, useEffect } from "react";
 import { Button, IconButton } from "@material-tailwind/react";
 import { ArrowRightIcon, ArrowLeftIcon } from "@heroicons/react/24/outline";
+import { useNavigate } from "react-router-dom";
 import { faker } from "@faker-js/faker";
+import axios from "axios";
+import Swal from "sweetalert2";
 
 export function createRandomUser(): User {
   return {
@@ -13,10 +16,11 @@ export function createRandomUser(): User {
 }
 
 export const USERS: User[] = faker.helpers.multiple(createRandomUser, {
-  count: 10,
+  count: 100,
 });
 
 const Dashboard = () => {
+  const Navigate = useNavigate();
   const [showMenu, setShowMenu] = useState(false);
   const [searchTerm, setSearchTerm] = useState("");
   const [dropdownVisible, setDropdownVisible] = useState(false);
@@ -35,9 +39,24 @@ const Dashboard = () => {
     setDropdownVisible(!dropdownVisible);
   };
 
-  React.useEffect(() => {
-    setData(USERS);
-  }, []);
+  useEffect(() => {
+    const token = localStorage.getItem("token");
+    const config = {
+      headers: {
+        Authorization: `Bearer ${token}`,
+      },
+    };
+    axios
+      .get("http://localhost:5001/api/mahasiswa/profile", config)
+      .then((res) => {
+        console.log(res.data);
+      })
+      .catch((err) => {
+        console.log(err.response);
+        Navigate("/login-mhs");
+      });
+    Swal.close();
+  });
 
   return (
     <div>
@@ -65,7 +84,7 @@ const Dashboard = () => {
                 </a>
                 <a
                   className="py-4 px-5 text-gray-500 font-semibold hover:text-yellow-200 transition duration-300"
-                  href="/upload-skripsi"
+                  href="/mhs/upload-skripsi"
                 >
                   Upload Skripsi
                 </a>

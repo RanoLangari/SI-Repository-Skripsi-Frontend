@@ -1,11 +1,34 @@
-import React, { useState } from "react";
+import React, { useState, useEffect } from "react";
+import { useNavigate } from "react-router-dom";
+import axios from "axios";
+import Swal from "sweetalert2";
 
 const UploadSkripsi = () => {
+  const Navigate = useNavigate();
   const [showMenu, setShowMenu] = useState(false);
 
   const showMenuToggle = () => {
     setShowMenu(!showMenu);
   };
+
+  useEffect(() => {
+    const token = localStorage.getItem("token");
+    const config = {
+      headers: {
+        Authorization: `Bearer ${token}`,
+      },
+    };
+    axios
+      .get("http://localhost:5001/api/mahasiswa/profile", config)
+      .then((res) => {
+        console.log(res.data);
+      })
+      .catch((err) => {
+        console.log(err.response);
+        Navigate("/login-mhs");
+      });
+    Swal.close();
+  });
 
   return (
     <div>
@@ -26,7 +49,7 @@ const UploadSkripsi = () => {
               {/* primary navbar items */}
               <div className="hidden md:flex items-center space-x-1">
                 <a
-                  href="/dashboard"
+                  href="/mhs/dashboard"
                   className="py-4 px-2 text-gray-500 font-semibold hover:text-yellow-200 transition duration-300"
                 >
                   Dashboard
@@ -158,6 +181,123 @@ const UploadSkripsi = () => {
           )}
         </div>
       </nav>
+
+      {/* create modern section form to upload skripsi  data*/}
+      <div className="container mx-auto mt-10">
+        <div className="max-w-md mx-auto bg-white rounded-lg overflow-hidden md:max-w-lg">
+          <div className="md:flex">
+            <div className="w-full p-3 px-6 py-10">
+              <div className="text-center mb-4">
+                <h1 className="font-bold text-3xl text-gray-900">
+                  Upload Skripsi
+                </h1>
+                <p>Upload Skripsi Anda Disini</p>
+              </div>
+              <form className="mb-4 md:flex md:flex-wrap md:justify-between">
+                <div className="flex flex-col mb-4 md:w-1/2">
+                  <label
+                    className="mb-2 font-bold text-lg text-gray-900"
+                    htmlFor="firstName"
+                  >
+                    NIM
+                  </label>
+                  <input
+                    //
+
+                    type="text"
+                    name="firstName"
+                    id="firstName"
+                    placeholder="NIM"
+                  />
+                </div>
+                <div className="flex flex-col mb-4 md:w-1/2">
+                  <label
+                    className="mb-2 font-bold text-lg text-gray-900"
+                    htmlFor="lastName"
+                  >
+                    Nama
+                  </label>
+                  <input
+                    className="border py-2 px-3 text-gray-700"
+                    type="text"
+                    name="lastName"
+                    id="lastName"
+                    placeholder="Nama"
+                  />
+                </div>
+                <div className="flex flex-col mb-4 md:w-full">
+                  <label
+                    className="mb-2 font-bold text-lg text-gray-900"
+                    htmlFor="email"
+                  >
+                    Email
+                  </label>
+                  <input
+                    className="border py-2 px-3 text-gray-700"
+                    type="email"
+                    name="email"
+                    id="email"
+                    placeholder="Email"
+                  />
+                </div>
+                <div className="flex flex-col mb-4 md:w-full">
+                  <label
+                    className="mb-2 font-bold text-lg text-gray-900"
+                    htmlFor="password"
+                  >
+                    Judul Skripsi
+                  </label>
+                  <input
+                    className="border py-2 px-3 text-gray-700"
+                    type="text"
+                    name="password"
+                    id="password"
+                    placeholder="Judul Skripsi"
+                  />
+                </div>
+                <div className="flex flex-col mb-4 md:w-full">
+                  <label
+                    className="mb-2 font-bold text-lg text-gray-900"
+                    htmlFor="password"
+                  >
+                    Abstrak
+                  </label>
+                  <textarea
+                    className="border py-2 px-3 text-gray-700"
+                    type="text"
+                    name="password"
+                    id="password"
+                    placeholder="Abstrak"
+                  />
+                </div>
+                <div className="flex flex-col mb-4 md:w-full">
+                  <label
+                    className="mb-2 font-bold text-lg text-gray-900"
+                    htmlFor="password"
+                  >
+                    File Skripsi
+                  </label>
+                  <input
+                    className="border py-2 px-3 text-gray-700 mb-4 md:mb-0"
+                    type="file"
+                    name="password"
+                    id="password"
+                    placeholder="File Skripsi"
+                  />
+                </div>
+                <div className="flex flex-col mb-4 md:w-full">
+                  <button
+                    className="block bg-yellow-300 hover:bg-yellow-400 py-2 px-4 mt-8 rounded-lg shadow-lg uppercase font-semibold"
+                    type="submit"
+                  >
+                    Upload
+                  </button>
+                </div>
+              </form>
+            </div>
+          </div>
+        </div>
+      </div>
 
       {/* end of navbar */}
 
