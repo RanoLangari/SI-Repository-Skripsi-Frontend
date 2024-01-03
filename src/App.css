@@ -37,3 +37,39 @@
     transform: rotate(360deg);
   }
 }
+
+.pagination {
+  display: inline-block;
+  margin-top: 10px;
+}
+
+.pagination a {
+  cursor: pointer;
+  padding: 6px 12px;
+  margin: 0 3px;
+  border-radius: 3px;
+  display: inline-block;
+  background: #f8f9fa;
+  color: #212529;
+  border: 1px solid #dee2e6;
+}
+
+.pagination .break-me {
+  cursor: auto;
+}
+
+.pagination a:hover {
+  background: #007bff;
+  color: #fff;
+}
+
+.pagination .active a {
+  background: #007bff;
+  color: #fff;
+  cursor: default;
+}
+
+.pagination .disabled a {
+  color: #6c757d;
+  cursor: not-allowed;
+}

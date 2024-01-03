@@ -1,6 +1,5 @@
 import React, { useState, useEffect } from "react";
-import { Button, IconButton } from "@material-tailwind/react";
-import { ArrowRightIcon, ArrowLeftIcon } from "@heroicons/react/24/outline";
+import { Pagination } from "flowbite-react";
 import { useNavigate } from "react-router-dom";
 import { faker } from "@faker-js/faker";
 import axios from "axios";
@@ -16,7 +15,7 @@ export function createRandomUser(): User {
 }
 
 export const USERS: User[] = faker.helpers.multiple(createRandomUser, {
-  count: 100,
+  count: 15,
 });
 
 const Dashboard = () => {
@@ -25,12 +24,12 @@ const Dashboard = () => {
   const [searchTerm, setSearchTerm] = useState("");
   const [dropdownVisible, setDropdownVisible] = useState(false);
   const [data, setData] = useState(USERS);
-
   const filteredData = data.filter((item) =>
     Object.values(item).some((value) =>
       value.toString().toLowerCase().includes(searchTerm.toLowerCase())
     )
   );
+
   const showMenuToggle = () => {
     setShowMenu(!showMenu);
   };
@@ -134,21 +133,23 @@ const Dashboard = () => {
                     aria-labelledby="options-menu"
                   >
                     <div className="py-1" role="none">
-                      <a
-                        href="#"
-                        className="block px-4 py-2 text-sm text-gray-700 hover:bg-yellow-300 hover:text-white transition duration-300"
+                      <button
+                        className="block px-4 py-2 text-sm text-gray-700 hover:bg-yellow-300 hover:text-white transition duration-300 w-full text-left"
                         role="menuitem"
+                        onClick={() => Navigate("/mhs/profile")}
                       >
-                        Your Profile
-                      </a>
-                      <a
-                        href="#"
-                        className="block px-4 py-2 text-sm text-gray
-                        -700 hover:bg-yellow-300 hover:text-white transition duration-300"
+                        Profile
+                      </button>
+                      <button
+                        className="block px-4 py-2 text-sm text-gray-700 hover:bg-yellow-300 hover:text-white transition duration-300 w-full text-left"
                         role="menuitem"
+                        onClick={() => {
+                          localStorage.removeItem("token");
+                          Navigate("/login-mhs");
+                        }}
                       >
-                        Sign out
-                      </a>
+                        Log out
+                      </button>
                     </div>
                   </div>
                 </div>
@@ -283,59 +284,55 @@ const Dashboard = () => {
           <h2 className="text-5xl font-semibold text-center">Daftar Skripsi</h2>
           <div className="flex items-center mt-12"></div>
         </div>
-        {/* show random skripsi with dummy table */}
-        <div className="max-w-6xl mx-auto px-4 sm:px-6 lg:px-8">
-          <div className="flex flex-col mt-2">
-            <div className="align-middle min-w-full overflow-x-auto shadow overflow-hidden sm:rounded-lg">
-              <table className="min-w-full divide-y divide-gray-200">
-                {/* table header */}
-                <thead>
-                  <tr>
-                    <th className="px-6 py-3 bg-gray-50 text-left text-xs font-medium text-gray-500 uppercase tracking-wider">
-                      Judul Skripsi
-                    </th>
-                    <th className="px-6 py-3 bg-gray-50 text-left text-xs font-medium text-gray-500 uppercase tracking-wider">
-                      NIM
-                    </th>
-                    <th className="px-6 py-3 bg-gray-50 text-left text-xs font-medium text-gray-500 uppercase tracking-wider">
-                      Nama Mahasiswa
-                    </th>
-                    <th className="px-6 py-3 bg-gray-50"></th>
-                  </tr>
-                </thead>
-                {/* table body */}
-                <tbody className="bg-white divide-y divide-gray-200">
-                  {filteredData.map((item) => (
-                    <tr key={item.id}>
-                      <td className="px-6 py-4 whitespace-nowrap">
-                        <div className="text-sm text-gray-900">{item.name}</div>
-                      </td>
-                      <td className="px-6 py-4 whitespace-nowrap">
-                        <div className="text-sm text-gray-900">{item.age}</div>
-                      </td>
-                      <td className="px-6 py-4 whitespace-nowrap">
-                        <div className="text-sm text-gray-900">
-                          {item.email}
-                        </div>
-                      </td>
-                      <td className="px-6 py-4 whitespace-nowrap text-right text-sm font-medium">
-                        <a
-                          href="#"
-                          className="text-yellow-300 hover:text-yellow-300"
-                        >
-                          Edit
-                        </a>
-                      </td>
-                    </tr>
-                  ))}
-                  {/* More items... */}
-                </tbody>
-              </table>
-              {/* pagination */}
-            </div>
+        {/* cretae modern konten(not table to show data like paragraf) */}
+        <div className="max-w-6xl mx-auto px-4">
+          <div className="flex flex-wrap -mx-4">
+            {filteredData.map((user) => (
+              <div className="w-full md:w-1/2 lg:w-1/3 xl:w-1/4 px-4 mb-4">
+                <div className="bg-white rounded-lg shadow-md">
+                  <img
+                    src="https://source.unsplash.com/IXUM4cJynP0"
+                    alt=""
+                    className="rounded-t-lg"
+                  />
+                  <div className="p-4">
+                    <h4 className="font-semibold text-lg text-center">
+                      {user.name}
+                    </h4>
+                    <div className="flex items-center justify-between mt-4">
+                      <a
+                        href="#"
+                        className="text-gray-500 hover:text-yellow-300 transition duration-300"
+                      >
+                        {user.email}
+                      </a>
+                    </div>
+                    <div className="flex items-center justify-between mt-4">
+                      <a
+                        href="#"
+                        className="text-gray-500 hover:text-yellow-300 transition duration-300"
+                      >
+                        {user.name}
+                      </a>
+                    </div>
+                    <div className="flex items-center justify-between mt-4">
+                      <a
+                        href="#"
+                        className="text-gray-500 hover:text-yellow-300 transition duration-300"
+                      >
+                        {user.age}
+                      </a>
+                    </div>
+                  </div>
+                </div>
+              </div>
+            ))}
           </div>
         </div>
       </section>
+      {/* end of konten */}
+      {/* start of pagination */}
+      {/* create modern pagination tailwind */}
     </div>
   );
 };
