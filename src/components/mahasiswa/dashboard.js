@@ -14,16 +14,17 @@ export function createRandomUser(): User {
   };
 }
 
-export const USERS: User[] = faker.helpers.multiple(createRandomUser, {
-  count: 15,
-});
+// export const USERS: User[] = faker.helpers.multiple(createRandomUser, {
+//   count: 15,
+// });
 
 const Dashboard = () => {
   const Navigate = useNavigate();
   const [showMenu, setShowMenu] = useState(false);
   const [searchTerm, setSearchTerm] = useState("");
   const [dropdownVisible, setDropdownVisible] = useState(false);
-  const [data, setData] = useState(USERS);
+  // const [data, setData] = useState(USERS);
+  const [data, setData] = useState([]);
   const filteredData = data.filter((item) =>
     Object.values(item).some((value) =>
       value.toString().toLowerCase().includes(searchTerm.toLowerCase())
@@ -46,16 +47,16 @@ const Dashboard = () => {
       },
     };
     axios
-      .get("http://localhost:5001/api/mahasiswa/profile", config)
+      .get("http://localhost:5001/api/mahasiswa/get-skripsi", config)
       .then((res) => {
-        console.log(res.data);
+        setData(res.data.data);
       })
       .catch((err) => {
         console.log(err.response);
         Navigate("/login-mhs");
       });
     Swal.close();
-  });
+  }, []);
 
   return (
     <div>
@@ -297,14 +298,14 @@ const Dashboard = () => {
                   />
                   <div className="p-4">
                     <h4 className="font-semibold text-lg text-center">
-                      {user.name}
+                      {user.judul_skripsi}
                     </h4>
                     <div className="flex items-center justify-between mt-4">
                       <a
                         href="#"
                         className="text-gray-500 hover:text-yellow-300 transition duration-300"
                       >
-                        {user.email}
+                        {user.jurusan}
                       </a>
                     </div>
                     <div className="flex items-center justify-between mt-4">
@@ -312,15 +313,7 @@ const Dashboard = () => {
                         href="#"
                         className="text-gray-500 hover:text-yellow-300 transition duration-300"
                       >
-                        {user.name}
-                      </a>
-                    </div>
-                    <div className="flex items-center justify-between mt-4">
-                      <a
-                        href="#"
-                        className="text-gray-500 hover:text-yellow-300 transition duration-300"
-                      >
-                        {user.age}
+                        {user.nama}
                       </a>
                     </div>
                   </div>
