@@ -49,6 +49,7 @@ const Dashboard = () => {
     axios
       .get("http://localhost:5001/api/mahasiswa/get-skripsi", config)
       .then((res) => {
+        console.log(res.data.data);
         setData(res.data.data);
       })
       .catch((err) => {
@@ -297,9 +298,12 @@ const Dashboard = () => {
                     className="rounded-t-lg"
                   />
                   <div className="p-4">
-                    <h4 className="font-semibold text-lg text-center">
+                    <button
+                      className="block text-lg font-semibold"
+                      onClick={() => Navigate(`/mhs/detail-skripsi/${user.id}`)}
+                    >
                       {user.judul_skripsi}
-                    </h4>
+                    </button>
                     <div className="flex items-center justify-between mt-4">
                       <a
                         href="#"
