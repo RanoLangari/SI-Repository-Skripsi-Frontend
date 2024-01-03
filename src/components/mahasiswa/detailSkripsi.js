@@ -2,14 +2,38 @@ import React, { useState, useEffect } from "react";
 import { useNavigate } from "react-router-dom";
 import axios from "axios";
 import Swal from "sweetalert2";
+import { FaFilePdf } from "react-icons/fa";
 
 const DetailSkripsi = () => {
   const Navigate = useNavigate();
   const [showMenu, setShowMenu] = useState(false);
+  const [data, setData] = useState([]);
 
   const showMenuToggle = () => {
     setShowMenu(!showMenu);
   };
+
+  useEffect(() => {
+    const token = localStorage.getItem("token");
+    const id_mhs = window.location.pathname.split("/")[3];
+    const config = {
+      headers: {
+        Authorization: `Bearer ${token}`,
+      },
+    };
+    axios
+      .get(
+        `http://localhost:5001/api/mahasiswa/detail-skripsi/${id_mhs}`,
+        config
+      )
+      .then((res) => {
+        console.log(res.data.data);
+        setData(res.data.data);
+      })
+      .catch((err) => {
+        console.log(err);
+      });
+  }, []);
 
   return (
     <div>
@@ -31,13 +55,13 @@ const DetailSkripsi = () => {
               <div className="hidden md:flex items-center space-x-1">
                 <a
                   href="/mhs/dashboard"
-                  className="py-4 px-2 text-gray-500 font-semibold hover:text-yellow-200 transition duration-300"
+                  className="py-4 px-2 text-yellow-300 border-b-4 border-yellow-300 font-semibold"
                 >
                   Dashboard
                 </a>
                 <a
-                  href="#"
-                  className="py-4 px-5 text-yellow-300 border-b-4 border-yellow-300 font-semibold"
+                  className="py-4 px-5 text-gray-500 font-semibold hover:text-yellow-200 transition duration-300"
+                  href="/mhs/upload-skripsi"
                 >
                   Upload Skripsi
                 </a>
@@ -162,35 +186,65 @@ const DetailSkripsi = () => {
           )}
         </div>
       </nav>
+      {/* show data detail skripsi in section */}
+      <section>
+        <div className="flex flex-col items-center justify-center">
+          <div className="flex flex-col w-full sm:w-2/8 md:w-3/4 lg:w-1/2 mt-10">
+            <div className="flex flex-col items-center">
+              <h1 className="text-2xl font-bold text-gray-700 mb-5">
+                Detail Skripsi
+              </h1>
+            </div>
+            <div className="flex flex-col bg-white shadow-md rounded my-2">
+              <div className="flex flex-row justify-between p-5 border-b border-gray-100">
+                <div className="flex flex-col">
+                  <span className="text-lg font-bold">
+                    {data.judul_skripsi}
 
-      {/* create modern section form to upload skripsi  data*/}
-
-      {/* end of navbar */}
-
-      {/* start of hero section */}
-      {/* <section className="bg-yellow-300 py-20 px-10">
-        <div className="max-w-6xl mx-auto flex items-center justify-between">
-          <div className="w-1/2">
-            <h1 className="text-white text-6xl font-semibold">
-              Belajar pemrograman web dengan mudah
-            </h1>
-            <p className="text-gray-300 text-2xl mt-8 font-semibold">
-              Lorem ipsum dolor sit amet consectetur adipisicing elit. Quisquam
-              quibusdam, quia, voluptatum, voluptates voluptate quod quos
-              doloribus debitis tempora eveniet voluptatibus. Quisquam
-              quibusdam, quia, voluptatum, voluptates voluptate quod quos
-              doloribus debitis tempora eveniet voluptatibus.
-            </p>
-            <button className="block bg-white hover:bg-gray-100 py-3 px-4 mt-10 rounded-lg shadow-lg uppercase font-semibold">
-              Get Started
-            </button>
-          </div>
-          <div className="w-1/2">
-            <img src="https://source.unsplash.com/IXUM4cJynP0" alt="" />
+                    {/* show pdf icons */}
+                  </span>
+                  <span className="text-sm text-black">{data.nama}</span>
+                </div>
+                <div className="flex flex-row items-center">
+                  <a href={`${data.skripsi_url}`} target="_blank">
+                    <FaFilePdf className="text-5xl text-red-400" />
+                    <span className="text-sm text-black">Full View</span>
+                  </a>
+                </div>
+              </div>
+              <div className="flex flex-col px-10 py-5">
+                <span className="text-sm text-black">Abstract</span>
+                <br />
+                <span className="text-sm text-black">{data.abstract}</span>
+              </div>
+              <div className="flex flex-col px-10 py-5" id="file">
+                {/* pembimbing 1 */}
+                <div className="flex flex-row">
+                  <span className="text-sm text-black">Pembimbing 1 : </span>
+                  <br />
+                  <span className="text-sm text-black">{data.pembimbing1}</span>
+                </div>
+                {/* pembimbing 2 */}
+                <div className="flex flex-row">
+                  <span className="text-sm text-black">Pembimbing 2 : </span>
+                  <br />
+                  <span className="text-sm text-black">{data.pembimbing2}</span>
+                </div>
+                {/* penguji 1 */}
+                <div className="flex flex-row">
+                  <span className="text-sm text-black">Penguji 1 : </span>
+                  <br />
+                  <span className="text-sm text-black">{data.penguji}</span>
+                </div>
+                <div>
+                  <span>skripsi_url : {data.skripsi_url}</span>
+                </div>
+                {/* icon file large */}
+              </div>
+            </div>
           </div>
         </div>
-      </section> */}
-      {/* end of hero section */}
+      </section>
     </div>
   );
 };
