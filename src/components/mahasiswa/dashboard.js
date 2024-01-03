@@ -5,14 +5,14 @@ import { faker } from "@faker-js/faker";
 import axios from "axios";
 import Swal from "sweetalert2";
 
-export function createRandomUser(): User {
-  return {
-    email: faker.internet.email(),
-    name: faker.name.fullName(),
-    birthdate: faker.date.birthdate(),
-    age: faker.datatype.number({ min: 18, max: 80 }),
-  };
-}
+// export function createRandomUser(): User {
+//   return {
+//     email: faker.internet.email(),
+//     name: faker.name.fullName(),
+//     birthdate: faker.date.birthdate(),
+//     age: faker.datatype.number({ min: 18, max: 80 }),
+//   };
+// }
 
 // export const USERS: User[] = faker.helpers.multiple(createRandomUser, {
 //   count: 15,
