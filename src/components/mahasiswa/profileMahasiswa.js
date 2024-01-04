@@ -12,17 +12,13 @@ const ProfileMahasiswa = () => {
 
   useEffect(() => {
     const token = localStorage.getItem("token");
-    const id_mhs = window.location.pathname.split("/")[3];
     const config = {
       headers: {
         Authorization: `Bearer ${token}`,
       },
     };
     axios
-      .get(
-        `http://localhost:5001/api/mahasiswa/detail-skripsi/${id_mhs}`,
-        config
-      )
+      .get(`http://localhost:5001/api/mahasiswa/profile`, config)
       .then((res) => {
         console.log(res.data.data);
         setData(res.data.data);
@@ -183,7 +179,79 @@ const ProfileMahasiswa = () => {
           )}
         </div>
       </nav>
-      {/* show data detail skripsi in section */}
+      <div class="h-screen -200 pt-20 bg-gray-200">
+        <div class="max-w-sm mx-auto bg-white dark:bg-gray-900 rounded-lg overflow-hidden shadow-lg">
+          <div class="border-b px-4 pb-6">
+            <div class="text-center my-4">
+              <img
+                class="h-32 w-32 rounded-full border-4 border-white dark:border-gray-800 mx-auto my-4"
+                src="https://randomuser.me/api/portraits/women/21.jpg"
+                alt=""
+              />
+              <div class="py-2">
+                <h3 class="font-bold text-2xl text-gray-800 dark:text-white mb-1">
+                  {data.nama}
+                </h3>
+              </div>
+            </div>
+            <div class="flex justify-center">
+              <form>
+                <div class="flex flex-col">
+                  <label class="text-gray-700 dark:text-gray-200">NIM</label>
+                  <input
+                    type="text"
+                    class="border rounded-lg px-3 py-2 mt-1 mb-5 text-sm w-full"
+                    value={data.nim}
+                  />
+                </div>
+                <div class="flex flex-col">
+                  <label class="text-gray-700 dark:text-gray-200">
+                    Nama Lengkap
+                  </label>
+                  <input
+                    type="text"
+                    class="border rounded-lg px-3 py-2 mt-1 mb-5 text-sm w-full"
+                    value={data.nama}
+                  />
+                </div>
+                <div class="flex flex-col">
+                  <label class="text-gray-700 dark:text-gray-200">
+                    Jurusan
+                  </label>
+                  <input
+                    type="text"
+                    class="border rounded-lg px-3 py-2 mt-1 mb-5 text-sm w-full"
+                    value={data.jurusan}
+                  />
+                </div>
+                <div class="flex flex-col">
+                  <label class="text-gray-700 dark:text-gray-200">
+                    Semester
+                  </label>
+                  <input
+                    type="text"
+                    class="border rounded-lg px-3 py-2 mt-1 mb-5 text-sm w-full"
+                    value={data.semester}
+                  />
+                </div>
+                <div class="flex flex-col">
+                  <label class="text-gray-700 dark:text-gray-200">
+                    Status Kelulusan
+                  </label>
+                  <input
+                    type="text"
+                    class="border rounded-lg px-3 py-2 mt-1 mb-5 text-sm w-full"
+                    value={data.status_kelulusan}
+                  />
+                </div>
+                <button class="bg-yellow-300 hover:bg-yellow-400 text-white font-bold py-2 rounded shadow-lg hover:shadow-xl transition duration-200">
+                  Update Profile
+                </button>
+              </form>
+            </div>
+          </div>
+        </div>
+      </div>
     </div>
   );
 };
