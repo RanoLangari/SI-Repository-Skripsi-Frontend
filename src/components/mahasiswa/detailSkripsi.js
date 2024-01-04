@@ -236,10 +236,6 @@ const DetailSkripsi = () => {
                   <br />
                   <span className="text-sm text-black">{data.penguji}</span>
                 </div>
-                <div>
-                  <span>skripsi_url : {data.skripsi_url}</span>
-                </div>
-                {/* icon file large */}
               </div>
             </div>
           </div>
