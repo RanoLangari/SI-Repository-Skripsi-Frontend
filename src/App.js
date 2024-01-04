@@ -6,6 +6,7 @@ import LoginAdmin from "./components/admin/auth/loginAdmin";
 import Dashboard from "./components/mahasiswa/dashboard";
 import UploadSkripsi from "./components/mahasiswa/uploadSkripsi";
 import DetailSkripsi from "./components/mahasiswa/detailSkripsi";
+import ProfileMahasiswa from "./components/mahasiswa/profileMahasiswa";
 import "./index.css";
 function App() {
   return (
@@ -16,6 +17,7 @@ function App() {
           <Route path="/login-admin" element={<LoginAdmin />} />
           <Route path="/register-mhs" element={<RegisterMahasiswa />} />
           <Route path="/mhs/dashboard" element={<Dashboard />} />
+          <Route path="/mhs/profile" element={<ProfileMahasiswa />} />
           <Route path="/mhs/upload-skripsi" element={<UploadSkripsi />} />
           <Route path="/mhs/detail-skripsi/:id" element={<DetailSkripsi />} />
         </Routes>
