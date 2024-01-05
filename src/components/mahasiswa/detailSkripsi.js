@@ -167,25 +167,28 @@ const DetailSkripsi = () => {
           {showMenu && (
             <div className="md:hidden mt-2">
               <a
-                href="#"
+                onClick={() => Navigate("/mhs/dashboard")}
                 className="block py-2 px-4 text-sm text-gray-500 hover:bg-yellow-300 hover:text-white transition duration-300"
               >
                 Dashboard
               </a>
               <a
-                href="#"
+                onClick={() => Navigate("/mhs/upload-skripsi")}
                 className="block py-2 px-4 text-sm text-gray-500 hover:bg-yellow-300 hover:text-white transition duration-300"
               >
                 Upload Skripsi
               </a>
               <a
-                href="#"
+                onClick={() => Navigate("/mhs/profile")}
                 className="block py-2 px-4 text-sm text-gray-500 hover:bg-yellow-300 hover:text-white transition duration-300"
               >
                 Profile
               </a>
               <a
-                href="#"
+                onClick={() => {
+                  localStorage.removeItem("token");
+                  Navigate("/login-mhs");
+                }}
                 className="block py-2 px-4 text-sm text-gray-500 hover:bg-yellow-300 hover:text-white transition duration-300"
               >
                 Log out
