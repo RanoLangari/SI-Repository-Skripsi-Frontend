@@ -6,6 +6,11 @@ const ProfileMahasiswa = () => {
   const Navigate = useNavigate();
   const [showMenu, setShowMenu] = useState(false);
   const [data, setData] = useState([]);
+  const [nama, setNama] = useState("");
+  const [nim, setNim] = useState("");
+  const [jurusan, setJurusan] = useState("");
+  const [semester, setSemester] = useState("");
+  const [status_kelulusan, setStatusKelulusan] = useState("");
   const showMenuToggle = () => {
     setShowMenu(!showMenu);
   };
@@ -179,8 +184,15 @@ const ProfileMahasiswa = () => {
           )}
         </div>
       </nav>
-      <div class="h-screen -200 pt-20 bg-gray-200">
-        <div class="max-w-sm mx-auto bg-white dark:bg-gray-900 rounded-lg overflow-hidden shadow-lg">
+      <div class="h-screen -200 pt-20 bg-gray-200 items-center justify-center">
+        <div class="bg-white dark:bg-gray-800 w-11/12 md:w-1/2 lg:w-1/3 mx-auto rounded-lg shadow">
+          <div class="py-4 px-8 mt-3">
+            <div class="flex justify-between items-center">
+              <h1 class="text-2xl font-bold text-gray-800 dark:text-white mt-4 text-center">
+                Profile Mahasiswa
+              </h1>
+            </div>
+          </div>
           <div class="border-b px-4 pb-6">
             <div class="text-center my-4">
               <img
@@ -195,58 +207,114 @@ const ProfileMahasiswa = () => {
               </div>
             </div>
             <div class="flex justify-center">
-              <form>
-                <div class="flex flex-col">
-                  <label class="text-gray-700 dark:text-gray-200">NIM</label>
-                  <input
-                    type="text"
-                    class="border rounded-lg px-3 py-2 mt-1 mb-5 text-sm w-full"
-                    value={data.nim}
-                  />
+              <form class="w-full max-w-lg">
+                <div class="flex flex-row md:flex-row">
+                  {/* buat nim dan nama dalam satu baris */}
+                  <div class="flex flex-row">
+                    <div className="flex flex-col">
+                      <label class="text-gray-700 dark:text-gray-200">
+                        NIM
+                      </label>
+                      <input
+                        type="text"
+                        class="border rounded-lg px-3 py-2 mt-1 mb-5 text-sm w-full"
+                        value={data.nim}
+                        onChange={(e) =>
+                          setData({ ...data, nim: e.target.value })
+                        }
+                      />
+                    </div>
+                    <div className="flex flex-col ml-4">
+                      <label class="text-gray-700 dark:text-gray-200">
+                        Nama
+                      </label>
+                      <input
+                        type="text"
+                        class="border rounded-lg px-3 py-2 mt-1 mb-5 text-sm w-full"
+                        value={data.nama}
+                        onChange={(e) =>
+                          setData({ ...data, nama: e.target.value })
+                        }
+                      />
+                    </div>
+                  </div>
                 </div>
-                <div class="flex flex-col">
-                  <label class="text-gray-700 dark:text-gray-200">
-                    Nama Lengkap
-                  </label>
-                  <input
-                    type="text"
-                    class="border rounded-lg px-3 py-2 mt-1 mb-5 text-sm w-full"
-                    value={data.nama}
-                  />
+                <div class="flex flex-row md:flex-row">
+                  {/* buat nim dan nama dalam satu baris */}
+                  <div class="flex flex-row">
+                    <div className="flex flex-col">
+                      <label class="text-gray-700 dark:text-gray-200">
+                        Jurusan
+                      </label>
+                      <select
+                        name="jurusan"
+                        id="jurusan"
+                        className=" border rounded-lg px-5  py-2 mt-1 mb-5 text-sm w-full"
+                        required
+                        onChange={(e) => {
+                          setJurusan(e.target.value);
+                        }}
+                      >
+                        <option value={data.jurusan}>{data.jurusan}</option>
+                        <option value={""}>-- Pilih Jurusan --</option>
+                        <option value={"Manajemen"}>Manajemen</option>
+                        <option value={"Akuntansi"}>Akuntansi</option>
+                        <option value={"Ekonomi Pembangunan"}>
+                          Ekonomi Pembangunan
+                        </option>
+                      </select>
+                    </div>
+                    <div className="flex flex-col ml-4">
+                      <label class="text-gray-700 dark:text-gray-200">
+                        Semester
+                      </label>
+                      <input
+                        type="text"
+                        class="border rounded-lg px-3 py-2 mt-1 mb-5 text-sm w-full"
+                        value={data.semester}
+                        onChange={(e) =>
+                          setData({ ...data, semester: e.target.value })
+                        }
+                      />
+                    </div>
+                  </div>
                 </div>
-                <div class="flex flex-col">
-                  <label class="text-gray-700 dark:text-gray-200">
-                    Jurusan
-                  </label>
-                  <input
-                    type="text"
-                    class="border rounded-lg px-3 py-2 mt-1 mb-5 text-sm w-full"
-                    value={data.jurusan}
-                  />
+                <div class="flex flex-row">
+                  {/* buat nim dan nama dalam satu baris */}
+                  <div class="flex flex-row">
+                    <div className="flex flex-col">
+                      <label class="text-gray-700 dark:text-gray-200">
+                        Status Kelulusan
+                      </label>
+                      <select
+                        name="status_kelulusan"
+                        id="status_kelulusan"
+                        className=" border rounded-lg px-3 py-2 mt-1 mb-5 text-sm w-full"
+                        required
+                        onChange={(e) => {
+                          setStatusKelulusan(e.target.value);
+                        }}
+                      >
+                        <option value={data.status_kelulusan}>
+                          {" "}
+                          {data.status_kelulusan}
+                        </option>
+                        <option value={""}>-- Pilih Status Kelulusan --</option>
+                        <option value={"Lulus"}>Lulus</option>
+                        <option value={"Belum Lulus"}>Belum Lulus</option>
+                      </select>
+                    </div>
+                  </div>
                 </div>
-                <div class="flex flex-col">
-                  <label class="text-gray-700 dark:text-gray-200">
-                    Semester
-                  </label>
-                  <input
-                    type="text"
-                    class="border rounded-lg px-3 py-2 mt-1 mb-5 text-sm w-full"
-                    value={data.semester}
-                  />
+                {/* button submit */}
+                <div class="flex justify-center">
+                  <button
+                    class="bg-yellow-300 hover:bg-yellow-400 text-white font-bold py-2 px-4 rounded-full"
+                    type="button"
+                  >
+                    Edit
+                  </button>
                 </div>
-                <div class="flex flex-col">
-                  <label class="text-gray-700 dark:text-gray-200">
-                    Status Kelulusan
-                  </label>
-                  <input
-                    type="text"
-                    class="border rounded-lg px-3 py-2 mt-1 mb-5 text-sm w-full"
-                    value={data.status_kelulusan}
-                  />
-                </div>
-                <button class="bg-yellow-300 hover:bg-yellow-400 text-white font-bold py-2 rounded shadow-lg hover:shadow-xl transition duration-200">
-                  Update Profile
-                </button>
               </form>
             </div>
           </div>
