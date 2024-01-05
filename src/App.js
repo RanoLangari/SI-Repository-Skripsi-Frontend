@@ -7,12 +7,14 @@ import Dashboard from "./components/mahasiswa/dashboard";
 import UploadSkripsi from "./components/mahasiswa/uploadSkripsi";
 import DetailSkripsi from "./components/mahasiswa/detailSkripsi";
 import ProfileMahasiswa from "./components/mahasiswa/profileMahasiswa";
+import { useNavigate } from "react-router-dom";
 import "./index.css";
 function App() {
   return (
     <div className="App">
       <BrowserRouter>
         <Routes>
+          <Route path="/" element={<LoginMhs />} />
           <Route path="/login-mhs" element={<LoginMhs />} />
           <Route path="/login-admin" element={<LoginAdmin />} />
           <Route path="/register-mhs" element={<RegisterMahasiswa />} />
