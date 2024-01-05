@@ -49,11 +49,9 @@ const Dashboard = () => {
     axios
       .get("http://localhost:5001/api/mahasiswa/get-skripsi", config)
       .then((res) => {
-        console.log(res.data.data);
         setData(res.data.data);
       })
       .catch((err) => {
-        console.log(err.response);
         Navigate("/login-mhs");
       });
     Swal.close();
@@ -78,7 +76,7 @@ const Dashboard = () => {
               {/* primary navbar items */}
               <div className="hidden md:flex items-center space-x-1">
                 <a
-                  href="#"
+                  href="/mhs/dashboard"
                   className="py-4 px-2 text-yellow-300 border-b-4 border-yellow-300 font-semibold"
                 >
                   Dashboard
@@ -186,25 +184,28 @@ const Dashboard = () => {
           {showMenu && (
             <div className="md:hidden mt-2">
               <a
-                href="#"
+                onClick={() => Navigate("/mhs/dashboard")}
                 className="block py-2 px-4 text-sm text-gray-500 hover:bg-yellow-300 hover:text-white transition duration-300"
               >
                 Dashboard
               </a>
               <a
-                href="#"
+                onClick={() => Navigate("/mhs/upload-skripsi")}
                 className="block py-2 px-4 text-sm text-gray-500 hover:bg-yellow-300 hover:text-white transition duration-300"
               >
                 Upload Skripsi
               </a>
               <a
-                href="#"
+                onClick={() => Navigate("/mhs/profile")}
                 className="block py-2 px-4 text-sm text-gray-500 hover:bg-yellow-300 hover:text-white transition duration-300"
               >
                 Profile
               </a>
               <a
-                href="#"
+                onClick={() => {
+                  localStorage.removeItem("token");
+                  Navigate("/login-mhs");
+                }}
                 className="block py-2 px-4 text-sm text-gray-500 hover:bg-yellow-300 hover:text-white transition duration-300"
               >
                 Log out
