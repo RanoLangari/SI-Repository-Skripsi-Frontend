@@ -56,7 +56,7 @@ const RegisterMahasiswa = () => {
   };
   return (
     <div className="flex items-center justify-center bg-gray-200">
-      <div className="w-full max-w-md">
+      <div className="w-full max-w-md ml-4 mr-4">
         <div className="flex justify-center mb-4">
           <img src="./FEB.png" alt="" className="mx-auto mb-4" />
         </div>

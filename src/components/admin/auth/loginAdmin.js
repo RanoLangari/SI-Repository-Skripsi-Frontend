@@ -48,7 +48,7 @@ const LoginAdmin = () => {
 
   return (
     <div className="flex items-center justify-center h-screen bg-gray-200">
-      <div className="w-full max-w-md">
+      <div className="w-full max-w-md ml-4 mr-4">
         <img src="./FEB.png" alt="" className="mx-auto mb-4" />
         <form
           className="bg-white shadow-md rounded px-8 pt-6 pb-8 mb-4"
