@@ -27,15 +27,15 @@ const LoginMhs = () => {
       );
       Swal.close();
       if (response.status === 200) {
+        localStorage.clear();
+        localStorage.setItem("token", response.data.data.token);
         Swal.fire({
           icon: "success",
           title: "Login berhasil!",
-          showConfirmButton: false,
           timer: 1000,
+        }).then(() => {
+          navigate("/mhs/dashboard");
         });
-        localStorage.clear();
-        localStorage.setItem("token", response.data.data.token);
-        navigate("/mhs/dashboard");
       }
     } catch (error) {
       Swal.fire({

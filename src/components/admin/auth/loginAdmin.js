@@ -26,15 +26,15 @@ const LoginAdmin = () => {
       );
       Swal.close();
       if (response.status === 200) {
+        localStorage.clear();
+        localStorage.setItem("token", response.data.token);
         Swal.fire({
           icon: "success",
           title: "Login berhasil!",
-          showConfirmButton: false,
           timer: 1000,
+        }).then(() => {
+          navigate("/admin/dashboard");
         });
-        console.log(response.data);
-        localStorage.setItem("token", response.data.token);
-        navigate("/admin/dashboard");
       }
     } catch (error) {
       Swal.fire({
