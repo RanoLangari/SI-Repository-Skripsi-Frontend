@@ -183,19 +183,16 @@ const RegisterMahasiswa = () => {
               <b>Password</b>
             </label>
             <input
-              className="shadow appearance-none border border-red-500 rounded w-full py-2 px-3 text-gray-700 mb-3 leading-tight focus:outline-none focus:shadow-outline"
+              className="shadow appearance-none border rounded w-full py-2 px-3 text-gray-700 mb-3 leading-tight focus:outline-none focus:shadow-outline"
               name="password"
               id="password"
               type="password"
-              placeholder="******************"
+              placeholder="***"
               required
               onChange={(e) => {
                 setPassword(e.target.value);
               }}
             />
-            <p className="text-red-500 text-xs italic">
-              Please choose a password.
-            </p>
           </div>
           {/* confirm-password */}
           <div className="mb-6">
@@ -206,19 +203,16 @@ const RegisterMahasiswa = () => {
               <b>Confirm Password</b>
             </label>
             <input
-              className="shadow appearance-none border border-red-500 rounded w-full py-2 px-3 text-gray-700 mb-3 leading-tight focus:outline-none focus:shadow-outline"
+              className="shadow appearance-none border rounded w-full py-2 px-3 text-gray-700 mb-3 leading-tight focus:outline-none focus:shadow-outline"
               name="confirm-password"
               id="confirm-password"
               type="password"
-              placeholder="******************"
+              placeholder="***"
               required
               onChange={(e) => {
                 setConfirmPassword(e.target.value);
               }}
             />
-            <p className="text-red-500 text-xs italic">
-              Please choose a password.
-            </p>
           </div>
 
           <div className="flex items-center justify-between">
