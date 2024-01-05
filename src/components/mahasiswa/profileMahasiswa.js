@@ -37,7 +37,7 @@ const ProfileMahasiswa = () => {
         },
       };
       const response = await axios.put(
-        `http://localhost:5001/api/mahasiswa/profile`,
+        `https://tugas-akhir-emquso6jja-as.a.run.app/api/mahasiswa/profile`,
         {
           nama: nama,
           nim: nim,
@@ -75,7 +75,10 @@ const ProfileMahasiswa = () => {
       },
     };
     axios
-      .get(`http://localhost:5001/api/mahasiswa/profile`, config)
+      .get(
+        `https://tugas-akhir-emquso6jja-as.a.run.app/api/mahasiswa/profile`,
+        config
+      )
       .then((res) => {
         setNama(res.data.data.nama);
         setNim(res.data.data.nim);

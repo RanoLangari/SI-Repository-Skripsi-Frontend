@@ -21,7 +21,7 @@ const LoginAdmin = () => {
     };
     try {
       const response = await axios.post(
-        "http://localhost:5001/api/admin/login",
+        "https://tugas-akhir-emquso6jja-as.a.run.app/api/admin/login",
         data
       );
       Swal.close();

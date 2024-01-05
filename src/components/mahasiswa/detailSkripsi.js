@@ -28,7 +28,7 @@ const DetailSkripsi = () => {
     };
     axios
       .get(
-        `http://localhost:5001/api/mahasiswa/detail-skripsi/${id_mhs}`,
+        `https://tugas-akhir-emquso6jja-as.a.run.app/api/mahasiswa/detail-skripsi/${id_mhs}`,
         config
       )
       .then((res) => {

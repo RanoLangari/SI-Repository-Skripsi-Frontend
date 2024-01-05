@@ -47,7 +47,10 @@ const Dashboard = () => {
       },
     };
     axios
-      .get("http://localhost:5001/api/mahasiswa/get-skripsi", config)
+      .get(
+        "https://tugas-akhir-emquso6jja-as.a.run.app/api/mahasiswa/get-skripsi",
+        config
+      )
       .then((res) => {
         setData(res.data.data);
       })
