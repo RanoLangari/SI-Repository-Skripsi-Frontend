@@ -6,6 +6,7 @@ import Swal from "sweetalert2";
 const ProfileMahasiswa = () => {
   const Navigate = useNavigate();
   const [showMenu, setShowMenu] = useState(false);
+  const [dropdownVisible, setDropdownVisible] = useState(false);
   const [nama, setNama] = useState("");
   const [nim, setNim] = useState("");
   const [jurusan, setJurusan] = useState("");
@@ -13,6 +14,10 @@ const ProfileMahasiswa = () => {
   const [status_kelulusan, setStatusKelulusan] = useState("");
   const showMenuToggle = () => {
     setShowMenu(!showMenu);
+  };
+
+  const toggleDropdown = () => {
+    setDropdownVisible(!dropdownVisible);
   };
 
   const handleUpdate = async (e) => {
@@ -127,7 +132,7 @@ const ProfileMahasiswa = () => {
                       id="options-menu"
                       aria-haspopup="true"
                       aria-expanded="true"
-                      onClick={() => setShowMenu(!showMenu)}
+                      onClick={toggleDropdown}
                     >
                       <span>Profile</span>
                       {/* chevron down icon */}
@@ -151,28 +156,31 @@ const ProfileMahasiswa = () => {
                   </div>
                   {/* dropdown profile items */}
                   <div
-                    className="origin-top-right absolute right-0 mt-2 w-40 rounded-md shadow-lg bg-white ring-1 ring-black ring-opacity-5 focus:outline-none"
+                    className={`origin-top-right absolute right-0 mt-2 w-40 rounded-md shadow-lg bg-white ring-1 ring-black ring-opacity-5 focus:outline-none ${
+                      dropdownVisible ? "block" : "hidden"
+                    }`}
                     role="menu"
                     aria-orientation="vertical"
                     aria-labelledby="options-menu"
-                    hidden={showMenu ? "" : "hidden"}
                   >
                     <div className="py-1" role="none">
-                      <a
-                        href="#"
-                        className="block px-4 py-2 text-sm text-gray-700 hover:bg-yellow-300 hover:text-white transition duration-300"
+                      <button
+                        className="block px-4 py-2 text-sm text-gray-700 hover:bg-yellow-300 hover:text-white transition duration-300 w-full text-left"
                         role="menuitem"
+                        onClick={() => Navigate("/mhs/profile")}
                       >
-                        Your Profile
-                      </a>
-                      <a
-                        href="#"
-                        className="block px-4 py-2 text-sm text-gray
-                        -700 hover:bg-yellow-300 hover:text-white transition duration-300"
+                        Profile
+                      </button>
+                      <button
+                        className="block px-4 py-2 text-sm text-gray-700 hover:bg-yellow-300 hover:text-white transition duration-300 w-full text-left"
                         role="menuitem"
+                        onClick={() => {
+                          localStorage.removeItem("token");
+                          Navigate("/login-mhs");
+                        }}
                       >
-                        Sign out
-                      </a>
+                        Log out
+                      </button>
                     </div>
                   </div>
                 </div>
