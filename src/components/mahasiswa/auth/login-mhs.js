@@ -22,7 +22,7 @@ const LoginMhs = () => {
     };
     try {
       const response = await axios.post(
-        "http://localhost:5001/api/mahasiswa/login",
+        "https://tugas-akhir-emquso6jja-as.a.run.app/api/mahasiswa/login",
         data
       );
       Swal.close();

@@ -31,7 +31,7 @@ const RegisterMahasiswa = () => {
     };
     try {
       const response = await axios.post(
-        "http://localhost:5001/api/mahasiswa/register",
+        "https://tugas-akhir-emquso6jja-as.a.run.app/api/mahasiswa/register",
         data
       );
       Swal.close();
