@@ -1,11 +1,11 @@
 import React, { useState, useEffect } from "react";
 import { useNavigate } from "react-router-dom";
 import axios from "axios";
+import Swal from "sweetalert2";
 
 const ProfileMahasiswa = () => {
   const Navigate = useNavigate();
   const [showMenu, setShowMenu] = useState(false);
-  const [data, setData] = useState([]);
   const [nama, setNama] = useState("");
   const [nim, setNim] = useState("");
   const [jurusan, setJurusan] = useState("");
@@ -13,6 +13,53 @@ const ProfileMahasiswa = () => {
   const [status_kelulusan, setStatusKelulusan] = useState("");
   const showMenuToggle = () => {
     setShowMenu(!showMenu);
+  };
+
+  const handleUpdate = async (e) => {
+    try {
+      e.preventDefault();
+      Swal.fire({
+        title: "Loading...",
+        allowOutsideClick: false,
+        didOpen: () => {
+          Swal.showLoading();
+        },
+      });
+      const token = localStorage.getItem("token");
+      const config = {
+        headers: {
+          Authorization: `Bearer ${token}`,
+        },
+      };
+      const response = await axios.put(
+        `http://localhost:5001/api/mahasiswa/profile`,
+        {
+          nama: nama,
+          nim: nim,
+          jurusan: jurusan,
+          semester: semester,
+          status_kelulusan: status_kelulusan,
+        },
+        config
+      );
+      Swal.close();
+      if (response.status === 200) {
+        Swal.fire({
+          icon: "success",
+          title: "Success!",
+          text: response.data.message,
+          showConfirmButton: false,
+          timer: 1500,
+        });
+        Navigate("/mhs/profile");
+      }
+    } catch (error) {
+      Swal.fire({
+        icon: "error",
+        title: "Oops...",
+        text: error.response.data.message,
+      });
+    }
   };
 
   useEffect(() => {
@@ -25,8 +72,11 @@ const ProfileMahasiswa = () => {
     axios
       .get(`http://localhost:5001/api/mahasiswa/profile`, config)
       .then((res) => {
-        console.log(res.data.data);
-        setData(res.data.data);
+        setNama(res.data.data.nama);
+        setNim(res.data.data.nim);
+        setJurusan(res.data.data.jurusan);
+        setSemester(res.data.data.semester);
+        setStatusKelulusan(res.data.data.status_kelulusan);
       })
       .catch((err) => {
         console.log(err);
@@ -202,12 +252,12 @@ const ProfileMahasiswa = () => {
               />
               <div class="py-2">
                 <h3 class="font-bold text-2xl text-gray-800 dark:text-white mb-1">
-                  {data.nama}
+                  {nama}
                 </h3>
               </div>
             </div>
             <div class="flex justify-center">
-              <form class="w-full max-w-lg">
+              <form class="w-full max-w-lg" onSubmit={handleUpdate}>
                 <div class="flex flex-row md:flex-row">
                   {/* buat nim dan nama dalam satu baris */}
                   <div class="flex flex-row">
@@ -218,10 +268,9 @@ const ProfileMahasiswa = () => {
                       <input
                         type="text"
                         class="border rounded-lg px-3 py-2 mt-1 mb-5 text-sm w-full"
-                        value={data.nim}
-                        onChange={(e) =>
-                          setData({ ...data, nim: e.target.value })
-                        }
+                        value={nim}
+                        onChange={(e) => setNim(e.target.value)}
+                        readOnly
                       />
                     </div>
                     <div className="flex flex-col ml-4">
@@ -231,10 +280,8 @@ const ProfileMahasiswa = () => {
                       <input
                         type="text"
                         class="border rounded-lg px-3 py-2 mt-1 mb-5 text-sm w-full"
-                        value={data.nama}
-                        onChange={(e) =>
-                          setData({ ...data, nama: e.target.value })
-                        }
+                        value={nama}
+                        onChange={(e) => setNama(e.target.value)}
                       />
                     </div>
                   </div>
@@ -255,7 +302,7 @@ const ProfileMahasiswa = () => {
                           setJurusan(e.target.value);
                         }}
                       >
-                        <option value={data.jurusan}>{data.jurusan}</option>
+                        <option value={jurusan}>{jurusan}</option>
                         <option value={""}>-- Pilih Jurusan --</option>
                         <option value={"Manajemen"}>Manajemen</option>
                         <option value={"Akuntansi"}>Akuntansi</option>
@@ -271,10 +318,8 @@ const ProfileMahasiswa = () => {
                       <input
                         type="text"
                         class="border rounded-lg px-3 py-2 mt-1 mb-5 text-sm w-full"
-                        value={data.semester}
-                        onChange={(e) =>
-                          setData({ ...data, semester: e.target.value })
-                        }
+                        value={semester}
+                        onChange={(e) => setSemester(e.target.value)}
                       />
                     </div>
                   </div>
@@ -295,9 +340,9 @@ const ProfileMahasiswa = () => {
                           setStatusKelulusan(e.target.value);
                         }}
                       >
-                        <option value={data.status_kelulusan}>
+                        <option value={status_kelulusan}>
                           {" "}
-                          {data.status_kelulusan}
+                          {status_kelulusan}
                         </option>
                         <option value={""}>-- Pilih Status Kelulusan --</option>
                         <option value={"Lulus"}>Lulus</option>
@@ -310,7 +355,7 @@ const ProfileMahasiswa = () => {
                 <div class="flex justify-center">
                   <button
                     class="bg-yellow-300 hover:bg-yellow-400 text-white font-bold py-2 px-4 rounded-full"
-                    type="button"
+                    type="submit"
                   >
                     Edit
                   </button>
