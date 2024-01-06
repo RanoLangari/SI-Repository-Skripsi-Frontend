@@ -276,7 +276,7 @@ const Dashboard = () => {
           <div className="p-10 bg-white rounded shadow-xl">
             {filteredData.map((item) => (
               <div className=" w-full lg:max-w-full lg:flex mt-10 rounded-lg shadow-xl">
-                <div className="h-48 lg:h-auto lg:w-48 flex-none bg-cover rounded-t lg:rounded-t-none lg:rounded-l text-center overflow-hidden rounded-lg">
+                <div className="h-20 lg:h-auto lg:w-48 flex-none bg-cover rounded-t lg:rounded-t-none lg:rounded-l text-center overflow-hidden rounded-lg">
                   <img
                     src={`https://feb.undana.ac.id/wp-content/uploads/2023/02/LOGO-FEB-black.png`}
                     alt=""
