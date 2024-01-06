@@ -215,35 +215,6 @@ const Dashboard = () => {
           )}
         </div>
       </nav>
-
-      {/* end of navbar */}
-
-      {/* start of hero section */}
-      {/* <section className="bg-yellow-300 py-20 px-10">
-        <div className="max-w-6xl mx-auto flex items-center justify-between">
-          <div className="w-1/2">
-            <h1 className="text-white text-6xl font-semibold">
-              Belajar pemrograman web dengan mudah
-            </h1>
-            <p className="text-gray-300 text-2xl mt-8 font-semibold">
-              Lorem ipsum dolor sit amet consectetur adipisicing elit. Quisquam
-              quibusdam, quia, voluptatum, voluptates voluptate quod quos
-              doloribus debitis tempora eveniet voluptatibus. Quisquam
-              quibusdam, quia, voluptatum, voluptates voluptate quod quos
-              doloribus debitis tempora eveniet voluptatibus.
-            </p>
-            <button className="block bg-white hover:bg-gray-100 py-3 px-4 mt-10 rounded-lg shadow-lg uppercase font-semibold">
-              Get Started
-            </button>
-          </div>
-          <div className="w-1/2">
-            <img src="https://source.unsplash.com/IXUM4cJynP0" alt="" />
-          </div>
-        </div>
-      </section> */}
-      {/* end of hero section */}
-
-      {/* start of stats section */}
       <section className="bg-gray-100 py-20">
         <div className="max-w-6xl mx-auto px-4">
           <h2 className="text-5xl font-semibold text-center">
@@ -289,38 +260,31 @@ const Dashboard = () => {
           <div className="flex items-center mt-12"></div>
         </div>
         {/* cretae modern konten(not table to show data like paragraf) */}
-        <div className="max-w-6xl mx-auto px-4">
-          <div className="flex flex-wrap -mx-4">
-            {filteredData.map((user) => (
-              <div className="w-full md:w-1/2 lg:w-1/3 xl:w-1/4 px-4 mb-4">
-                <div className="bg-white rounded-lg shadow-md">
+        <div className="container mx-auto px-4">
+          <div className="p-10 bg-white rounded shadow-xl">
+            {filteredData.map((item) => (
+              <div className=" w-full lg:max-w-full lg:flex mt-10 rounded-lg shadow-xl">
+                <div className="h-48 lg:h-auto lg:w-48 flex-none bg-cover rounded-t lg:rounded-t-none lg:rounded-l text-center overflow-hidden rounded-lg">
                   <img
-                    src="https://source.unsplash.com/IXUM4cJynP0"
+                    src={`https://feb.undana.ac.id/wp-content/uploads/2023/02/LOGO-FEB-black.png`}
                     alt=""
-                    className="rounded-t-lg"
+                    className=" w-100 h-100 rounded-lg"
                   />
-                  <div className="p-4">
-                    <button
-                      className="block text-lg font-semibold"
-                      onClick={() => Navigate(`/mhs/detail-skripsi/${user.id}`)}
-                    >
-                      {user.judul_skripsi}
-                    </button>
-                    <div className="flex items-center justify-between mt-4">
-                      <a
-                        href="#"
-                        className="text-gray-500 hover:text-yellow-300 transition duration-300"
-                      >
-                        {user.jurusan}
-                      </a>
-                    </div>
-                    <div className="flex items-center justify-between mt-4">
-                      <a
-                        href="#"
-                        className="text-gray-500 hover:text-yellow-300 transition duration-300"
-                      >
-                        {user.nama}
-                      </a>
+                </div>
+                <div className="bg-white rounded-b lg:rounded-b-none lg:rounded-r p-4 flex flex-col justify-between leading-normal">
+                  <div className="mb-8">
+                    <p className=" text-black flex items-center align-middle text-bold font-bold uppercase text-start">
+                      {item.judul_skripsi}
+                    </p>
+                  </div>
+                  <div className="flex">
+                    <div className="text-sm">
+                      <p className="text-gray-600 text-start">
+                        Oleh {item.nama}
+                      </p>
+                      <p className="text-gray-600 text-start">
+                        Program Studi {item.jurusan}
+                      </p>
                     </div>
                   </div>
                 </div>
@@ -329,9 +293,6 @@ const Dashboard = () => {
           </div>
         </div>
       </section>
-      {/* end of konten */}
-      {/* start of pagination */}
-      {/* create modern pagination tailwind */}
     </div>
   );
 };
