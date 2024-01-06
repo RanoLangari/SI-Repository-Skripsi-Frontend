@@ -19,6 +19,7 @@ import Swal from "sweetalert2";
 // });
 
 const Dashboard = () => {
+  const backendUrl = process.env.REACT_APP_API_URL;
   const Navigate = useNavigate();
   const [showMenu, setShowMenu] = useState(false);
   const [searchTerm, setSearchTerm] = useState("");
@@ -47,10 +48,7 @@ const Dashboard = () => {
       },
     };
     axios
-      .get(
-        "https://tugas-akhir-emquso6jja-as.a.run.app/api/mahasiswa/get-skripsi",
-        config
-      )
+      .get(`${backendUrl}/api/mahasiswa/get-skripsi`, config)
       .then((res) => {
         setData(res.data.data);
       })

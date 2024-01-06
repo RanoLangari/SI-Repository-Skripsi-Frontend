@@ -3,6 +3,7 @@ import axios from "axios";
 import { useNavigate } from "react-router-dom";
 import Swal from "sweetalert2";
 const RegisterMahasiswa = () => {
+  const backendUrl = process.env.REACT_APP_API_URL;
   const navigate = useNavigate();
   const [nim, setNim] = useState("");
   const [nama, setNama] = useState("");
@@ -31,7 +32,7 @@ const RegisterMahasiswa = () => {
     };
     try {
       const response = await axios.post(
-        "https://tugas-akhir-emquso6jja-as.a.run.app/api/mahasiswa/register",
+        `${backendUrl}/api/mahasiswa/register`,
         data
       );
       Swal.close();

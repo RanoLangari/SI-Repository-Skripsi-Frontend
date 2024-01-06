@@ -4,6 +4,7 @@ import axios from "axios";
 import Swal from "sweetalert2";
 
 const ProfileMahasiswa = () => {
+  const backendUrl = process.env.REACT_APP_BACKEND_URL;
   const Navigate = useNavigate();
   const [showMenu, setShowMenu] = useState(false);
   const [dropdownVisible, setDropdownVisible] = useState(false);
@@ -37,7 +38,7 @@ const ProfileMahasiswa = () => {
         },
       };
       const response = await axios.put(
-        `https://tugas-akhir-emquso6jja-as.a.run.app/api/mahasiswa/profile`,
+        `${backendUrl}/api/mahasiswa/profile`,
         {
           nama: nama,
           nim: nim,
@@ -75,10 +76,7 @@ const ProfileMahasiswa = () => {
       },
     };
     axios
-      .get(
-        `https://tugas-akhir-emquso6jja-as.a.run.app/api/mahasiswa/profile`,
-        config
-      )
+      .get(`${backendUrl}/api/mahasiswa/profile`, config)
       .then((res) => {
         setNama(res.data.data.nama);
         setNim(res.data.data.nim);

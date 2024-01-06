@@ -4,6 +4,7 @@ import axios from "axios";
 import Swal from "sweetalert2";
 
 const UploadSkripsi = () => {
+  const backendUrl = process.env.REACT_APP_BACKEND_URL;
   const Navigate = useNavigate();
   const [showMenu, setShowMenu] = useState(false);
   const [dropdownVisible, setDropdownVisible] = useState(false);

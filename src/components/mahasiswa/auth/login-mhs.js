@@ -4,6 +4,7 @@ import { useNavigate } from "react-router-dom";
 import Swal from "sweetalert2";
 
 const LoginMhs = () => {
+  const backendUrl = process.env.REACT_APP_API_URL;
   const navigate = useNavigate();
   const [nim, setNim] = useState("");
   const [password, setPassword] = useState("");
@@ -22,7 +23,7 @@ const LoginMhs = () => {
     };
     try {
       const response = await axios.post(
-        "https://tugas-akhir-emquso6jja-as.a.run.app/api/mahasiswa/login",
+        `${backendUrl}/api/mahasiswa/login`,
         data
       );
       Swal.close();

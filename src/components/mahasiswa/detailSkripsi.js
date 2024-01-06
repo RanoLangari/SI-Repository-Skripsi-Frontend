@@ -5,6 +5,7 @@ import Swal from "sweetalert2";
 import { FaFilePdf } from "react-icons/fa";
 
 const DetailSkripsi = () => {
+  const backendUrl = process.env.REACT_APP_BACKEND_URL;
   const Navigate = useNavigate();
   const [showMenu, setShowMenu] = useState(false);
   const [data, setData] = useState([]);
@@ -27,10 +28,7 @@ const DetailSkripsi = () => {
       },
     };
     axios
-      .get(
-        `https://tugas-akhir-emquso6jja-as.a.run.app/api/mahasiswa/detail-skripsi/${id_mhs}`,
-        config
-      )
+      .get(`${backendUrl}/api/mahasiswa/detail-skripsi/${id_mhs}`, config)
       .then((res) => {
         console.log(res.data.data);
         setData(res.data.data);

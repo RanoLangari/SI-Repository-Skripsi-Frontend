@@ -3,6 +3,7 @@ import axios from "axios";
 import { useNavigate } from "react-router-dom";
 import Swal from "sweetalert2";
 const LoginAdmin = () => {
+  const backendUrl = process.env.REACT_APP_API_URL;
   const navigate = useNavigate();
   const [username, setUsername] = useState("");
   const [password, setPassword] = useState("");
@@ -20,10 +21,7 @@ const LoginAdmin = () => {
       password,
     };
     try {
-      const response = await axios.post(
-        "https://tugas-akhir-emquso6jja-as.a.run.app/api/admin/login",
-        data
-      );
+      const response = await axios.post(`${backendUrl}/api/admin/login`, data);
       Swal.close();
       if (response.status === 200) {
         localStorage.clear();
