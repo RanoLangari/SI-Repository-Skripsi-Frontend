@@ -41,6 +41,15 @@ const Dashboard = () => {
   };
 
   useEffect(() => {
+    Swal.fire({
+      title: "Loading Data",
+      text: "Please wait ...",
+      showConfirmButton: false,
+      allowOutsideClick: false,
+      willOpen: () => {
+        Swal.showLoading();
+      },
+    });
     const token = localStorage.getItem("token");
     const config = {
       headers: {
@@ -51,6 +60,9 @@ const Dashboard = () => {
       .get(`${backendUrl}/api/mahasiswa/get-skripsi`, config)
       .then((res) => {
         setData(res.data.data);
+      })
+      .then(() => {
+        Swal.close();
       })
       .catch((err) => {
         Navigate("/login-mhs");
