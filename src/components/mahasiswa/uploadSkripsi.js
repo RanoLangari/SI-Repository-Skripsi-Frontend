@@ -8,6 +8,65 @@ const UploadSkripsi = () => {
   const Navigate = useNavigate();
   const [showMenu, setShowMenu] = useState(false);
   const [dropdownVisible, setDropdownVisible] = useState(false);
+  const [pembimbing1, setPembimbing1] = useState("");
+  const [pembimbing2, setPembimbing2] = useState("");
+  const [penguji, setPenguji] = useState("");
+  const [judul, setJudul] = useState("");
+  const [abstract, setAbstract] = useState("");
+  const [file, setFile] = useState(null);
+
+  const handleFileChange = (event) => {
+    setFile(event.target.files[0]);
+  };
+
+  const handleUpload = async (e) => {
+    e.preventDefault();
+    Swal.fire({
+      title: "Loading...",
+      allowOutsideClick: false,
+      didOpen: () => {
+        Swal.showLoading();
+      },
+    });
+    try {
+      const token = localStorage.getItem("token");
+      const config = {
+        headers: {
+          Authorization: `Bearer ${token}`,
+        },
+      };
+      const formData = new FormData();
+      formData.append("pembimbing1", pembimbing1);
+      formData.append("pembimbing2", pembimbing2);
+      formData.append("penguji", penguji);
+      formData.append("judul_skripsi", judul);
+      formData.append("abstract", abstract);
+      formData.append("file", file);
+      const res = await axios.post(
+        `${backendUrl}/api/mahasiswa/upload-skripsi`,
+        formData,
+        config
+      );
+      Swal.close();
+      if (res.status === 200) {
+        Swal.fire({
+          icon: "success",
+          title: "Berhasil",
+          text: res.data.message,
+          timer: 1000,
+        }).then(() => {
+          Navigate("/mhs/dashboard");
+        });
+      }
+    } catch (error) {
+      Swal.fire({
+        icon: "error",
+        title: "Gagal",
+        text: error.response.data.message,
+        timer: 1000,
+      });
+    }
+  };
 
   const showMenuToggle = () => {
     setShowMenu(!showMenu);
@@ -27,14 +86,17 @@ const UploadSkripsi = () => {
     axios
       .get(`${backendUrl}/api/mahasiswa/profile`, config)
       .then((res) => {
-        console.log(res.data);
+        setPembimbing1(res.data.data.pembimbing1);
+        setPembimbing2(res.data.data.pembimbing2);
+        setPenguji(res.data.data.penguji);
+        setJudul(res.data.data.judul_skripsi);
+        setAbstract(res.data.data.abstract);
       })
       .catch((err) => {
         console.log(err.response);
         Navigate("/login-mhs");
       });
-    Swal.close();
-  });
+  }, []);
 
   return (
     <div>
@@ -193,119 +255,136 @@ const UploadSkripsi = () => {
           )}
         </div>
       </nav>
+      <div className="bg-gray-200 py-20 px-10">
+        <div className="container mx-auto">
+          <div className="bg-white dark:bg-gray-800 lg:w-1/2 mx-auto rounded-lg shadow">
+            <div className="max-w-md mx-auto rounded-lg overflow-hidden md:max-w-lg ">
+              <div className="md:flex">
+                <div className="w-full p-3 px-6 py-10">
+                  <div className="text-center mb-4">
+                    <h1 className="font-bold text-3xl text-gray-900">
+                      Upload Skripsi
+                    </h1>
+                    <p>Upload Skripsi Anda Disini</p>
+                  </div>
+                  <form
+                    className="mb-4 md:flex md:flex-wrap md:justify-between"
+                    typeof="multipart/form-data"
+                    onSubmit={handleUpload}
+                  >
+                    <div className="flex flex-col mb-4 md:w-full">
+                      <label
+                        className="mb-2 font-bold text-lg text-gray-900"
+                        htmlFor="Pembingbing1"
+                      >
+                        Pembimbing 1
+                      </label>
+                      <input
+                        className="border py-2 px-3 text-gray-700 rounded-lg ml-4 mr-4"
+                        type="text"
+                        name="Pembimbing1"
+                        id="Pembimbing1"
+                        placeholder="Pembimbing 1"
+                        value={pembimbing1}
+                        onChange={(e) => setPembimbing1(e.target.value)}
+                      />
+                    </div>
+                    <div className="flex flex-col mb-4 md:w-full">
+                      <label
+                        className="mb-2 font-bold text-lg text-gray-900"
+                        htmlFor="Pembingbing2"
+                      >
+                        Pembimbing 2
+                      </label>
+                      <input
+                        className="border py-2 px-3 text-gray-700 rounded-lg ml-4 mr-4"
+                        type="text"
+                        name="pembimbing2"
+                        id="pembimbing2"
+                        placeholder="Pembimbing 2"
+                        value={pembimbing2}
+                        onChange={(e) => setPembimbing2(e.target.value)}
+                      />
+                    </div>
+                    <div className="flex flex-col mb-4 md:w-full">
+                      <label
+                        className="mb-2 font-bold text-lg text-gray-900"
+                        htmlFor="penguji"
+                      >
+                        Penguji
+                      </label>
+                      <input
+                        className="border py-2 px-3 text-gray-700 rounded-lg ml-4 mr-4"
+                        type="text"
+                        name="penguji"
+                        id="penguji"
+                        placeholder="Penguji"
+                        value={penguji}
+                        onChange={(e) => setPenguji(e.target.value)}
+                      />
+                    </div>
+                    <div className="flex flex-col mb-4 md:w-full">
+                      <label
+                        className="mb-2 font-bold text-lg text-gray-900"
+                        htmlFor="judul"
+                      >
+                        Judul Skripsi
+                      </label>
+                      <input
+                        className="border py-2 px-3 text-gray-700 rounded-lg ml-4 mr-4"
+                        type="text"
+                        name="judul_skripsi"
+                        id="judul_skripsi"
+                        placeholder="Judul Skripsi"
+                        value={judul}
+                        onChange={(e) => setJudul(e.target.value)}
+                      />
+                    </div>
 
-      {/* create modern section form to upload skripsi  data*/}
-      <div className="container mx-auto mt-10">
-        <div className="max-w-md mx-auto bg-white rounded-lg overflow-hidden md:max-w-lg">
-          <div className="md:flex">
-            <div className="w-full p-3 px-6 py-10">
-              <div className="text-center mb-4">
-                <h1 className="font-bold text-3xl text-gray-900">
-                  Upload Skripsi
-                </h1>
-                <p>Upload Skripsi Anda Disini</p>
+                    <div className="flex flex-col mb-4 md:w-full">
+                      <label
+                        className="mb-2 font-bold text-lg text-gray-900"
+                        htmlFor="abstract"
+                      >
+                        Abstrak
+                      </label>
+                      <textarea
+                        className="border py-2 px-3 text-gray-700 rounded-lg ml-4 mr-4 text-sm h-32"
+                        type="text"
+                        name="abstract"
+                        id="abstract"
+                        placeholder="Abstrak"
+                        value={abstract}
+                        onChange={(e) => setAbstract(e.target.value)}
+                      />
+                    </div>
+                    <div className="flex flex-col mb-4 md:w-full">
+                      <label
+                        className="mb-2 font-bold text-lg text-gray-900"
+                        htmlFor="file"
+                      >
+                        File Skripsi
+                      </label>
+                      <input
+                        className="border py-2 px-3 text-gray-700 mb-4 md:mb-0 rounded-lg ml-4 mr-4"
+                        type="file"
+                        name="file"
+                        id="file"
+                        placeholder="File Skripsi"
+                        onChange={handleFileChange}
+                      />
+                    </div>
+                    <div className="flex flex-col mb-4 md:w-full">
+                      <button
+                        className="block bg-yellow-300 hover:bg-yellow-400 py-2 px-4 mt-8 rounded-lg shadow-lg uppercase font-semibold ml-4 mr-4"
+                        type="submit"
+                      >
+                        Upload
+                      </button>
+                    </div>
+                  </form>
+                </div>
               </div>
-              <form className="mb-4 md:flex md:flex-wrap md:justify-between">
-                <div className="flex flex-col mb-4 md:w-1/2">
-                  <label
-                    className="mb-2 font-bold text-lg text-gray-900"
-                    htmlFor="firstName"
-                  >
-                    NIM
-                  </label>
-                  <input
-                    //
-                    className="border py-2 px-3 text-gray-700 rounded-lg ml-4 mr-4"
-                    type="text"
-                    name="firstName"
-                    id="firstName"
-                    placeholder="NIM"
-                  />
-                </div>
-                <div className="flex flex-col mb-4 md:w-1/2">
-                  <label
-                    className="mb-2 font-bold text-lg text-gray-900"
-                    htmlFor="lastName"
-                  >
-                    Nama
-                  </label>
-                  <input
-                    className="border py-2 px-3 text-gray-700 rounded-lg ml-4 mr-4"
-                    type="text"
-                    name="lastName"
-                    id="lastName"
-                    placeholder="Nama"
-                  />
-                </div>
-                <div className="flex flex-col mb-4 md:w-full">
-                  <label
-                    className="mb-2 font-bold text-lg text-gray-900"
-                    htmlFor="email"
-                  >
-                    Email
-                  </label>
-                  <input
-                    className="border py-2 px-3 text-gray-700 rounded-lg ml-4 mr-4"
-                    type="email"
-                    name="email"
-                    id="email"
-                    placeholder="Email"
-                  />
-                </div>
-                <div className="flex flex-col mb-4 md:w-full">
-                  <label
-                    className="mb-2 font-bold text-lg text-gray-900"
-                    htmlFor="password"
-                  >
-                    Judul Skripsi
-                  </label>
-                  <input
-                    className="border py-2 px-3 text-gray-700 rounded-lg ml-4 mr-4"
-                    type="text"
-                    name="password"
-                    id="password"
-                    placeholder="Judul Skripsi"
-                  />
-                </div>
-                <div className="flex flex-col mb-4 md:w-full">
-                  <label
-                    className="mb-2 font-bold text-lg text-gray-900"
-                    htmlFor="password"
-                  >
-                    Abstrak
-                  </label>
-                  <textarea
-                    className="border py-2 px-3 text-gray-700 rounded-lg ml-4 mr-4"
-                    type="text"
-                    name="password"
-                    id="password"
-                    placeholder="Abstrak"
-                  />
-                </div>
-                <div className="flex flex-col mb-4 md:w-full">
-                  <label
-                    className="mb-2 font-bold text-lg text-gray-900"
-                    htmlFor="password"
-                  >
-                    File Skripsi
-                  </label>
-                  <input
-                    className="border py-2 px-3 text-gray-700 mb-4 md:mb-0 rounded-lg ml-4 mr-4"
-                    type="file"
-                    name="password"
-                    id="password"
-                    placeholder="File Skripsi"
-                  />
-                </div>
-                <div className="flex flex-col mb-4 md:w-full">
-                  <button
-                    className="block bg-yellow-300 hover:bg-yellow-400 py-2 px-4 mt-8 rounded-lg shadow-lg uppercase font-semibold ml-4 mr-4"
-                    type="submit"
-                  >
-                    Upload
-                  </button>
-                </div>
-              </form>
             </div>
           </div>
         </div>
