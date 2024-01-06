@@ -25,10 +25,7 @@ const UploadSkripsi = () => {
       },
     };
     axios
-      .get(
-        "https://tugas-akhir-emquso6jja-as.a.run.app/api/mahasiswa/profile",
-        config
-      )
+      .get(`${backendUrl}/api/mahasiswa/profile`, config)
       .then((res) => {
         console.log(res.data);
       })
