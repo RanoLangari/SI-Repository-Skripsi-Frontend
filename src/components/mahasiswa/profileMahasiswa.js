@@ -69,6 +69,15 @@ const ProfileMahasiswa = () => {
   };
 
   useEffect(() => {
+    Swal.fire({
+      title: "Loading Data",
+      text: "Please wait ...",
+      showConfirmButton: false,
+      allowOutsideClick: false,
+      willOpen: () => {
+        Swal.showLoading();
+      },
+    });
     const token = localStorage.getItem("token");
     const config = {
       headers: {
@@ -83,6 +92,9 @@ const ProfileMahasiswa = () => {
         setJurusan(res.data.data.jurusan);
         setSemester(res.data.data.semester);
         setStatusKelulusan(res.data.data.status_kelulusan);
+      })
+      .then(() => {
+        Swal.close();
       })
       .catch((err) => {
         console.log(err);
