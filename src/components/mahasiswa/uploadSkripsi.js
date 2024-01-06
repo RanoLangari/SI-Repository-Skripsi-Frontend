@@ -77,6 +77,15 @@ const UploadSkripsi = () => {
   };
 
   useEffect(() => {
+    Swal.fire({
+      title: "Loading Data",
+      text: "Please wait ...",
+      showConfirmButton: false,
+      allowOutsideClick: false,
+      willOpen: () => {
+        Swal.showLoading();
+      },
+    });
     const token = localStorage.getItem("token");
     const config = {
       headers: {
@@ -92,6 +101,10 @@ const UploadSkripsi = () => {
         setJudul(res.data.data.judul_skripsi);
         setAbstract(res.data.data.abstract);
       })
+      .then(() => {
+        Swal.close();
+      })
+
       .catch((err) => {
         console.log(err.response);
         Navigate("/login-mhs");
