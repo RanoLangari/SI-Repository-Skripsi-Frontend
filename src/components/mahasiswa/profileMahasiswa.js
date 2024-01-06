@@ -282,7 +282,6 @@ const ProfileMahasiswa = () => {
                         class="border rounded-lg px-3 py-2 mt-1 mb-5 text-sm w-full"
                         value={nim}
                         onChange={(e) => setNim(e.target.value)}
-                        readOnly
                       />
                     </div>
                     <div className="flex flex-col ml-4">
