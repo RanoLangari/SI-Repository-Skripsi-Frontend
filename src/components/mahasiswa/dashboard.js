@@ -273,9 +273,12 @@ const Dashboard = () => {
                 </div>
                 <div className="bg-white rounded-b lg:rounded-b-none lg:rounded-r p-4 flex flex-col justify-between leading-normal">
                   <div className="mb-8">
-                    <p className=" text-black flex items-center align-middle text-bold font-bold uppercase text-start">
+                    <button
+                      className=" text-black flex items-center align-middle text-bold font-bold uppercase text-start"
+                      onClick={() => Navigate(`/mhs/detail-skripsi/${item.id}`)}
+                    >
                       {item.judul_skripsi}
-                    </p>
+                    </button>
                   </div>
                   <div className="flex">
                     <div className="text-sm">

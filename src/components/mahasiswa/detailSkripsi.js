@@ -20,6 +20,16 @@ const DetailSkripsi = () => {
   };
 
   useEffect(() => {
+    Swal.fire({
+      title: "Loading Data",
+      text: "Please wait ...",
+      showConfirmButton: false,
+      allowOutsideClick: false,
+      willOpen: () => {
+        Swal.showLoading();
+      },
+    });
+
     const token = localStorage.getItem("token");
     const id_mhs = window.location.pathname.split("/")[3];
     const config = {
@@ -30,8 +40,10 @@ const DetailSkripsi = () => {
     axios
       .get(`${backendUrl}/api/mahasiswa/detail-skripsi/${id_mhs}`, config)
       .then((res) => {
-        console.log(res.data.data);
         setData(res.data.data);
+      })
+      .then(() => {
+        Swal.close();
       })
       .catch((err) => {
         console.log(err);
@@ -40,21 +52,17 @@ const DetailSkripsi = () => {
 
   return (
     <div>
-      {/* create modern navbar using tailwind */}
       <nav className="bg-white shadow-lg">
         <div className="max-w-6xl mx-auto px-4">
           <div className="flex justify-between">
-            {/* set logo FEB.png */}
             <div className="flex space-x-7">
               <div>
-                {/* image icon */}
                 <a href="#" className="flex items-center py-4">
                   <span className="font-semibold text-gray-500 text-lg">
                     Sistem Informasi Repository Skripsi
                   </span>
                 </a>
               </div>
-              {/* primary navbar items */}
               <div className="hidden md:flex items-center space-x-1">
                 <a
                   href="/mhs/dashboard"
@@ -70,9 +78,7 @@ const DetailSkripsi = () => {
                 </a>
               </div>
             </div>
-            {/* secondary navbar items */}
             <div className="hidden md:flex items-center space-x-3 ">
-              {/* dropdown profile list item */}
               <div className="flex flex-col md:flex-row items-center md:space-x-3 ">
                 <div className="relative inline-block text-left">
                   <div>
