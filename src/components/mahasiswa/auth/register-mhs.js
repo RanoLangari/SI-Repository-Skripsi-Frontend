@@ -37,22 +37,19 @@ const RegisterMahasiswa = () => {
       );
       Swal.close();
       if (response.status === 200) {
-        Swal.fire(
-          {
-            icon: "success",
-            title: "Register berhasil!",
-            timer: 1000,
-          }.then(() => {
-            navigate("/login-mhs");
-          })
-        );
+        Swal.fire({
+          icon: "success",
+          title: "Register berhasil!",
+          timer: 1000,
+        }).then(() => {
+          navigate("/login-mhs");
+        });
       }
     } catch (error) {
       Swal.fire({
         icon: "error",
-        title: "Oops...",
+        title: "Register gagal!",
         text: error.response.data.message,
-        timer: 1000,
       });
     }
   };
