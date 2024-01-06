@@ -217,7 +217,7 @@ const UploadSkripsi = () => {
                   </label>
                   <input
                     //
-
+                    className="border py-2 px-3 text-gray-700 rounded-lg ml-4 mr-4"
                     type="text"
                     name="firstName"
                     id="firstName"
@@ -232,7 +232,7 @@ const UploadSkripsi = () => {
                     Nama
                   </label>
                   <input
-                    className="border py-2 px-3 text-gray-700"
+                    className="border py-2 px-3 text-gray-700 rounded-lg ml-4 mr-4"
                     type="text"
                     name="lastName"
                     id="lastName"
@@ -247,7 +247,7 @@ const UploadSkripsi = () => {
                     Email
                   </label>
                   <input
-                    className="border py-2 px-3 text-gray-700"
+                    className="border py-2 px-3 text-gray-700 rounded-lg ml-4 mr-4"
                     type="email"
                     name="email"
                     id="email"
@@ -262,7 +262,7 @@ const UploadSkripsi = () => {
                     Judul Skripsi
                   </label>
                   <input
-                    className="border py-2 px-3 text-gray-700"
+                    className="border py-2 px-3 text-gray-700 rounded-lg ml-4 mr-4"
                     type="text"
                     name="password"
                     id="password"
@@ -277,7 +277,7 @@ const UploadSkripsi = () => {
                     Abstrak
                   </label>
                   <textarea
-                    className="border py-2 px-3 text-gray-700"
+                    className="border py-2 px-3 text-gray-700 rounded-lg ml-4 mr-4"
                     type="text"
                     name="password"
                     id="password"
@@ -292,7 +292,7 @@ const UploadSkripsi = () => {
                     File Skripsi
                   </label>
                   <input
-                    className="border py-2 px-3 text-gray-700 mb-4 md:mb-0"
+                    className="border py-2 px-3 text-gray-700 mb-4 md:mb-0 rounded-lg ml-4 mr-4"
                     type="file"
                     name="password"
                     id="password"
@@ -301,7 +301,7 @@ const UploadSkripsi = () => {
                 </div>
                 <div className="flex flex-col mb-4 md:w-full">
                   <button
-                    className="block bg-yellow-300 hover:bg-yellow-400 py-2 px-4 mt-8 rounded-lg shadow-lg uppercase font-semibold"
+                    className="block bg-yellow-300 hover:bg-yellow-400 py-2 px-4 mt-8 rounded-lg shadow-lg uppercase font-semibold ml-4 mr-4"
                     type="submit"
                   >
                     Upload
