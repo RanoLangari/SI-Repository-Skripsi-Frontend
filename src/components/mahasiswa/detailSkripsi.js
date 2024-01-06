@@ -5,7 +5,7 @@ import Swal from "sweetalert2";
 import { FaFilePdf } from "react-icons/fa";
 
 const DetailSkripsi = () => {
-  const backendUrl = process.env.REACT_APP_BACKEND_URL;
+  const backendUrl = process.env.REACT_APP_API_URL;
   const Navigate = useNavigate();
   const [showMenu, setShowMenu] = useState(false);
   const [data, setData] = useState([]);

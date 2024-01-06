@@ -4,7 +4,7 @@ import axios from "axios";
 import Swal from "sweetalert2";
 
 const ProfileMahasiswa = () => {
-  const backendUrl = process.env.REACT_APP_BACKEND_URL;
+  const backendUrl = process.env.REACT_APP_API_URL;
   const Navigate = useNavigate();
   const [showMenu, setShowMenu] = useState(false);
   const [dropdownVisible, setDropdownVisible] = useState(false);
