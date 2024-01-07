@@ -38,6 +38,12 @@ const AdminDashboard = () => {
                 >
                   Dashboard
                 </a>
+                <a
+                  href="/admin/daftar-skripsi"
+                  className="py-4 px-2 text-gray-500 font-semibold hover:text-yellow-300 transition duration-300"
+                >
+                  Daftar Skripsi
+                </a>
               </div>
             </div>
             {/* secondary navbar items */}
