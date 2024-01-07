@@ -33,16 +33,10 @@ const AdminDashboard = () => {
               {/* primary navbar items */}
               <div className="hidden md:flex items-center space-x-1">
                 <a
-                  href="/mhs/dashboard"
+                  href="/admin/dashboard"
                   className="py-4 px-2 text-yellow-300 border-b-4 border-yellow-300 font-semibold"
                 >
                   Dashboard
-                </a>
-                <a
-                  className="py-4 px-5 text-gray-500 font-semibold hover:text-yellow-200 transition duration-300"
-                  href="/mhs/upload-skripsi"
-                >
-                  Upload Skripsi
                 </a>
               </div>
             </div>
@@ -93,7 +87,7 @@ const AdminDashboard = () => {
                       <button
                         className="block px-4 py-2 text-sm text-gray-700 hover:bg-yellow-300 hover:text-white transition duration-300 w-full text-left"
                         role="menuitem"
-                        onClick={() => Navigate("/mhs/profile")}
+                        onClick={() => Navigate("/admin/profile")}
                       >
                         Profile
                       </button>
@@ -102,7 +96,7 @@ const AdminDashboard = () => {
                         role="menuitem"
                         onClick={() => {
                           localStorage.removeItem("token");
-                          Navigate("/login-mhs");
+                          Navigate("/login-admin");
                         }}
                       >
                         Log out
@@ -145,12 +139,6 @@ const AdminDashboard = () => {
                 className="block py-2 px-4 text-sm text-gray-500 hover:bg-yellow-300 hover:text-white transition duration-300"
               >
                 Dashboard
-              </a>
-              <a
-                onClick={() => Navigate("/mhs/upload-skripsi")}
-                className="block py-2 px-4 text-sm text-gray-500 hover:bg-yellow-300 hover:text-white transition duration-300"
-              >
-                Upload Skripsi
               </a>
               <a
                 onClick={() => Navigate("/mhs/profile")}
