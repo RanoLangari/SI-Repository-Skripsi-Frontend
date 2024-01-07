@@ -41,33 +41,49 @@ const MhsDashboard = () => {
   };
 
   useEffect(() => {
-    Swal.fire({
-      title: "Loading Data",
-      text: "Please wait ...",
-      showConfirmButton: false,
-      allowOutsideClick: false,
-      willOpen: () => {
-        Swal.showLoading();
-      },
-    });
-    const token = localStorage.getItem("token");
-    const config = {
-      headers: {
-        Authorization: `Bearer ${token}`,
-      },
-    };
-    axios
-      .get(`${backendUrl}/api/mahasiswa/get-skripsi`, config)
-      .then((res) => {
-        setData(res.data.data);
-      })
-      .then(() => {
-        Swal.close();
-      })
-      .catch((err) => {
-        Navigate("/login-mhs");
+    try {
+      Swal.fire({
+        title: "Loading Data",
+        text: "Please wait ...",
+        showConfirmButton: false,
+        allowOutsideClick: false,
+        willOpen: () => {
+          Swal.showLoading();
+        },
       });
-    Swal.close();
+      const token = localStorage.getItem("token");
+      const config = {
+        headers: {
+          Authorization: `Bearer ${token}`,
+        },
+      };
+      axios
+        .get(`${backendUrl}/api/mahasiswa/check-login`, config)
+        .then((response) => {
+          if (response.status === 200) {
+            axios
+              .get(`${backendUrl}/api/mahasiswa/get-skripsi`, config)
+              .then((res) => {
+                setData(res.data.data);
+              })
+              .then(() => {
+                Swal.close();
+              })
+              .catch((err) => {
+                Navigate("/login-mhs");
+                Swal.close();
+              });
+            Swal.close();
+          }
+        })
+        .catch((err) => {
+          Navigate("/login-mhs");
+          Swal.close();
+        });
+    } catch (err) {
+      Swal.close();
+      Navigate("/login-mhs");
+    }
   }, []);
 
   return (
