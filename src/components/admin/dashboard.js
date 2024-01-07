@@ -2,6 +2,7 @@ import React, { useState, useEffect } from "react";
 import { useNavigate } from "react-router-dom";
 import axios from "axios";
 import Swal from "sweetalert2";
+import { tr } from "@faker-js/faker";
 
 const AdminDashboard = () => {
   const backendUrl = process.env.REACT_APP_API_URL;
@@ -14,6 +15,34 @@ const AdminDashboard = () => {
   const toggleDropdown = () => {
     setDropdownVisible(!dropdownVisible);
   };
+
+  useEffect(() => {
+    Swal.fire({
+      title: "Loading Data",
+      text: "Please wait ...",
+      showConfirmButton: false,
+      allowOutsideClick: false,
+      willOpen: () => {
+        Swal.showLoading();
+      },
+    });
+    const token = localStorage.getItem("token");
+    const config = {
+      headers: {
+        Authorization: `Bearer ${token}`,
+      },
+    };
+    axios
+      .get(`${backendUrl}/api/admin/check-login`, config)
+      .then((res) => {
+        Swal.close();
+      })
+      .catch((err) => {
+        Navigate("/login-admin");
+        Swal.close();
+      });
+  }, []);
+
   return (
     <div>
       {/* create modern navbar using tailwind */}
