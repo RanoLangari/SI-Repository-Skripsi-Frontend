@@ -1,75 +1,19 @@
 import React, { useState, useEffect } from "react";
-import { Pagination } from "flowbite-react";
 import { useNavigate } from "react-router-dom";
-import { faker } from "@faker-js/faker";
 import axios from "axios";
 import Swal from "sweetalert2";
 
-// export function createRandomUser(): User {
-//   return {
-//     email: faker.internet.email(),
-//     name: faker.name.fullName(),
-//     birthdate: faker.date.birthdate(),
-//     age: faker.datatype.number({ min: 18, max: 80 }),
-//   };
-// }
-
-// export const USERS: User[] = faker.helpers.multiple(createRandomUser, {
-//   count: 15,
-// });
-
-const MhsDashboard = () => {
+const AdminDashboard = () => {
   const backendUrl = process.env.REACT_APP_API_URL;
   const Navigate = useNavigate();
   const [showMenu, setShowMenu] = useState(false);
-  const [searchTerm, setSearchTerm] = useState("");
   const [dropdownVisible, setDropdownVisible] = useState(false);
-  // const [data, setData] = useState(USERS);
-  const [data, setData] = useState([]);
-  const filteredData = data.filter((item) =>
-    Object.values(item).some((value) =>
-      value.toString().toLowerCase().includes(searchTerm.toLowerCase())
-    )
-  );
-
   const showMenuToggle = () => {
     setShowMenu(!showMenu);
   };
-
   const toggleDropdown = () => {
     setDropdownVisible(!dropdownVisible);
   };
-
-  useEffect(() => {
-    Swal.fire({
-      title: "Loading Data",
-      text: "Please wait ...",
-      showConfirmButton: false,
-      allowOutsideClick: false,
-      willOpen: () => {
-        Swal.showLoading();
-      },
-    });
-    const token = localStorage.getItem("token");
-    const config = {
-      headers: {
-        Authorization: `Bearer ${token}`,
-      },
-    };
-    axios
-      .get(`${backendUrl}/api/mahasiswa/get-skripsi`, config)
-      .then((res) => {
-        setData(res.data.data);
-      })
-      .then(() => {
-        Swal.close();
-      })
-      .catch((err) => {
-        Navigate("/login-mhs");
-      });
-    Swal.close();
-  }, []);
-
   return (
     <div>
       {/* create modern navbar using tailwind */}
@@ -227,89 +171,8 @@ const MhsDashboard = () => {
           )}
         </div>
       </nav>
-      <section className="bg-gray-100 py-20">
-        <div className="max-w-6xl mx-auto px-4">
-          <h2 className="text-5xl font-semibold text-center">
-            Masukan Judul Skripsi
-          </h2>
-          {/* icon search */}
-          <div className="flex items-center mt-12">
-            <div className="w-full">
-              <div className="relative">
-                <div className="absolute top-4 left-3">
-                  <svg
-                    className="w-6 h-6 text-gray-400"
-                    fill="none"
-                    strokeLinecap="round"
-                    strokeLinejoin="round"
-                    strokeWidth="2"
-                    viewBox="0 0 24 24"
-                    stroke="currentColor"
-                  >
-                    {/* search icon */}
-                    <path
-                      d="M9 21h6M19 19l-6-6M10 8a2 2
-                      0 100-4 2 2 0 000 4z"
-                    ></path>
-                  </svg>
-                </div>
-                <input
-                  type="text"
-                  className="w-full bg-white rounded-lg pl-10 pr-4 py-2 focus:outline-none focus:shadow-outline text-gray-600 font-medium"
-                  placeholder="Search"
-                  onChange={(e) => setSearchTerm(e.target.value)}
-                />
-              </div>
-            </div>
-          </div>
-        </div>
-      </section>
-      {/* end of stats section */}
-      {/* tampilkan data dummy skripsi */}
-      <section className="bg-gray-100 py-20">
-        <div className="max-w-6xl mx-auto px-4">
-          <h2 className="text-5xl font-semibold text-center">Daftar Skripsi</h2>
-          <div className="flex items-center mt-12"></div>
-        </div>
-        {/* cretae modern konten(not table to show data like paragraf) */}
-        <div className="container mx-auto px-4">
-          <div className="p-10 bg-white rounded shadow-xl">
-            {filteredData.map((item) => (
-              <div className=" w-full lg:max-w-full lg:flex mt-10 rounded-lg shadow-xl">
-                <div className="h-20 lg:h-auto lg:w-48 flex-none bg-cover rounded-t lg:rounded-t-none lg:rounded-l text-center overflow-hidden rounded-lg">
-                  <img
-                    src={`https://feb.undana.ac.id/wp-content/uploads/2023/02/LOGO-FEB-black.png`}
-                    alt=""
-                    className=" w-100 h-100 rounded-lg"
-                  />
-                </div>
-                <div className="bg-white rounded-b lg:rounded-b-none lg:rounded-r p-4 flex flex-col justify-between leading-normal">
-                  <div className="mb-8">
-                    <button
-                      className=" text-black flex items-center align-middle text-bold font-bold uppercase text-start"
-                      onClick={() => Navigate(`/mhs/detail-skripsi/${item.id}`)}
-                    >
-                      {item.judul_skripsi}
-                    </button>
-                  </div>
-                  <div className="flex">
-                    <div className="text-sm">
-                      <p className="text-gray-600 text-start">
-                        Oleh {item.nama}
-                      </p>
-                      <p className="text-gray-600 text-start">
-                        Program Studi {item.jurusan}
-                      </p>
-                    </div>
-                  </div>
-                </div>
-              </div>
-            ))}
-          </div>
-        </div>
-      </section>
     </div>
   );
 };
 
-export default MhsDashboard;
+export default AdminDashboard;
