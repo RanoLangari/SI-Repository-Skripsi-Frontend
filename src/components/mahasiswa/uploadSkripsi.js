@@ -76,41 +76,6 @@ const UploadSkripsi = () => {
     setDropdownVisible(!dropdownVisible);
   };
 
-  useEffect(() => {
-    Swal.fire({
-      title: "Loading Data",
-      text: "Please wait ...",
-      showConfirmButton: false,
-      allowOutsideClick: false,
-      willOpen: () => {
-        Swal.showLoading();
-      },
-    });
-    const token = localStorage.getItem("token");
-    const config = {
-      headers: {
-        Authorization: `Bearer ${token}`,
-      },
-    };
-    axios
-      .get(`${backendUrl}/api/mahasiswa/profile`, config)
-      .then((res) => {
-        setPembimbing1(res.data.data.pembimbing1);
-        setPembimbing2(res.data.data.pembimbing2);
-        setPenguji(res.data.data.penguji);
-        setJudul(res.data.data.judul_skripsi);
-        setAbstract(res.data.data.abstract);
-      })
-      .then(() => {
-        Swal.close();
-      })
-
-      .catch((err) => {
-        console.log(err.response);
-        Navigate("/login-mhs");
-      });
-  }, []);
-
   return (
     <div>
       {/* create modern navbar using tailwind */}
