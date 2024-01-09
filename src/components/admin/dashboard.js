@@ -170,13 +170,13 @@ const AdminDashboard = () => {
           {showMenu && (
             <div className="md:hidden mt-2">
               <a
-                onClick={() => Navigate("/mhs/dashboard")}
+                onClick={() => Navigate("/admin/dashboard")}
                 className="block py-2 px-4 text-sm text-gray-500 hover:bg-yellow-300 hover:text-white transition duration-300"
               >
                 Dashboard
               </a>
               <a
-                onClick={() => Navigate("/mhs/profile")}
+                onClick={() => Navigate("/admin/profile")}
                 className="block py-2 px-4 text-sm text-gray-500 hover:bg-yellow-300 hover:text-white transition duration-300"
               >
                 Profile
