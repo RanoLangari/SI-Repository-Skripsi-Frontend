@@ -8,6 +8,7 @@ import UploadSkripsi from "./components/mahasiswa/uploadSkripsi";
 import DetailSkripsi from "./components/mahasiswa/detailSkripsi";
 import ProfileMahasiswa from "./components/mahasiswa/profileMahasiswa";
 import AdminDashboard from "./components/admin/dashboard";
+import DataSkripsi from "./components/admin/dataSkripsi";
 import "./index.css";
 
 function App() {
@@ -24,6 +25,7 @@ function App() {
           <Route path="/mhs/upload-skripsi" element={<UploadSkripsi />} />
           <Route path="/mhs/detail-skripsi/:id" element={<DetailSkripsi />} />
           <Route path="/admin/dashboard" element={<AdminDashboard />} />
+          <Route path="/admin/data-skripsi" element={<DataSkripsi />} />
         </Routes>
       </BrowserRouter>
     </div>
