@@ -35,16 +35,16 @@ const ProfileMahasiswa = () => {
               {/* primary navbar items */}
               <div className="hidden md:flex items-center space-x-1">
                 <a
-                  href="/mhs/dashboard"
+                  href="/admin/dashboard"
                   className="py-4 px-2 text-yellow-300 border-b-4 border-yellow-300 font-semibold"
                 >
                   Dashboard
                 </a>
                 <a
-                  className="py-4 px-5 text-gray-500 font-semibold hover:text-yellow-200 transition duration-300"
-                  href="/mhs/upload-skripsi"
+                  href="/admin/data-skripsi"
+                  className="py-4 px-2 text-gray-500 font-semibold hover:text-yellow-300 transition duration-300"
                 >
-                  Upload Skripsi
+                  Data Skripsi
                 </a>
               </div>
             </div>
