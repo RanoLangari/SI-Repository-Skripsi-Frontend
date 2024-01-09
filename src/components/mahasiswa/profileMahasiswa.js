@@ -13,13 +13,6 @@ const ProfileMahasiswa = () => {
   const [jurusan, setJurusan] = useState("");
   const [semester, setSemester] = useState("");
   const [status_kelulusan, setStatusKelulusan] = useState("");
-
-  const [judulSkripsi, setJudulSkripsi] = useState("");
-  const [pembimbing1, setPembimbing1] = useState("");
-  const [pembimbing2, setPembimbing2] = useState("");
-  const [penguji1, setPenguji1] = useState("");
-  const [abstract, setAbstract] = useState("");
-  const [skripsi_url, setSkripsiUrl] = useState("");
   const [statusSkripsi, setStatusSkripsi] = useState("");
   const showMenuToggle = () => {
     setShowMenu(!showMenu);
@@ -131,12 +124,6 @@ const ProfileMahasiswa = () => {
       .then((res) => {
         console.log(res.data.data);
         setStatusSkripsi(res.data.data.status_skripsi);
-        setJudulSkripsi(res.data.data.judul_skripsi);
-        setPembimbing1(res.data.data.pembimbing1);
-        setPembimbing2(res.data.data.pembimbing2);
-        setPenguji1(res.data.data.penguji1);
-        setAbstract(res.data.data.abstract);
-        setSkripsiUrl(res.data.data.skripsi_url);
       })
       .then(() => {
         Swal.close();
