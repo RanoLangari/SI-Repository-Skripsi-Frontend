@@ -445,7 +445,9 @@ const ProfileMahasiswa = () => {
             </div>
           </div>
           <div className="border-b px-4 pb-6">
-            <h5>status skripsi anda {statusSkripsi}</h5>
+            <h5>
+              Status Skripsi Anda <b>{statusSkripsi}</b>
+            </h5>
           </div>
         </div>
         <div class="flex justify-center mt-4 text-gray-500">
