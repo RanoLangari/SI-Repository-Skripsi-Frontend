@@ -211,20 +211,14 @@ const DetailSkripsi = () => {
               </h1>
             </div>
             <div className="flex flex-col bg-white shadow-md rounded my-2">
-              <div className="flex flex-row justify-between p-5 border-b border-gray-100">
+              <div className="flex flex-col justify-center p-5 border-b border-gray-100">
                 <div className="flex flex-col">
                   <span className="text-lg font-bold">
                     {data.judul_skripsi}
 
                     {/* show pdf icons */}
                   </span>
-                  <span className="text-sm text-black">{data.nama}</span>
-                </div>
-                <div className="flex flex-row items-center">
-                  <a href={`${data.skripsi_url}`} target="_blank">
-                    <FaFilePdf className="text-5xl text-red-400" />
-                    <span className="text-sm text-black">Full View</span>
-                  </a>
+                  <span className="text-sm text-black"> Oleh {data.nama}</span>
                 </div>
               </div>
               <div className="flex flex-col px-10 py-5">
@@ -232,24 +226,44 @@ const DetailSkripsi = () => {
                 <br />
                 <span className="text-sm text-black">{data.abstract}</span>
               </div>
-              <div className="flex flex-col px-10 py-5" id="file">
-                {/* pembimbing 1 */}
-                <div className="flex flex-row">
-                  <span className="text-sm text-black">Pembimbing 1 : </span>
-                  <br />
-                  <span className="text-sm text-black">{data.pembimbing1}</span>
-                </div>
-                {/* pembimbing 2 */}
-                <div className="flex flex-row">
-                  <span className="text-sm text-black">Pembimbing 2 : </span>
-                  <br />
-                  <span className="text-sm text-black">{data.pembimbing2}</span>
-                </div>
-                {/* penguji 1 */}
-                <div className="flex flex-row">
-                  <span className="text-sm text-black">Penguji 1 : </span>
-                  <br />
-                  <span className="text-sm text-black">{data.penguji}</span>
+              <div className="flex flex-col px-10 py-5">
+                <div class="flex flex-direction-row justify-content-space-between">
+                  <div class="w-1/2">
+                    <div className="flex flex-row">
+                      <span className="text-sm text-black">
+                        Pembimbing 1 :{" "}
+                      </span>
+                      <br />
+                      <span className="text-sm text-black">
+                        {data.pembimbing1}
+                      </span>
+                    </div>
+                    {/* pembimbing 2 */}
+                    <div className="flex flex-row">
+                      <span className="text-sm text-black">
+                        Pembimbing 2 :{" "}
+                      </span>
+                      <br />
+                      <span className="text-sm text-black">
+                        {data.pembimbing2}
+                      </span>
+                    </div>
+                    {/* penguji 1 */}
+                    <div className="flex flex-row">
+                      <span className="text-sm text-black">Penguji 1 : </span>
+                      <br />
+                      <span className="text-sm text-black">{data.penguji}</span>
+                    </div>
+                  </div>
+                  <div class="flex w-1/2 justify-end items-end">
+                    {" "}
+                    <div className="flex flex-row items-center">
+                      <a href={`${data.skripsi_url}`} target="_blank">
+                        <FaFilePdf className="text-5xl text-red-400" />
+                        <span className="text-sm text-black">Full View</span>
+                      </a>
+                    </div>
+                  </div>
                 </div>
               </div>
             </div>
