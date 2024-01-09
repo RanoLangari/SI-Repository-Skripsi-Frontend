@@ -9,6 +9,7 @@ import DetailSkripsi from "./components/mahasiswa/detailSkripsi";
 import ProfileMahasiswa from "./components/mahasiswa/profileMahasiswa";
 import AdminDashboard from "./components/admin/dashboard";
 import DataSkripsi from "./components/admin/dataSkripsi";
+import ProfileAdmin from "./components/admin/profileAdmin";
 import "./index.css";
 
 function App() {
@@ -26,6 +27,7 @@ function App() {
           <Route path="/mhs/detail-skripsi/:id" element={<DetailSkripsi />} />
           <Route path="/admin/dashboard" element={<AdminDashboard />} />
           <Route path="/admin/data-skripsi" element={<DataSkripsi />} />
+          <Route path="/admin/profile" element={<ProfileAdmin />} />
         </Routes>
       </BrowserRouter>
     </div>
