@@ -63,15 +63,15 @@ const DataSkripsi = () => {
               <div className="hidden md:flex items-center space-x-1">
                 <a
                   href="/admin/dashboard"
-                  className="py-4 px-2 text-yellow-300 border-b-4 border-yellow-300 font-semibold"
+                  className="py-4 px-2 text-gray-500 font-semibold hover:text-yellow-300 transition duration-300"
                 >
                   Dashboard
                 </a>
                 <a
-                  href="/admin/daftar-skripsi"
-                  className="py-4 px-2 text-gray-500 font-semibold hover:text-yellow-300 transition duration-300"
+                  href="/admin/data-skripsi"
+                  className="py-4 px-2 text-yellow-300 border-b-4 border-yellow-300 font-semibold"
                 >
-                  Daftar Skripsi
+                  Data Skripsi
                 </a>
               </div>
             </div>
