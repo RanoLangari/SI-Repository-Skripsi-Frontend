@@ -78,7 +78,6 @@ const UploadSkripsi = () => {
 
   return (
     <div>
-      {/* create modern navbar using tailwind */}
       <nav className="bg-white shadow-lg">
         <div className="max-w-6xl mx-auto px-4">
           <div className="flex justify-between">
@@ -233,7 +232,7 @@ const UploadSkripsi = () => {
           )}
         </div>
       </nav>
-      <div className="bg-gray-200 py-20 px-10">
+      <div className="bg-gray-100 py-20 px-10">
         <div className="container mx-auto">
           <div className="bg-white dark:bg-gray-800 lg:w-1/2 mx-auto rounded-lg shadow">
             <div className="max-w-md mx-auto rounded-lg overflow-hidden md:max-w-lg ">
@@ -366,34 +365,12 @@ const UploadSkripsi = () => {
             </div>
           </div>
         </div>
-      </div>
-
-      {/* end of navbar */}
-
-      {/* start of hero section */}
-      {/* <section className="bg-yellow-300 py-20 px-10">
-        <div className="max-w-6xl mx-auto flex items-center justify-between">
-          <div className="w-1/2">
-            <h1 className="text-white text-6xl font-semibold">
-              Belajar pemrograman web dengan mudah
-            </h1>
-            <p className="text-gray-300 text-2xl mt-8 font-semibold">
-              Lorem ipsum dolor sit amet consectetur adipisicing elit. Quisquam
-              quibusdam, quia, voluptatum, voluptates voluptate quod quos
-              doloribus debitis tempora eveniet voluptatibus. Quisquam
-              quibusdam, quia, voluptatum, voluptates voluptate quod quos
-              doloribus debitis tempora eveniet voluptatibus.
-            </p>
-            <button className="block bg-white hover:bg-gray-100 py-3 px-4 mt-10 rounded-lg shadow-lg uppercase font-semibold">
-              Get Started
-            </button>
-          </div>
-          <div className="w-1/2">
-            <img src="https://source.unsplash.com/IXUM4cJynP0" alt="" />
+        <div class="flex justify-center mt-4 text-gray-500 bg-gray-100">
+          <div class="text-center">
+            <p>© Sistem Informasi Repository Skripsi 2021</p>
           </div>
         </div>
-      </section> */}
-      {/* end of hero section */}
+      </div>
     </div>
   );
 };
