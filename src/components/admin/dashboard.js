@@ -67,12 +67,6 @@ const AdminDashboard = () => {
                 >
                   Dashboard
                 </a>
-                <a
-                  href="/admin/data-skripsi"
-                  className="py-4 px-2 text-gray-500 font-semibold hover:text-yellow-300 transition duration-300"
-                >
-                  Data Skripsi
-                </a>
               </div>
             </div>
             {/* secondary navbar items */}
