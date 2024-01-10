@@ -21,7 +21,6 @@ const MhsDashboard = () => {
   const toggleDropdown = () => {
     setDropdownVisible(!dropdownVisible);
   };
-
   useEffect(() => {
     try {
       Swal.fire({
@@ -70,21 +69,17 @@ const MhsDashboard = () => {
 
   return (
     <div>
-      {/* create modern navbar using tailwind */}
       <nav className="bg-white shadow-lg">
         <div className="max-w-6xl mx-auto px-4">
           <div className="flex justify-between">
-            {/* set logo FEB.png */}
             <div className="flex space-x-7">
               <div>
-                {/* image icon */}
                 <a href="#" className="flex items-center py-4">
                   <span className="font-semibold text-gray-500 text-lg">
                     Sistem Informasi Repository Skripsi
                   </span>
                 </a>
               </div>
-              {/* primary navbar items */}
               <div className="hidden md:flex items-center space-x-1">
                 <a
                   href="/mhs/dashboard"
@@ -115,7 +110,6 @@ const MhsDashboard = () => {
                       onClick={toggleDropdown}
                     >
                       <span>Profile</span>
-                      {/* chevron down icon */}
                       <svg
                         className="w-5 h-5 ml-2 -mr-1"
                         xmlns="http://www.w3.org/2000/svg"
@@ -134,7 +128,6 @@ const MhsDashboard = () => {
                       </svg>
                     </button>
                   </div>
-                  {/* dropdown profile items */}
                   <div
                     className={`origin-top-right absolute right-0 mt-2 w-40 rounded-md shadow-lg bg-white ring-1 ring-black ring-opacity-5 focus:outline-none ${
                       dropdownVisible ? "block" : "hidden"
@@ -262,8 +255,6 @@ const MhsDashboard = () => {
           </div>
         </div>
       </section>
-      {/* end of stats section */}
-      {/* tampilkan data dummy skripsi */}
       <section className="bg-gray-100 py-20">
         <div className="max-w-6xl mx-auto px-4">
           <h2 className="text-5xl font-semibold text-center">Daftar Skripsi</h2>
