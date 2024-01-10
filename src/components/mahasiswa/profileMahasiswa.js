@@ -367,7 +367,6 @@ const ProfileMahasiswa = () => {
                           </option>
                         </select>
                       </div>
-
                       <div className="flex flex-col ml-4">
                         <label class="text-gray-700 dark:text-gray-200">
                           Semester
@@ -396,16 +395,11 @@ const ProfileMahasiswa = () => {
                           onChange={(e) => {
                             setStatusKelulusan(e.target.value);
                           }}
+                          value={status_kelulusan}
                         >
-                          <option value={status_kelulusan}>
-                            {" "}
-                            {status_kelulusan}
-                          </option>
-                          <option value={""}>
-                            -- Pilih Status Kelulusan --
-                          </option>
+                          <option value={""}>-- Pilih Status --</option>
                           <option value={"Lulus"}>Lulus</option>
-                          <option value={"Belum Lulus"}>Belum Lulus</option>
+                          <option value={"Tidak Lulus"}>Tidak Lulus</option>
                         </select>
                       </div>
                     </div>
