@@ -368,15 +368,29 @@ const ProfileMahasiswa = () => {
                         </select>
                       </div>
                       <div className="flex flex-col ml-4">
-                        <label class="text-gray-700 dark:text-gray-200">
+                        <label className="text-gray-700 dark:text-gray-200">
                           Semester
                         </label>
-                        <input
-                          type="text"
-                          class="border rounded-lg px-3 py-2 mt-1 mb-5 text-sm w-full"
+                        <select
+                          name="semester"
+                          id="semester"
+                          className="border rounded-lg px-5 py-2 mt-1 mb-5 text-sm w-full"
+                          required
+                          onChange={(e) => {
+                            setSemester(e.target.value);
+                          }}
                           value={semester}
-                          onChange={(e) => setSemester(e.target.value)}
-                        />
+                        >
+                          <option value={""}>-- Pilih Semester --</option>
+                          {[...Array(14)].map((_, index) => (
+                            <option
+                              key={index + 1}
+                              value={(index + 1).toString()}
+                            >
+                              {index + 1}
+                            </option>
+                          ))}
+                        </select>
                       </div>
                     </div>
                   </div>
