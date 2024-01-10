@@ -346,19 +346,19 @@ const ProfileMahasiswa = () => {
                     {/* buat nim dan nama dalam satu baris */}
                     <div class="flex flex-row">
                       <div className="flex flex-col">
-                        <label class="text-gray-700 dark:text-gray-200">
+                        <label className="text-gray-700 dark:text-gray-200">
                           Jurusan
                         </label>
                         <select
                           name="jurusan"
                           id="jurusan"
-                          className=" border rounded-lg px-5  py-2 mt-1 mb-5 text-sm w-full"
+                          className="border rounded-lg px-5 py-2 mt-1 mb-5 text-sm w-full"
                           required
                           onChange={(e) => {
                             setJurusan(e.target.value);
                           }}
+                          value={jurusan}
                         >
-                          <option value={jurusan}>{jurusan}</option>
                           <option value={""}>-- Pilih Jurusan --</option>
                           <option value={"Manajemen"}>Manajemen</option>
                           <option value={"Akuntansi"}>Akuntansi</option>
@@ -367,6 +367,7 @@ const ProfileMahasiswa = () => {
                           </option>
                         </select>
                       </div>
+
                       <div className="flex flex-col ml-4">
                         <label class="text-gray-700 dark:text-gray-200">
                           Semester
