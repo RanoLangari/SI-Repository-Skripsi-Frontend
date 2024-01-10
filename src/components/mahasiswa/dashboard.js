@@ -10,18 +10,22 @@ const MhsDashboard = () => {
   const [searchTerm, setSearchTerm] = useState("");
   const [dropdownVisible, setDropdownVisible] = useState(false);
   const [data, setData] = useState([]);
+
   const filteredData = data.filter((item) =>
     Object.values(item).some((value) =>
       value.toString().toLowerCase().includes(searchTerm.toLowerCase())
     )
   );
+
   const showMenuToggle = () => {
     setShowMenu(!showMenu);
   };
+
   const toggleDropdown = () => {
     setDropdownVisible(!dropdownVisible);
   };
-  useEffect(() => {
+
+  const fetchData = async () => {
     try {
       Swal.fire({
         title: "Loading Data",
@@ -32,40 +36,66 @@ const MhsDashboard = () => {
           Swal.showLoading();
         },
       });
+
       const token = localStorage.getItem("token");
       const config = {
         headers: {
           Authorization: `Bearer ${token}`,
         },
       };
-      axios
-        .get(`${backendUrl}/api/mahasiswa/check-login`, config)
-        .then((response) => {
-          if (response.status === 200) {
-            axios
-              .get(`${backendUrl}/api/mahasiswa/get-skripsi`, config)
-              .then((res) => {
-                setData(res.data.data);
-              })
-              .then(() => {
-                Swal.close();
-              })
-              .catch((err) => {
-                Navigate("/login-mhs");
-                Swal.close();
-              });
-            Swal.close();
-          }
-        })
-        .catch((err) => {
-          Navigate("/login-mhs");
-          Swal.close();
-        });
+
+      const response = await axios.get(
+        `${backendUrl}/api/mahasiswa/check-login`,
+        config
+      );
+
+      if (response.status === 200) {
+        const res = await axios.get(
+          `${backendUrl}/api/mahasiswa/get-skripsi`,
+          config
+        );
+        setData(res.data.data);
+        Swal.close();
+      }
     } catch (err) {
       Swal.close();
       Navigate("/login-mhs");
     }
+  };
+
+  useEffect(() => {
+    fetchData();
   }, []);
+
+  const SkripsiItem = ({ item }) => (
+    <div className="w-full lg:max-w-full lg:flex mt-10 rounded-lg shadow-xl">
+      <div className="h-20 lg:h-auto lg:w-48 flex-none bg-cover rounded-t lg:rounded-t-none lg:rounded-l text-center overflow-hidden rounded-lg">
+        <img
+          src={`https://feb.undana.ac.id/wp-content/uploads/2023/02/LOGO-FEB-black.png`}
+          alt=""
+          className=" w-100 h-100 rounded-lg"
+        />
+      </div>
+      <div className="bg-white rounded-b lg:rounded-b-none lg:rounded-r p-4 flex flex-col justify-between leading-normal">
+        <div className="mb-8">
+          <button
+            className=" text-black flex items-center align-middle text-bold font-bold uppercase text-start"
+            onClick={() => Navigate(`/mhs/detail-skripsi/${item.id}`)}
+          >
+            {item.judul_skripsi}
+          </button>
+        </div>
+        <div className="flex">
+          <div className="text-sm">
+            <p className="text-gray-600 text-start">Oleh {item.nama}</p>
+            <p className="text-gray-600 text-start">
+              Program Studi {item.jurusan}
+            </p>
+          </div>
+        </div>
+      </div>
+    </div>
+  );
 
   return (
     <div>
@@ -255,48 +285,22 @@ const MhsDashboard = () => {
           </div>
         </div>
       </section>
+
       <section className="bg-gray-100 py-20">
         <div className="max-w-6xl mx-auto px-4">
           <h2 className="text-5xl font-semibold text-center">Daftar Skripsi</h2>
           <div className="flex items-center mt-12"></div>
         </div>
-        {/* cretae modern konten(not table to show data like paragraf) */}
+
         <div className="container mx-auto px-4">
           <div className="p-10 bg-white rounded shadow-xl">
             {filteredData.map((item) => (
-              <div className=" w-full lg:max-w-full lg:flex mt-10 rounded-lg shadow-xl">
-                <div className="h-20 lg:h-auto lg:w-48 flex-none bg-cover rounded-t lg:rounded-t-none lg:rounded-l text-center overflow-hidden rounded-lg">
-                  <img
-                    src={`https://feb.undana.ac.id/wp-content/uploads/2023/02/LOGO-FEB-black.png`}
-                    alt=""
-                    className=" w-100 h-100 rounded-lg"
-                  />
-                </div>
-                <div className="bg-white rounded-b lg:rounded-b-none lg:rounded-r p-4 flex flex-col justify-between leading-normal">
-                  <div className="mb-8">
-                    <button
-                      className=" text-black flex items-center align-middle text-bold font-bold uppercase text-start"
-                      onClick={() => Navigate(`/mhs/detail-skripsi/${item.id}`)}
-                    >
-                      {item.judul_skripsi}
-                    </button>
-                  </div>
-                  <div className="flex">
-                    <div className="text-sm">
-                      <p className="text-gray-600 text-start">
-                        Oleh {item.nama}
-                      </p>
-                      <p className="text-gray-600 text-start">
-                        Program Studi {item.jurusan}
-                      </p>
-                    </div>
-                  </div>
-                </div>
-              </div>
+              <SkripsiItem key={item.id} item={item} />
             ))}
           </div>
         </div>
       </section>
+
       <div className="flex justify-center bg-gray-100">
         <p className="text-center text-gray-500 text-xs">
           &copy;2023 FEB UNDANA. All rights reserved.
