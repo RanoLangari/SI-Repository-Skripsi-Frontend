@@ -1,22 +1,7 @@
 import React, { useState, useEffect } from "react";
-import { Pagination } from "flowbite-react";
 import { useNavigate } from "react-router-dom";
-import { faker } from "@faker-js/faker";
 import axios from "axios";
 import Swal from "sweetalert2";
-
-// export function createRandomUser(): User {
-//   return {
-//     email: faker.internet.email(),
-//     name: faker.name.fullName(),
-//     birthdate: faker.date.birthdate(),
-//     age: faker.datatype.number({ min: 18, max: 80 }),
-//   };
-// }
-
-// export const USERS: User[] = faker.helpers.multiple(createRandomUser, {
-//   count: 15,
-// });
 
 const MhsDashboard = () => {
   const backendUrl = process.env.REACT_APP_API_URL;
@@ -24,18 +9,15 @@ const MhsDashboard = () => {
   const [showMenu, setShowMenu] = useState(false);
   const [searchTerm, setSearchTerm] = useState("");
   const [dropdownVisible, setDropdownVisible] = useState(false);
-  // const [data, setData] = useState(USERS);
   const [data, setData] = useState([]);
   const filteredData = data.filter((item) =>
     Object.values(item).some((value) =>
       value.toString().toLowerCase().includes(searchTerm.toLowerCase())
     )
   );
-
   const showMenuToggle = () => {
     setShowMenu(!showMenu);
   };
-
   const toggleDropdown = () => {
     setDropdownVisible(!dropdownVisible);
   };
