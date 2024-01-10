@@ -89,7 +89,7 @@ const ProfileMahasiswa = () => {
                       <button
                         className="block px-4 py-2 text-sm text-gray-700 hover:bg-yellow-300 hover:text-white transition duration-300 w-full text-left"
                         role="menuitem"
-                        onClick={() => Navigate("/mhs/profile")}
+                        onClick={() => Navigate("/admin/profile")}
                       >
                         Profile
                       </button>
