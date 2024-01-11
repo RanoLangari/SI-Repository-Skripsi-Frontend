@@ -41,6 +41,7 @@ const DetailSkripsi = () => {
     axios
       .get(`${backendUrl}/api/mahasiswa/detail-skripsi/${id_mhs}`, config)
       .then((res) => {
+        setIsReady(true);
         setData(res.data.data);
       })
       .then(() => {
@@ -92,14 +93,12 @@ const DetailSkripsi = () => {
                       onClick={toggleDropdown}
                     >
                       <span>Profile</span>
-                      {/* chevron down icon */}
                       <svg
                         className="w-5 h-5 ml-2 -mr-1"
                         xmlns="http://www.w3.org/2000/svg"
                         viewBox="0 0 20 20"
                         fill="currentColor"
                       >
-                        {/* chevron down icon */}
                         <path
                           fillRule="evenodd"
                           d="M6.293 6.293a1 1 0 011.414 0L10
@@ -111,7 +110,6 @@ const DetailSkripsi = () => {
                       </svg>
                     </button>
                   </div>
-                  {/* dropdown profile items */}
                   <div
                     className={`origin-top-right absolute right-0 mt-2 w-40 rounded-md shadow-lg bg-white ring-1 ring-black ring-opacity-5 focus:outline-none ${
                       dropdownVisible ? "block" : "hidden"
@@ -144,7 +142,6 @@ const DetailSkripsi = () => {
               </div>
             </div>
 
-            {/* mobile menu button */}
             <div className="md:hidden flex items-center">
               <button
                 className="outline-none mobile-menu-button"
@@ -168,7 +165,6 @@ const DetailSkripsi = () => {
               </button>
             </div>
           </div>
-          {/* mobile menu */}
           {showMenu && (
             <div className="md:hidden mt-2">
               <a
@@ -202,7 +198,6 @@ const DetailSkripsi = () => {
           )}
         </div>
       </nav>
-      {/* show data detail skripsi in section */}
       <section>
         <div className="flex flex-col items-center justify-center">
           <div className="flex flex-col w-full sm:w-2/8 md:w-3/4 lg:w-1/2 mt-10">
@@ -216,8 +211,6 @@ const DetailSkripsi = () => {
                 <div className="flex flex-col">
                   <span className="text-lg font-bold">
                     {data.judul_skripsi}
-
-                    {/* show pdf icons */}
                   </span>
                   <span className="text-sm text-black"> Oleh {data.nama}</span>
                 </div>
@@ -239,7 +232,6 @@ const DetailSkripsi = () => {
                         {data.pembimbing1}
                       </span>
                     </div>
-                    {/* pembimbing 2 */}
                     <div className="flex flex-row">
                       <span className="text-sm text-black">
                         Pembimbing 2 :{" "}
@@ -249,7 +241,6 @@ const DetailSkripsi = () => {
                         {data.pembimbing2}
                       </span>
                     </div>
-                    {/* penguji 1 */}
                     <div className="flex flex-row">
                       <span className="text-sm text-black">Penguji 1 : </span>
                       <br />
