@@ -88,7 +88,6 @@ const ProfileMahasiswa = () => {
     axios
       .get(`${backendUrl}/api/mahasiswa/profile`, config)
       .then((res) => {
-        // console.log(res.data.data);
         setNama(res.data.data.nama);
         setNim(res.data.data.nim);
         setJurusan(res.data.data.jurusan);
@@ -135,21 +134,17 @@ const ProfileMahasiswa = () => {
 
   return (
     <div>
-      {/* create modern navbar using tailwind */}
       <nav className="bg-white shadow-lg">
         <div className="max-w-6xl mx-auto px-4">
           <div className="flex justify-between">
-            {/* set logo FEB.png */}
             <div className="flex space-x-7">
               <div>
-                {/* image icon */}
                 <a href="#" className="flex items-center py-4">
                   <span className="font-semibold text-gray-500 text-lg">
                     Sistem Informasi Repository Skripsi
                   </span>
                 </a>
               </div>
-              {/* primary navbar items */}
               <div className="hidden md:flex items-center space-x-1">
                 <a
                   href="/mhs/dashboard"
@@ -165,9 +160,7 @@ const ProfileMahasiswa = () => {
                 </a>
               </div>
             </div>
-            {/* secondary navbar items */}
             <div className="hidden md:flex items-center space-x-3 ">
-              {/* dropdown profile list item */}
               <div className="flex flex-col md:flex-row items-center md:space-x-3 ">
                 <div className="relative inline-block text-left">
                   <div>
@@ -180,14 +173,12 @@ const ProfileMahasiswa = () => {
                       onClick={toggleDropdown}
                     >
                       <span>Profile</span>
-                      {/* chevron down icon */}
                       <svg
                         className="w-5 h-5 ml-2 -mr-1"
                         xmlns="http://www.w3.org/2000/svg"
                         viewBox="0 0 20 20"
                         fill="currentColor"
                       >
-                        {/* chevron down icon */}
                         <path
                           fillRule="evenodd"
                           d="M6.293 6.293a1 1 0 011.414 0L10
