@@ -190,7 +190,6 @@ const ProfileMahasiswa = () => {
                       </svg>
                     </button>
                   </div>
-                  {/* dropdown profile items */}
                   <div
                     className={`origin-top-right absolute right-0 mt-2 w-40 rounded-md shadow-lg bg-white ring-1 ring-black ring-opacity-5 focus:outline-none ${
                       dropdownVisible ? "block" : "hidden"
@@ -222,8 +221,6 @@ const ProfileMahasiswa = () => {
                 </div>
               </div>
             </div>
-
-            {/* mobile menu button */}
             <div className="md:hidden flex items-center">
               <button
                 className="outline-none mobile-menu-button"
@@ -247,7 +244,6 @@ const ProfileMahasiswa = () => {
               </button>
             </div>
           </div>
-          {/* mobile menu */}
           {showMenu && (
             <div className="md:hidden mt-2">
               <a
@@ -307,7 +303,6 @@ const ProfileMahasiswa = () => {
               <form class="w-full max-w-lg" onSubmit={handleUpdate}>
                 <div className="flex flex-col items-center">
                   <div class="flex flex-row md:flex-row">
-                    {/* buat nim dan nama dalam satu baris */}
                     <div class="flex flex-row">
                       <div className="flex flex-col">
                         <label class="text-gray-700 dark:text-gray-200">
@@ -334,7 +329,6 @@ const ProfileMahasiswa = () => {
                     </div>
                   </div>
                   <div class="flex flex-row md:flex-row">
-                    {/* buat nim dan nama dalam satu baris */}
                     <div class="flex flex-row">
                       <div className="flex flex-col">
                         <label className="text-gray-700 dark:text-gray-200">
@@ -386,7 +380,6 @@ const ProfileMahasiswa = () => {
                     </div>
                   </div>
                   <div class="flex flex-row">
-                    {/* buat nim dan nama dalam satu baris */}
                     <div class="flex flex-row">
                       <div className="flex flex-col">
                         <label class="text-gray-700 dark:text-gray-200">
@@ -409,7 +402,6 @@ const ProfileMahasiswa = () => {
                       </div>
                     </div>
                   </div>
-                  {/* button submit */}
                   <div class="flex justify-center">
                     <button
                       class="bg-yellow-300 hover:bg-yellow-400 text-white font-bold py-2 px-4 rounded-full"
