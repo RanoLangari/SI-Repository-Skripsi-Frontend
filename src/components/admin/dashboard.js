@@ -3,6 +3,11 @@ import { useNavigate } from "react-router-dom";
 import axios from "axios";
 import Swal from "sweetalert2";
 import { tr } from "@faker-js/faker";
+const data = [
+  { name: "John Doe", email: "john@example.com", role: "Admin" },
+  { name: "Jane Doe", email: "jane@example.com", role: "User" },
+  // Add more data here
+];
 
 const AdminDashboard = () => {
   const backendUrl = process.env.REACT_APP_API_URL;
@@ -42,6 +47,11 @@ const AdminDashboard = () => {
         Swal.close();
       });
   }, []);
+  const [search, setSearch] = useState("");
+
+  const filteredData = data.filter((item) =>
+    item.name.toLowerCase().includes(search.toLowerCase())
+  );
 
   return (
     <div>
@@ -188,6 +198,18 @@ const AdminDashboard = () => {
           )}
         </div>
       </nav>
+      <section>
+        <div className="flex justify-center bg-gray-50 py-12 px-4 sm:px-6 lg:px-8">
+          <div className="max-w-md w-full space-y-8">
+            <div>
+              <h2 className="mt-6 text-center text-3xl font-extrabold text-gray-900">
+                Dashboard Admin
+              </h2>
+            </div>
+          </div>
+        </div>
+      </section>
+      <section> </section>
     </div>
   );
 };

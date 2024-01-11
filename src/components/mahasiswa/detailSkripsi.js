@@ -10,6 +10,7 @@ const DetailSkripsi = () => {
   const [showMenu, setShowMenu] = useState(false);
   const [data, setData] = useState([]);
   const [dropdownVisible, setDropdownVisible] = useState(false);
+  const [isReady, setIsReady] = useState(false);
 
   const showMenuToggle = () => {
     setShowMenu(!showMenu);
@@ -54,7 +55,7 @@ const DetailSkripsi = () => {
     <div className="bg-gray-100 w-full min-h-screen">
       <nav className="bg-white shadow-lg">
         <div className="max-w-6xl mx-auto px-4">
-          <div className="flex justify-between">
+          <div className="flexx justify-between">
             <div className="flex space-x-7">
               <div>
                 <a href="#" className="flex items-center py-4">
