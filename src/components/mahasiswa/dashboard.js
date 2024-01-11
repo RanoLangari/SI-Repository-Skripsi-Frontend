@@ -125,9 +125,7 @@ const MhsDashboard = () => {
                 </a>
               </div>
             </div>
-            {/* secondary navbar items */}
             <div className="hidden md:flex items-center space-x-3 ">
-              {/* dropdown profile list item */}
               <div className="flex flex-col md:flex-row items-center md:space-x-3 ">
                 <div className="relative inline-block text-left">
                   <div>
@@ -190,7 +188,6 @@ const MhsDashboard = () => {
               </div>
             </div>
 
-            {/* mobile menu button */}
             <div className="md:hidden flex items-center">
               <button
                 className="outline-none mobile-menu-button"
@@ -214,7 +211,6 @@ const MhsDashboard = () => {
               </button>
             </div>
           </div>
-          {/* mobile menu */}
           {showMenu && (
             <div className="md:hidden mt-2">
               <a
@@ -253,7 +249,6 @@ const MhsDashboard = () => {
           <h2 className="text-5xl font-semibold text-center">
             Masukan Judul Skripsi
           </h2>
-          {/* icon search */}
           <div className="flex items-center mt-12">
             <div className="w-full">
               <div className="relative">
@@ -267,7 +262,6 @@ const MhsDashboard = () => {
                     viewBox="0 0 24 24"
                     stroke="currentColor"
                   >
-                    {/* search icon */}
                     <path
                       d="M9 21h6M19 19l-6-6M10 8a2 2
                       0 100-4 2 2 0 000 4z"
