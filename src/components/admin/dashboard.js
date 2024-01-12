@@ -14,6 +14,7 @@ const AdminDashboard = () => {
   const Navigate = useNavigate();
   const [showMenu, setShowMenu] = useState(false);
   const [dropdownVisible, setDropdownVisible] = useState(false);
+  const [data, setData] = useState([]);
   const showMenuToggle = () => {
     setShowMenu(!showMenu);
   };
@@ -47,11 +48,20 @@ const AdminDashboard = () => {
         Swal.close();
       });
   }, []);
-  const [search, setSearch] = useState("");
 
-  const filteredData = data.filter((item) =>
-    item.name.toLowerCase().includes(search.toLowerCase())
-  );
+  useEffect(() => {
+    const token = localStorage.getItem("token");
+    const config = {
+      headers: {
+        Authorization: `Bearer ${token}`,
+      },
+    };
+    axios
+      .get(`${backendUrl}/api/admin/get-skripsi-process`, config)
+      .then((res) => {
+        console.log(res.data.data);
+      });
+  }, []);
 
   return (
     <div>
@@ -209,7 +219,7 @@ const AdminDashboard = () => {
           </div>
         </div>
       </section>
-      <section> </section>
+      <section></section>
     </div>
   );
 };
