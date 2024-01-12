@@ -2,13 +2,12 @@ import React, { useState, useEffect } from "react";
 import { useNavigate } from "react-router-dom";
 import axios from "axios";
 import Swal from "sweetalert2";
-import { tr } from "@faker-js/faker";
 import MahasiswaTable from "./mahasiswaTable";
-const data = [
-  { name: "John Doe", email: "john@example.com", role: "Admin" },
-  { name: "Jane Doe", email: "jane@example.com", role: "User" },
-  // Add more data here
-];
+import { useMemo } from "react";
+import {
+  MaterialReactTable,
+  useMaterialReactTable,
+} from "material-react-table";
 
 const AdminDashboard = () => {
   const backendUrl = process.env.REACT_APP_API_URL;
@@ -64,6 +63,61 @@ const AdminDashboard = () => {
         console.log(res.data.data);
       });
   }, []);
+
+  const columns = useMemo(
+    () => [
+      {
+        accessorKey: "nim", //access nested data with dot notation
+        header: "NIM",
+        size: 150,
+      },
+      {
+        accessorKey: "nama",
+        header: "Nama Mahasiswa",
+        size: 150,
+      },
+      {
+        accessorKey: "skripsi.judul_skripsi", //normal accessorKey
+        header: "Judul Skripsi",
+        size: 200,
+      },
+      {
+        accessorKey: "jurusan",
+        header: "Jurusan",
+        size: 150,
+      },
+      {
+        accessorKey: "skripsi.status",
+        header: "status",
+        size: 150,
+      },
+      {
+        header: "Action",
+        size: 150,
+        Cell: ({ row }) => (
+          <div>
+            <button
+              onClick={() => {
+                window.location.href = `/admin/detail-skripsi/${row.original.id}`;
+              }}
+              className="btn btn-primary"
+            >
+              Detail
+            </button>
+          </div>
+
+          // <div>
+          //   <button
+        ),
+      },
+    ],
+    []
+  );
+
+  const table = useMaterialReactTable({
+    columns,
+    data, //data must be memoized or stable (useState, useMemo, defined outside of this component, etc.)
+  });
 
   return (
     <div>
@@ -223,13 +277,15 @@ const AdminDashboard = () => {
       </section>
       <section>
         <div className="flex justify-center bg-gray-50 py-12 px-4 sm:px-6 lg:px-8">
-          <div className="max-w-2xl w-full space-y-8">
+          <div className=" w-full space-y-8 px-10">
             <div>
-              <h2 className="mt-6 text-center text-3xl font-extrabold text-gray-900">
-                Skripsi yang sedang diproses
+              <h2 className="mt-6 text-center text-xl font-extrabold text-gray-900">
+                Data Skripsi
               </h2>
             </div>
-            <div className="flex flex-col">{MahasiswaTable}</div>
+            <div className="flex flex-col">
+              <MaterialReactTable table={table} />
+            </div>
           </div>
         </div>
       </section>
