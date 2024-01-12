@@ -273,6 +273,12 @@ const AdminDashboard = () => {
                           >
                             Status
                           </th>
+                          <th
+                            scope="col"
+                            className="px-6 py-3 text-center text-xs font-medium text-gray-500 uppercase tracking-wider"
+                          >
+                            Aksi
+                          </th>
                         </tr>
                       </thead>
                       {/* table body */}
@@ -300,6 +306,14 @@ const AdminDashboard = () => {
                               </td>
                               <td className="px-6 py-4 whitespace-nowrap text-left">
                                 {item.skripsi["status"]}
+                              </td>
+                              <td className="px-6 py-4 whitespace-nowrap text-left text-sm font-medium">
+                                <a
+                                  href={`/admin/detail-skripsi/${item.id}`}
+                                  className="text-yellow-300 hover:text-white transition duration-300"
+                                >
+                                  Detail
+                                </a>
                               </td>
                             </tr>
                           );
