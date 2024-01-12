@@ -189,7 +189,7 @@ const ProfileMahasiswa = () => {
               </h1>
             </div>
           </div>
-          <div class="border-b px-4 pb-6">
+          <div class="border-b px-4 pb-6 mb-10 mt-4">
             <div class="text-center my-4">
               <img
                 class="h-32 w-32 rounded-full border-4 border-white dark:border-gray-800 mx-auto my-4"
@@ -242,7 +242,6 @@ const ProfileMahasiswa = () => {
                 </h3>
               </div>
             </div>
-
             <div className="flex justify-center">
               <form className="w-full max-w-lg">
                 <div className="flex flex-col items-center">
