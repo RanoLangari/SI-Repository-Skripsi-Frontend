@@ -197,9 +197,12 @@ const ProfileMahasiswa = () => {
                 alt=""
               />
               <div class="py-2">
-                <h3 class="font-bold text-2xl text-gray-800 dark:text-white mb-1"></h3>
+                <h3 class="text-xl text-gray-800 dark:text-white mb-1">
+                  ubah username
+                </h3>
               </div>
             </div>
+
             <div class="flex justify-center">
               <form class="w-full max-w-lg">
                 <div className="flex flex-col items-center">
@@ -218,6 +221,57 @@ const ProfileMahasiswa = () => {
                       </div>
                     </div>
                   </div>
+                  {/* button submit */}
+                  <div class="flex justify-center">
+                    <button
+                      class="bg-yellow-300 hover:bg-yellow-400 text-white font-bold py-2 px-4 rounded-full"
+                      type="submit"
+                    >
+                      Edit
+                    </button>
+                  </div>
+                </div>
+              </form>
+            </div>
+          </div>
+          <div class="border-b px-4 pb-6 mt-4">
+            <div class="text-center my-4">
+              <div class="py-2">
+                <h3 class="text-xl text-gray-800 dark:text-white mb-1">
+                  ubah password
+                </h3>
+              </div>
+            </div>
+
+            <div className="flex justify-center">
+              <form className="w-full max-w-lg">
+                <div className="flex flex-col items-center">
+                  <div className="flex flex-row md:flex-row ml-4 mr-4">
+                    <div className="flex flex-row">
+                      <div className="flex flex-col">
+                        <label className="text-gray-700 dark:text-gray-200">
+                          Password Lama
+                        </label>
+                        <input
+                          type="password"
+                          className="border rounded-lg px-3 py-2 mt-1 mb-5  w-full text-center"
+                        />
+                      </div>
+                    </div>
+
+                    <div className="flex flex-row ml-4 mr-4">
+                      <div className="flex flex-col">
+                        <label className="text-gray-700 dark:text-gray-200">
+                          Password Baru
+                        </label>
+                        <input
+                          type="password"
+                          className="border rounded-lg px-3 py-2 mt-1 mb-5  w-full text-center"
+                        />
+                      </div>
+                    </div>
+                  </div>
+
                   {/* button submit */}
                   <div class="flex justify-center">
                     <button
