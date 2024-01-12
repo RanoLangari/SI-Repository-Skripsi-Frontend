@@ -3,6 +3,7 @@ import { useNavigate } from "react-router-dom";
 import axios from "axios";
 import Swal from "sweetalert2";
 import { tr } from "@faker-js/faker";
+import MahasiswaTable from "./mahasiswaTable";
 const data = [
   { name: "John Doe", email: "john@example.com", role: "Admin" },
   { name: "Jane Doe", email: "jane@example.com", role: "User" },
@@ -228,102 +229,7 @@ const AdminDashboard = () => {
                 Skripsi yang sedang diproses
               </h2>
             </div>
-            <div className="flex flex-col">
-              <div className="-my-2 overflow-x-auto sm:-mx-6 lg:-mx-8">
-                <div className="py-2 align-middle inline-block min-w-full sm:px-6 lg:px-8">
-                  {/* table */}
-                  <div className="shadow overflow-hidden border-b border-gray-200 sm:rounded-lg">
-                    {/* table head */}
-                    <table className="min-w-full divide-y divide-gray-200">
-                      <thead className="bg-gray-50">
-                        <tr>
-                          <th
-                            scope="col"
-                            className="px-6 py-3 text-center text-xs font-medium text-gray-500 uppercase tracking-wider"
-                          >
-                            No
-                          </th>
-                          <th
-                            scope="col"
-                            className="px-6 py-3 text-center text-xs font-medium text-gray-500 uppercase tracking-wider"
-                          >
-                            NIM
-                          </th>
-                          <th
-                            scope="col"
-                            className="px-6 py-3 text-center text-xs font-medium text-gray-500 uppercase tracking-wider"
-                          >
-                            Nama Mahasiswa
-                          </th>
-                          <th
-                            scope="col"
-                            className="px-6 py-3 text-center text-xs font-medium text-gray-500 uppercase tracking-wider"
-                          >
-                            Judul Skripsi
-                          </th>
-                          <th
-                            scope="col"
-                            className="px-6 py-3 text-center text-xs font-medium text-gray-500 uppercase tracking-wider"
-                          >
-                            Tanggal Upload
-                          </th>
-                          <th
-                            scope="col"
-                            className="px-6 py-3 text-center text-xs font-medium text-gray-500 uppercase tracking-wider"
-                          >
-                            Status
-                          </th>
-                          <th
-                            scope="col"
-                            className="px-6 py-3 text-center text-xs font-medium text-gray-500 uppercase tracking-wider"
-                          >
-                            Aksi
-                          </th>
-                        </tr>
-                      </thead>
-                      {/* table body */}
-                      {/* fetch from setdata */}
-                      <tbody className="bg-white divide-y divide-gray-200">
-                        {data.map((item, index) => {
-                          return (
-                            <tr>
-                              <td className="px-6 py-4 whitespace-nowrap text-left">
-                                {index + 1}
-                              </td>
-                              <td className="px-6 py-4 whitespace-nowrap text-left">
-                                {item.nim}
-                              </td>
-                              <td className="px-6 py-4 whitespace-nowrap text-left">
-                                {item.nama}
-                              </td>
-                              <td className="px-6 py-4 whitespace-nowrap text-left">
-                                {item.skripsi["judul_skripsi"]}
-                              </td>
-                              <td className="px-6 py-4 whitespace-nowrap text-left">
-                                {new Date(
-                                  item.skripsi["tanggal_upload"]._seconds * 1000
-                                ).toLocaleString()}
-                              </td>
-                              <td className="px-6 py-4 whitespace-nowrap text-left">
-                                {item.skripsi["status"]}
-                              </td>
-                              <td className="px-6 py-4 whitespace-nowrap text-left text-sm font-medium">
-                                <a
-                                  href={`/admin/detail-skripsi/${item.id}`}
-                                  className="text-yellow-300 hover:text-white transition duration-300"
-                                >
-                                  Detail
-                                </a>
-                              </td>
-                            </tr>
-                          );
-                        })}
-                      </tbody>
-                    </table>
-                  </div>
-                </div>
-              </div>
-            </div>
+            <div className="flex flex-col">{MahasiswaTable}</div>
           </div>
         </div>
       </section>
