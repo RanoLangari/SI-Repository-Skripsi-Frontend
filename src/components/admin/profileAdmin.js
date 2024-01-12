@@ -6,6 +6,7 @@ import Swal from "sweetalert2";
 const ProfileMahasiswa = () => {
   const backendUrl = process.env.REACT_APP_API_URL;
   const Navigate = useNavigate();
+  const [data, setData] = useState([]);
   const [showMenu, setShowMenu] = useState(false);
   const [dropdownVisible, setDropdownVisible] = useState(false);
   const showMenuToggle = () => {
@@ -15,6 +16,18 @@ const ProfileMahasiswa = () => {
   const toggleDropdown = () => {
     setDropdownVisible(!dropdownVisible);
   };
+
+  useEffect(() => {
+    const token = localStorage.getItem("token");
+    const config = {
+      headers: {
+        Authorization: `Bearer ${token}`,
+      },
+    };
+    axios.get(`${backendUrl}/api/admin/getadmin`, config).then((res) => {
+      setData(res.data.data);
+    });
+  }, []);
 
   return (
     <div>
@@ -199,7 +212,8 @@ const ProfileMahasiswa = () => {
                         </label>
                         <input
                           type="text"
-                          class="border rounded-lg px-3 py-2 mt-1 mb-5 text-sm w-full"
+                          class="border rounded-lg px-3 py-2 mt-1 mb-5  w-full text-center"
+                          value={data.username}
                         />
                       </div>
                     </div>
