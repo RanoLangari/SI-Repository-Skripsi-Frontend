@@ -53,10 +53,10 @@ const DetailSkripsi = () => {
   }, []);
 
   return (
-    <div className="bg-gray-100 w-full min-h-screen">
+    <div>
       <nav className="bg-white shadow-lg">
         <div className="max-w-6xl mx-auto px-4">
-          <div className="flexx justify-between">
+          <div className="flex justify-between">
             <div className="flex space-x-7">
               <div>
                 <a href="#" className="flex items-center py-4">
@@ -99,6 +99,7 @@ const DetailSkripsi = () => {
                         viewBox="0 0 20 20"
                         fill="currentColor"
                       >
+                        {/* chevron down icon */}
                         <path
                           fillRule="evenodd"
                           d="M6.293 6.293a1 1 0 011.414 0L10

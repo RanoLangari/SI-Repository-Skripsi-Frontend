@@ -56,31 +56,30 @@ const DetailDataSkripsi = () => {
     <div className="bg-gray-100 w-full min-h-screen">
       <nav className="bg-white shadow-lg">
         <div className="max-w-6xl mx-auto px-4">
-          <div className="flexx justify-between">
+          <div className="flex justify-between">
+            {/* set logo FEB.png */}
             <div className="flex space-x-7">
               <div>
+                {/* image icon */}
                 <a href="#" className="flex items-center py-4">
                   <span className="font-semibold text-gray-500 text-lg">
                     Sistem Informasi Repository Skripsi
                   </span>
                 </a>
               </div>
+              {/* primary navbar items */}
               <div className="hidden md:flex items-center space-x-1">
                 <a
-                  href="/mhs/dashboard"
+                  href="/admin/dashboard"
                   className="py-4 px-2 text-yellow-300 border-b-4 border-yellow-300 font-semibold"
                 >
                   Dashboard
                 </a>
-                <a
-                  className="py-4 px-5 text-gray-500 font-semibold hover:text-yellow-200 transition duration-300"
-                  href="/mhs/upload-skripsi"
-                >
-                  Upload Skripsi
-                </a>
               </div>
             </div>
+            {/* secondary navbar items */}
             <div className="hidden md:flex items-center space-x-3 ">
+              {/* dropdown profile list item */}
               <div className="flex flex-col md:flex-row items-center md:space-x-3 ">
                 <div className="relative inline-block text-left">
                   <div>
@@ -93,12 +92,14 @@ const DetailDataSkripsi = () => {
                       onClick={toggleDropdown}
                     >
                       <span>Profile</span>
+                      {/* chevron down icon */}
                       <svg
                         className="w-5 h-5 ml-2 -mr-1"
                         xmlns="http://www.w3.org/2000/svg"
                         viewBox="0 0 20 20"
                         fill="currentColor"
                       >
+                        {/* chevron down icon */}
                         <path
                           fillRule="evenodd"
                           d="M6.293 6.293a1 1 0 011.414 0L10
@@ -110,6 +111,7 @@ const DetailDataSkripsi = () => {
                       </svg>
                     </button>
                   </div>
+                  {/* dropdown profile items */}
                   <div
                     className={`origin-top-right absolute right-0 mt-2 w-40 rounded-md shadow-lg bg-white ring-1 ring-black ring-opacity-5 focus:outline-none ${
                       dropdownVisible ? "block" : "hidden"
@@ -122,7 +124,7 @@ const DetailDataSkripsi = () => {
                       <button
                         className="block px-4 py-2 text-sm text-gray-700 hover:bg-yellow-300 hover:text-white transition duration-300 w-full text-left"
                         role="menuitem"
-                        onClick={() => Navigate("/mhs/profile")}
+                        onClick={() => Navigate("/admin/profile")}
                       >
                         Profile
                       </button>
@@ -131,7 +133,7 @@ const DetailDataSkripsi = () => {
                         role="menuitem"
                         onClick={() => {
                           localStorage.removeItem("token");
-                          Navigate("/login-mhs");
+                          Navigate("/login-admin");
                         }}
                       >
                         Log out
@@ -142,6 +144,7 @@ const DetailDataSkripsi = () => {
               </div>
             </div>
 
+            {/* mobile menu button */}
             <div className="md:hidden flex items-center">
               <button
                 className="outline-none mobile-menu-button"
@@ -165,22 +168,17 @@ const DetailDataSkripsi = () => {
               </button>
             </div>
           </div>
+          {/* mobile menu */}
           {showMenu && (
             <div className="md:hidden mt-2">
               <a
-                onClick={() => Navigate("/mhs/dashboard")}
+                onClick={() => Navigate("/admin/dashboard")}
                 className="block py-2 px-4 text-sm text-gray-500 hover:bg-yellow-300 hover:text-white transition duration-300"
               >
                 Dashboard
               </a>
               <a
-                onClick={() => Navigate("/mhs/upload-skripsi")}
-                className="block py-2 px-4 text-sm text-gray-500 hover:bg-yellow-300 hover:text-white transition duration-300"
-              >
-                Upload Skripsi
-              </a>
-              <a
-                onClick={() => Navigate("/mhs/profile")}
+                onClick={() => Navigate("/admin/profile")}
                 className="block py-2 px-4 text-sm text-gray-500 hover:bg-yellow-300 hover:text-white transition duration-300"
               >
                 Profile
