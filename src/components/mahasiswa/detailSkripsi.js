@@ -53,7 +53,7 @@ const DetailSkripsi = () => {
   }, []);
 
   return (
-    <div>
+    <div className="bg-gray-100 w-full min-h-screen">
       <nav className="bg-white shadow-lg">
         <div className="max-w-6xl mx-auto px-4">
           <div className="flex justify-between">
