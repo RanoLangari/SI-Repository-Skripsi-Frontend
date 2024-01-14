@@ -52,6 +52,49 @@ const DetailDataSkripsi = () => {
       });
   }, []);
 
+  const KonfirmasiSkripsi = async (e) => {
+    try {
+      e.preventDefault();
+      Swal.fire({
+        title: "Loading Data",
+        text: "Please wait ...",
+        showConfirmButton: false,
+        allowOutsideClick: false,
+        willOpen: () => {
+          Swal.showLoading();
+        },
+      });
+      const token = localStorage.getItem("token");
+      const id = window.location.pathname.split("/")[3];
+      const config = {
+        headers: {
+          Authorization: `Bearer ${token}`,
+        },
+      };
+      console.log(token);
+      const res = await axios.put(
+        `${backendUrl}/api/admin/konfirmasi-skripsi/${id}`,
+        {},
+        config
+      );
+      Swal.fire({
+        icon: "success",
+        title: "Berhasil",
+        text: res.data.message,
+        timer: 1500,
+      }).finally(() => {
+        Navigate("/admin/dashboard");
+      });
+    } catch (error) {
+      Swal.fire({
+        icon: "error",
+        title: "Gagal",
+        text: error.response.data.message,
+        timer: 1500,
+      });
+    }
+  };
+
   return (
     <div className="bg-gray-100 w-full min-h-screen">
       <nav className="bg-white shadow-lg">
@@ -216,9 +259,9 @@ const DetailDataSkripsi = () => {
                   </button>
                   <button
                     className="bg-green-500 hover:bg-yellow-200 px-4 py-2 rounded-md text-white focus:outline-none"
-                    onClick={() => Navigate("/admin/dashboard")}
+                    onClick={KonfirmasiSkripsi}
                   >
-                    Terima
+                    Konfirmasi
                   </button>
                 </div>
               </div>
