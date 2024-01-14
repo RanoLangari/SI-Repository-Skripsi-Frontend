@@ -205,6 +205,23 @@ const DetailDataSkripsi = () => {
               </h1>
             </div>
             <div className="flex flex-col bg-white shadow-md rounded my-2">
+              {/* div for button confirm and delete skripsi */}
+              <div className="flex flex-row justify-end p-5">
+                <div className="flex flex-row space-x-2">
+                  <button
+                    className="bg-red-500 hover:bg-yellow-200 px-4 py-2 rounded-md text-white focus:outline-none"
+                    onClick={() => Navigate("/admin/dashboard")}
+                  >
+                    Tolak
+                  </button>
+                  <button
+                    className="bg-green-500 hover:bg-yellow-200 px-4 py-2 rounded-md text-white focus:outline-none"
+                    onClick={() => Navigate("/admin/dashboard")}
+                  >
+                    Terima
+                  </button>
+                </div>
+              </div>
               <div className="flex flex-col justify-center p-5 border-b border-gray-100">
                 <div className="flex flex-col">
                   <span className="text-lg font-bold">
