@@ -14,6 +14,10 @@ const ProfileMahasiswa = () => {
   const [semester, setSemester] = useState("");
   const [status_kelulusan, setStatusKelulusan] = useState("");
   const [statusSkripsi, setStatusSkripsi] = useState("");
+  const [old_password, setOldPassword] = useState("");
+  const [new_password, setNewPassword] = useState("");
+  const [confirm_password, setConfirmPassword] = useState("");
+
   const showMenuToggle = () => {
     setShowMenu(!showMenu);
   };
@@ -432,6 +436,7 @@ const ProfileMahasiswa = () => {
                     <input
                       type="password"
                       className="border rounded-lg px-3 py-2 mt-1 mb-5 text-sm w-full"
+                      name="old_password"
                     />
                   </div>
                   <div className="flex flex-col">
@@ -441,6 +446,7 @@ const ProfileMahasiswa = () => {
                     <input
                       type="password"
                       className="border rounded-lg px-3 py-2 mt-1 mb-5 text-sm w-full"
+                      name="new_password"
                     />
                   </div>
                   <div className="flex flex-col">
@@ -450,6 +456,7 @@ const ProfileMahasiswa = () => {
                     <input
                       type="password"
                       className="border rounded-lg px-3 py-2 mt-1 mb-5 text-sm w-full"
+                      name="confirm_password"
                     />
                   </div>
                   <div className="flex justify-center">
