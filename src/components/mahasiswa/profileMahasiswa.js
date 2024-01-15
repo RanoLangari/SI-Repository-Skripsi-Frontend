@@ -98,7 +98,8 @@ const ProfileMahasiswa = () => {
         Swal.close();
       })
       .catch((err) => {
-        console.log(err);
+        Swal.close();
+        Navigate("/login-mhs");
       });
   }, []);
 
@@ -330,7 +331,7 @@ const ProfileMahasiswa = () => {
                   </div>
                   <div class="flex flex-row md:flex-row">
                     <div class="flex flex-row">
-                      <div className="flex flex-col">
+                      <div className="flex flex-col ml-4">
                         <label className="text-gray-700 dark:text-gray-200">
                           Jurusan
                         </label>
