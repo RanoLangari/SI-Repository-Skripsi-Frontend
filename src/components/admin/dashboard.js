@@ -279,7 +279,7 @@ const AdminDashboard = () => {
           <div className=" w-full space-y-8 px-10">
             <div>
               <h2 className="mt-6 text-center text-xl font-extrabold text-gray-900">
-                Data Skripsi
+                Data Skripsi yang Belum Terkonfirmasi
               </h2>
             </div>
             <div className="flex flex-col">
