@@ -234,55 +234,66 @@ const ProfileMahasiswa = () => {
               </form>
             </div>
           </div>
-          <div class="border-b px-4 pb-6 mt-4">
-            <div class="text-center my-4">
-              <div class="py-2">
-                <h3 class="text-xl text-gray-800 dark:text-white mb-1">
-                  ubah password
-                </h3>
-              </div>
-            </div>
-            <div className="flex justify-center">
-              <form className="w-full max-w-lg">
-                <div className="flex flex-col items-center">
-                  <div className="flex flex-row md:flex-row ml-4 mr-4">
-                    <div className="flex flex-row">
-                      <div className="flex flex-col">
-                        <label className="text-gray-700 dark:text-gray-200">
-                          Password Lama
-                        </label>
-                        <input
-                          type="password"
-                          className="border rounded-lg px-3 py-2 mt-1 mb-5  w-full text-center"
-                        />
-                      </div>
-                    </div>
-
-                    <div className="flex flex-row ml-4 mr-4">
-                      <div className="flex flex-col">
-                        <label className="text-gray-700 dark:text-gray-200">
-                          Password Baru
-                        </label>
-                        <input
-                          type="password"
-                          className="border rounded-lg px-3 py-2 mt-1 mb-5  w-full text-center"
-                        />
-                      </div>
-                    </div>
-                  </div>
-
-                  {/* button submit */}
-                  <div class="flex justify-center">
-                    <button
-                      class="bg-yellow-300 hover:bg-yellow-400 text-white font-bold py-2 px-4 rounded-full"
-                      type="submit"
-                    >
-                      Edit
-                    </button>
-                  </div>
+        </div>
+      </div>
+      <div className="bg-white dark:bg-gray-800 w-11/12 md:w-1/2 lg:w-1/3 mx-auto rounded-lg shadow mt-5">
+        <div className="py-4 px-8 mt-3">
+          <div className="flex justify-between items-center">
+            <h1 className="text-2xl font-bold text-gray-800 dark:text-white mt-4 text-center">
+              Ganti Password
+            </h1>
+          </div>
+        </div>
+        <div className="border-b px-4 pb-6">
+          <div className="flex justify-center">
+            <form className="w-full max-w-lg" onSubmit={UpdatePassword}>
+              <div className="flex flex-col">
+                <div className="flex flex-col">
+                  <label className="text-gray-700 dark:text-gray-200">
+                    Password Lama
+                  </label>
+                  <input
+                    type="password"
+                    className="border rounded-lg px-3 py-2 mt-1 mb-5 text-sm w-full"
+                    name="old_password"
+                    value={old_password}
+                    onChange={(e) => setOldPassword(e.target.value)}
+                  />
                 </div>
-              </form>
-            </div>
+                <div className="flex flex-col">
+                  <label className="text-gray-700 dark:text-gray-200">
+                    Password Baru
+                  </label>
+                  <input
+                    type="password"
+                    className="border rounded-lg px-3 py-2 mt-1 mb-5 text-sm w-full"
+                    name="new_password"
+                    value={new_password}
+                    onChange={(e) => setNewPassword(e.target.value)}
+                  />
+                </div>
+                <div className="flex flex-col">
+                  <label className="text-gray-700 dark:text-gray-200">
+                    Konfirmasi Password Baru
+                  </label>
+                  <input
+                    type="password"
+                    className="border rounded-lg px-3 py-2 mt-1 mb-5 text-sm w-full"
+                    name="confirm_password"
+                    value={confirm_password}
+                    onChange={(e) => setConfirmPassword(e.target.value)}
+                  />
+                </div>
+                <div className="flex justify-center">
+                  <button
+                    className="bg-yellow-300 hover:bg-yellow-400 text-white font-bold py-2 px-4 rounded-full"
+                    type="submit"
+                  >
+                    Ganti Password
+                  </button>
+                </div>
+              </div>
+            </form>
           </div>
         </div>
       </div>
