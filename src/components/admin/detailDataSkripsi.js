@@ -54,7 +54,6 @@ const DetailDataSkripsi = () => {
 
   const KonfirmasiSkripsi = async (e) => {
     try {
-      e.preventDefault();
       Swal.fire({
         title: "Loading Data",
         text: "Please wait ...",
@@ -71,7 +70,6 @@ const DetailDataSkripsi = () => {
           Authorization: `Bearer ${token}`,
         },
       };
-      console.log(token);
       const res = await axios.put(
         `${backendUrl}/api/admin/konfirmasi-skripsi/${id}`,
         {},
@@ -97,7 +95,6 @@ const DetailDataSkripsi = () => {
 
   const deleteSkripsi = async (e) => {
     try {
-      e.preventDefault();
       Swal.fire({
         title: "Loading Data",
         text: "Please wait ...",
@@ -296,13 +293,41 @@ const DetailDataSkripsi = () => {
                 <div className="flex flex-row space-x-2">
                   <button
                     className="bg-red-500 hover:bg-yellow-200 px-4 py-2 rounded-md text-white focus:outline-none"
-                    onClick={() => Navigate("/admin/dashboard")}
+                    onClick={() => {
+                      Swal.fire({
+                        title: "Tolak Skripsi",
+                        text: "Apakah anda yakin ingin menolak skripsi ini?",
+                        showCancelButton: true,
+                        confirmButtonText: "Tolak",
+                        cancelButtonText: "Batal",
+                        confirmButtonColor: "#3085d6",
+                        cancelButtonColor: "#d33",
+                      }).then((result) => {
+                        if (result.isConfirmed) {
+                          deleteSkripsi();
+                        }
+                      });
+                    }}
                   >
                     Tolak
                   </button>
                   <button
                     className="bg-green-500 hover:bg-yellow-200 px-4 py-2 rounded-md text-white focus:outline-none"
-                    onClick={KonfirmasiSkripsi}
+                    onClick={() => {
+                      Swal.fire({
+                        title: "Konfirmasi Skripsi",
+                        text: "Apakah anda yakin ingin mengkonfirmasi skripsi ini?",
+                        showCancelButton: true,
+                        confirmButtonText: "Konfirmasi",
+                        cancelButtonText: "Batal",
+                        confirmButtonColor: "#3085d6",
+                        cancelButtonColor: "#d33",
+                      }).then((result) => {
+                        if (result.isConfirmed) {
+                          KonfirmasiSkripsi();
+                        }
+                      });
+                    }}
                   >
                     Konfirmasi
                   </button>
