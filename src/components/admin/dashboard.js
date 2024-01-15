@@ -105,9 +105,6 @@ const AdminDashboard = () => {
               <FaEye />
             </button>
           </div>
-
-          // <div>
-          //   <button
         ),
       },
     ],
