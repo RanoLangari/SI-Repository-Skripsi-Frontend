@@ -7,6 +7,7 @@ import {
   MaterialReactTable,
   useMaterialReactTable,
 } from "material-react-table";
+import { FaEye } from "react-icons/fa";
 
 const AdminDashboard = () => {
   const backendUrl = process.env.REACT_APP_API_URL;
@@ -99,9 +100,9 @@ const AdminDashboard = () => {
               onClick={() => {
                 window.location.href = `/admin/detail-skripsi/${row.original.id}`;
               }}
-              className="btn btn-primary"
+              className="bg-yellow-300 hover:bg-yellow-400 text-white font-bold py-2 px-4 rounded inline-flex items-center"
             >
-              Detail
+              <FaEye />
             </button>
           </div>
 
