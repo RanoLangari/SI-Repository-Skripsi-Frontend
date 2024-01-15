@@ -113,12 +113,11 @@ const AdminDashboard = () => {
 
   const table = useMaterialReactTable({
     columns,
-    data, //data must be memoized or stable (useState, useMemo, defined outside of this component, etc.)
+    data,
   });
 
   return (
-    <div>
-      {/* create modern navbar using tailwind */}
+    <div className="bg-gray-100 w-full min-h-screen">
       <nav className="bg-white shadow-lg">
         <div className="max-w-6xl mx-auto px-4">
           <div className="flex justify-between">
@@ -261,31 +260,33 @@ const AdminDashboard = () => {
           )}
         </div>
       </nav>
-      <section>
-        <div className="flex justify-center bg-gray-50 py-12 px-4 sm:px-6 lg:px-8">
-          <div className="max-w-md w-full space-y-8">
-            <div>
-              <h2 className="mt-6 text-center text-3xl font-extrabold text-gray-900">
-                Dashboard Admin
-              </h2>
+      <div className="bg-gray-100 p-10">
+        <section>
+          <div className="flex justify-center bg-gray-100 py-12 px-4 sm:px-6 lg:px-8">
+            <div className="max-w-md w-full space-y-8">
+              <div>
+                <h2 className="mt-6 text-center text-3xl font-extrabold text-gray-900">
+                  Dashboard Admin
+                </h2>
+              </div>
             </div>
           </div>
-        </div>
-      </section>
-      <section>
-        <div className="flex justify-center bg-gray-50 py-12 px-4 sm:px-6 lg:px-8">
-          <div className=" w-full space-y-8 px-10">
-            <div>
-              <h2 className="mt-6 text-center text-xl font-extrabold text-gray-900">
-                Data Skripsi yang Belum Terkonfirmasi
-              </h2>
-            </div>
-            <div className="flex flex-col">
-              <MaterialReactTable table={table} />
+        </section>
+        <section>
+          <div className="flex justify-center bg-gray-50 py-12 px-4 sm:px-6 lg:px-2">
+            <div className=" w-full space-y-8 px-10">
+              <div>
+                <h2 className="mt-6 text-center text-xl font-extrabold text-gray-900">
+                  Data Skripsi yang Belum Terkonfirmasi
+                </h2>
+              </div>
+              <div className="flex flex-col">
+                <MaterialReactTable table={table} />
+              </div>
             </div>
           </div>
-        </div>
-      </section>
+        </section>
+      </div>
     </div>
   );
 };

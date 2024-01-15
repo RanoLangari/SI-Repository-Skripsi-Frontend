@@ -105,7 +105,6 @@ const ProfileMahasiswa = () => {
         {
           old_password: old_password,
           new_password: new_password,
-          confirm_password: confirm_password,
         },
         config
       );
@@ -343,7 +342,7 @@ const ProfileMahasiswa = () => {
           )}
         </div>
       </nav>
-      <div class="pt-20 bg-gray-200 items-center justify-center">
+      <div class="pt-20 bg-gray-100 items-center justify-center">
         <div class="bg-white dark:bg-gray-800 w-11/12 md:w-1/2 lg:w-1/3 mx-auto rounded-lg shadow">
           <div class="py-4 px-8 mt-3">
             <div class="flex justify-between items-center">
