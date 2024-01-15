@@ -395,7 +395,7 @@ const ProfileMahasiswa = () => {
                       >
                         <option value={""}>-- Pilih Status --</option>
                         <option value={"Lulus"}>Lulus</option>
-                        <option value={"Tidak Lulus"}>Tidak Lulus</option>
+                        <option value={"Belum Lulus"}>Belum Lulus</option>
                       </select>
                     </div>
                   </div>
@@ -406,6 +406,58 @@ const ProfileMahasiswa = () => {
                       type="submit"
                     >
                       Edit
+                    </button>
+                  </div>
+                </div>
+              </form>
+            </div>
+          </div>
+        </div>
+        <div className="bg-white dark:bg-gray-800 w-11/12 md:w-1/2 lg:w-1/3 mx-auto rounded-lg shadow mt-5">
+          <div className="py-4 px-8 mt-3">
+            <div className="flex justify-between items-center">
+              <h1 className="text-2xl font-bold text-gray-800 dark:text-white mt-4 text-center">
+                Ganti Password
+              </h1>
+            </div>
+          </div>
+          <div className="border-b px-4 pb-6">
+            <div className="flex justify-center">
+              <form className="w-full max-w-lg">
+                <div className="flex flex-col">
+                  <div className="flex flex-col">
+                    <label className="text-gray-700 dark:text-gray-200">
+                      Password Lama
+                    </label>
+                    <input
+                      type="password"
+                      className="border rounded-lg px-3 py-2 mt-1 mb-5 text-sm w-full"
+                    />
+                  </div>
+                  <div className="flex flex-col">
+                    <label className="text-gray-700 dark:text-gray-200">
+                      Password Baru
+                    </label>
+                    <input
+                      type="password"
+                      className="border rounded-lg px-3 py-2 mt-1 mb-5 text-sm w-full"
+                    />
+                  </div>
+                  <div className="flex flex-col">
+                    <label className="text-gray-700 dark:text-gray-200">
+                      Konfirmasi Password Baru
+                    </label>
+                    <input
+                      type="password"
+                      className="border rounded-lg px-3 py-2 mt-1 mb-5 text-sm w-full"
+                    />
+                  </div>
+                  <div className="flex justify-center">
+                    <button
+                      className="bg-yellow-300 hover:bg-yellow-400 text-white font-bold py-2 px-4 rounded-full"
+                      type="button"
+                    >
+                      Ganti Password
                     </button>
                   </div>
                 </div>
