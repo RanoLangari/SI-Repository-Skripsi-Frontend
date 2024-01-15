@@ -301,111 +301,108 @@ const ProfileMahasiswa = () => {
               </div>
             </div>
             <div class="flex justify-center">
-              <form class="w-full max-w-lg" onSubmit={handleUpdate}>
-                <div className="flex flex-col items-center">
-                  <div class="flex flex-row md:flex-row">
-                    <div class="flex flex-row">
-                      <div className="flex flex-col">
-                        <label class="text-gray-700 dark:text-gray-200">
-                          NIM
-                        </label>
-                        <input
-                          type="text"
-                          class="border rounded-lg px-3 py-2 mt-1 mb-5 text-sm w-full"
-                          value={nim}
-                          onChange={(e) => setNim(e.target.value)}
-                        />
-                      </div>
-                      <div className="flex flex-col ml-4">
-                        <label class="text-gray-700 dark:text-gray-200">
-                          Nama
-                        </label>
-                        <input
-                          type="text"
-                          class="border rounded-lg px-3 py-2 mt-1 mb-5 text-sm w-full"
-                          value={nama}
-                          onChange={(e) => setNama(e.target.value)}
-                        />
-                      </div>
+              <form className="w-full max-w-lg" onSubmit={handleUpdate}>
+                <div className="flex flex-col">
+                  <div className="flex flex-col md:flex-row">
+                    <div className="flex flex-col w-full md:w-1/2 md:pr-2">
+                      <label className="text-gray-700 dark:text-gray-200">
+                        NIM
+                      </label>
+                      <input
+                        type="text"
+                        className="border rounded-lg px-3 py-2 mt-1 mb-5 text-sm w-full"
+                        value={nim}
+                        onChange={(e) => setNim(e.target.value)}
+                      />
+                    </div>
+                    <div className="flex flex-col w-full md:w-1/2 md:pl-2">
+                      <label className="text-gray-700 dark:text-gray-200">
+                        Jurusan
+                      </label>
+                      <select
+                        name="jurusan"
+                        id="jurusan"
+                        className="border rounded-lg px-3 py-2 mt-1 mb-5 text-sm w-full"
+                        required
+                        onChange={(e) => {
+                          setJurusan(e.target.value);
+                        }}
+                        value={jurusan}
+                      >
+                        <option value={""}>-- Pilih Jurusan --</option>
+                        <option value={"Manajemen"}>Manajemen</option>
+                        <option value={"Akuntansi"}>Akuntansi</option>
+                        <option value={"Ekonomi Pembangunan"}>
+                          Ekonomi Pembangunan
+                        </option>
+                      </select>
                     </div>
                   </div>
-                  <div class="flex flex-row md:flex-row">
-                    <div class="flex flex-row">
-                      <div className="flex flex-col ml-4">
-                        <label className="text-gray-700 dark:text-gray-200">
-                          Jurusan
-                        </label>
-                        <select
-                          name="jurusan"
-                          id="jurusan"
-                          className="border rounded-lg px-5 py-2 mt-1 mb-5 text-sm w-full"
-                          required
-                          onChange={(e) => {
-                            setJurusan(e.target.value);
-                          }}
-                          value={jurusan}
-                        >
-                          <option value={""}>-- Pilih Jurusan --</option>
-                          <option value={"Manajemen"}>Manajemen</option>
-                          <option value={"Akuntansi"}>Akuntansi</option>
-                          <option value={"Ekonomi Pembangunan"}>
-                            Ekonomi Pembangunan
+
+                  <div className="flex flex-col md:flex-row">
+                    <div className="flex flex-col w-full md:w-1/2 md:pr-2">
+                      <label className="text-gray-700 dark:text-gray-200">
+                        Nama
+                      </label>
+                      <input
+                        type="text"
+                        className="border rounded-lg px-3 py-2 mt-1 mb-5 text-sm w-full"
+                        value={nama}
+                        onChange={(e) => setNama(e.target.value)}
+                      />
+                    </div>
+                    <div className="flex flex-col w-full md:w-1/2 md:pl-2">
+                      <label className="text-gray-700 dark:text-gray-200">
+                        Semester
+                      </label>
+                      <select
+                        name="semester"
+                        id="semester"
+                        className="border rounded-lg px-3 py-2 mt-1 mb-5 text-sm w-full"
+                        required
+                        onChange={(e) => {
+                          setSemester(e.target.value);
+                        }}
+                        value={semester}
+                      >
+                        <option value={""}>-- Pilih Semester --</option>
+                        {[...Array(14)].map((_, index) => (
+                          <option
+                            key={index + 1}
+                            value={(index + 1).toString()}
+                          >
+                            {index + 1}
                           </option>
-                        </select>
-                      </div>
-                      <div className="flex flex-col ml-4">
-                        <label className="text-gray-700 dark:text-gray-200">
-                          Semester
-                        </label>
-                        <select
-                          name="semester"
-                          id="semester"
-                          className="border rounded-lg px-5 py-2 mt-1 mb-5 text-sm w-full"
-                          required
-                          onChange={(e) => {
-                            setSemester(e.target.value);
-                          }}
-                          value={semester}
-                        >
-                          <option value={""}>-- Pilih Semester --</option>
-                          {[...Array(14)].map((_, index) => (
-                            <option
-                              key={index + 1}
-                              value={(index + 1).toString()}
-                            >
-                              {index + 1}
-                            </option>
-                          ))}
-                        </select>
-                      </div>
+                        ))}
+                      </select>
                     </div>
                   </div>
-                  <div class="flex flex-row">
-                    <div class="flex flex-row">
-                      <div className="flex flex-col">
-                        <label class="text-gray-700 dark:text-gray-200">
-                          Status Kelulusan
-                        </label>
-                        <select
-                          name="status_kelulusan"
-                          id="status_kelulusan"
-                          className=" border rounded-lg px-3 py-2 mt-1 mb-5 text-sm w-full"
-                          required
-                          onChange={(e) => {
-                            setStatusKelulusan(e.target.value);
-                          }}
-                          value={status_kelulusan}
-                        >
-                          <option value={""}>-- Pilih Status --</option>
-                          <option value={"Lulus"}>Lulus</option>
-                          <option value={"Tidak Lulus"}>Tidak Lulus</option>
-                        </select>
-                      </div>
+
+                  <div className="flex flex-col">
+                    <div className="flex flex-col w-full">
+                      <label className="text-gray-700 dark:text-gray-200">
+                        Status Kelulusan
+                      </label>
+                      <select
+                        name="status_kelulusan"
+                        id="status_kelulusan"
+                        className="border rounded-lg px-3 py-2 mt-1 mb-5 text-sm w-full"
+                        required
+                        onChange={(e) => {
+                          setStatusKelulusan(e.target.value);
+                        }}
+                        value={status_kelulusan}
+                      >
+                        <option value={""}>-- Pilih Status --</option>
+                        <option value={"Lulus"}>Lulus</option>
+                        <option value={"Tidak Lulus"}>Tidak Lulus</option>
+                      </select>
                     </div>
                   </div>
-                  <div class="flex justify-center">
+
+                  <div className="flex justify-center">
                     <button
-                      class="bg-yellow-300 hover:bg-yellow-400 text-white font-bold py-2 px-4 rounded-full"
+                      className="bg-yellow-300 hover:bg-yellow-400 text-white font-bold py-2 px-4 rounded-full"
                       type="submit"
                     >
                       Edit
