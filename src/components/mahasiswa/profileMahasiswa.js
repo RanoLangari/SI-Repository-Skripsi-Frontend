@@ -73,6 +73,67 @@ const ProfileMahasiswa = () => {
     }
   };
 
+  const UpdatePassword = async (e) => {
+    e.preventDefault();
+    try {
+      Swal.fire({
+        title: "Loading Data",
+        text: "Please wait ...",
+        showConfirmButton: false,
+        allowOutsideClick: false,
+        willOpen: () => {
+          Swal.showLoading();
+        },
+      });
+      if (new_password !== confirm_password) {
+        Swal.fire({
+          icon: "error",
+          title: "Oops...",
+          text: "Password baru dan konfirmasi password tidak sama",
+          timer: 1500,
+        });
+        return;
+      }
+      const token = localStorage.getItem("token");
+      const config = {
+        headers: {
+          Authorization: `Bearer ${token}`,
+        },
+      };
+      const response = await axios.put(
+        `${backendUrl}/api/mahasiswa/change-password`,
+        {
+          old_password: old_password,
+          new_password: new_password,
+          confirm_password: confirm_password,
+        },
+        config
+      );
+      Swal.close();
+      if (response.status === 200) {
+        Swal.fire({
+          icon: "success",
+          title: "Success!",
+          text: response.data.message,
+          showConfirmButton: false,
+          timer: 1500,
+        }).then(() => {
+          // reset form
+          setOldPassword("");
+          setNewPassword("");
+          setConfirmPassword("");
+        });
+      }
+    } catch (error) {
+      Swal.fire({
+        icon: "error",
+        title: "Oops...",
+        text: error.response.data.message,
+        timer: 1500,
+      });
+    }
+  };
+
   useEffect(() => {
     Swal.fire({
       title: "Loading Data",
@@ -427,7 +488,7 @@ const ProfileMahasiswa = () => {
           </div>
           <div className="border-b px-4 pb-6">
             <div className="flex justify-center">
-              <form className="w-full max-w-lg">
+              <form className="w-full max-w-lg" onSubmit={UpdatePassword}>
                 <div className="flex flex-col">
                   <div className="flex flex-col">
                     <label className="text-gray-700 dark:text-gray-200">
@@ -437,6 +498,8 @@ const ProfileMahasiswa = () => {
                       type="password"
                       className="border rounded-lg px-3 py-2 mt-1 mb-5 text-sm w-full"
                       name="old_password"
+                      value={old_password}
+                      onChange={(e) => setOldPassword(e.target.value)}
                     />
                   </div>
                   <div className="flex flex-col">
@@ -447,6 +510,8 @@ const ProfileMahasiswa = () => {
                       type="password"
                       className="border rounded-lg px-3 py-2 mt-1 mb-5 text-sm w-full"
                       name="new_password"
+                      value={new_password}
+                      onChange={(e) => setNewPassword(e.target.value)}
                     />
                   </div>
                   <div className="flex flex-col">
@@ -457,12 +522,14 @@ const ProfileMahasiswa = () => {
                       type="password"
                       className="border rounded-lg px-3 py-2 mt-1 mb-5 text-sm w-full"
                       name="confirm_password"
+                      value={confirm_password}
+                      onChange={(e) => setConfirmPassword(e.target.value)}
                     />
                   </div>
                   <div className="flex justify-center">
                     <button
                       className="bg-yellow-300 hover:bg-yellow-400 text-white font-bold py-2 px-4 rounded-full"
-                      type="button"
+                      type="submit"
                     >
                       Ganti Password
                     </button>
