@@ -95,6 +95,49 @@ const DetailDataSkripsi = () => {
     }
   };
 
+  const deleteSkripsi = async (e) => {
+    try {
+      e.preventDefault();
+      Swal.fire({
+        title: "Loading Data",
+        text: "Please wait ...",
+        showConfirmButton: false,
+        allowOutsideClick: false,
+        willOpen: () => {
+          Swal.showLoading();
+        },
+      });
+      const token = localStorage.getItem("token");
+      const id = window.location.pathname.split("/")[3];
+      const config = {
+        headers: {
+          Authorization: `Bearer ${token}`,
+        },
+      };
+      console.log(token);
+      const res = await axios.put(
+        `${backendUrl}/api/admin/delete-skripsi/${id}`,
+        {},
+        config
+      );
+      Swal.fire({
+        icon: "success",
+        title: "Berhasil",
+        text: res.data.message,
+        timer: 1500,
+      }).finally(() => {
+        Navigate("/admin/dashboard");
+      });
+    } catch (error) {
+      Swal.fire({
+        icon: "error",
+        title: "Gagal",
+        text: error.response.data.message,
+        timer: 1500,
+      });
+    }
+  };
+
   return (
     <div className="bg-gray-100 w-full min-h-screen">
       <nav className="bg-white shadow-lg">
