@@ -137,7 +137,7 @@ const AdminDashboard = () => {
                   href="/admin/dashboard"
                   className="py-4 px-2 text-yellow-300 border-b-4 border-yellow-300 font-semibold"
                 >
-                  Dashboard
+                  Beranda
                 </a>
               </div>
             </div>
@@ -239,7 +239,7 @@ const AdminDashboard = () => {
                 onClick={() => Navigate("/admin/dashboard")}
                 className="block py-2 px-4 text-sm text-gray-500 hover:bg-yellow-300 hover:text-white transition duration-300"
               >
-                Dashboard
+                Beranda
               </a>
               <a
                 onClick={() => Navigate("/admin/profile")}
@@ -266,7 +266,7 @@ const AdminDashboard = () => {
             <div className="max-w-md w-full space-y-8">
               <div>
                 <h2 className="mt-6 text-center text-3xl font-extrabold text-gray-900">
-                  Dashboard Admin
+                  Beranda Admin
                 </h2>
               </div>
             </div>

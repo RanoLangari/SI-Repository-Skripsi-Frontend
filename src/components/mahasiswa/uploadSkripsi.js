@@ -97,13 +97,13 @@ const UploadSkripsi = () => {
                   href="/mhs/dashboard"
                   className="py-4 px-2 text-gray-500 font-semibold hover:text-yellow-200 transition duration-300"
                 >
-                  Dashboard
+                  Beranda
                 </a>
                 <a
                   href="#"
                   className="py-4 px-5 text-yellow-300 border-b-4 border-yellow-300 font-semibold"
                 >
-                  Upload Skripsi
+                  Unggah Skripsi
                 </a>
               </div>
             </div>
@@ -205,13 +205,13 @@ const UploadSkripsi = () => {
                 onClick={() => Navigate("/mhs/dashboard")}
                 className="block py-2 px-4 text-sm text-gray-500 hover:bg-yellow-300 hover:text-white transition duration-300"
               >
-                Dashboard
+                Beranda
               </a>
               <a
                 onClick={() => Navigate("/mhs/upload-skripsi")}
                 className="block py-2 px-4 text-sm text-gray-500 hover:bg-yellow-300 hover:text-white transition duration-300"
               >
-                Upload Skripsi
+                Unggah Skripsi
               </a>
               <a
                 onClick={() => Navigate("/mhs/profile")}
