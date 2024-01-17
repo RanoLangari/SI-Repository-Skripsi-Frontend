@@ -115,7 +115,7 @@ const MhsDashboard = () => {
                   href="/mhs/dashboard"
                   className="py-4 px-2 text-yellow-300 border-b-4 border-yellow-300 font-semibold"
                 >
-                  Dashboard
+                  Beranda
                 </a>
                 <a
                   className="py-4 px-5 text-gray-500 font-semibold hover:text-yellow-200 transition duration-300"
@@ -217,7 +217,7 @@ const MhsDashboard = () => {
                 onClick={() => Navigate("/mhs/dashboard")}
                 className="block py-2 px-4 text-sm text-gray-500 hover:bg-yellow-300 hover:text-white transition duration-300"
               >
-                Dashboard
+                Beranda
               </a>
               <a
                 onClick={() => Navigate("/mhs/upload-skripsi")}
