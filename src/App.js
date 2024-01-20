@@ -10,6 +10,7 @@ import ProfileMahasiswa from "./components/mahasiswa/profileMahasiswa";
 import AdminDashboard from "./components/admin/dashboard";
 import ProfileAdmin from "./components/admin/profileAdmin";
 import DetailDataSkripsi from "./components/admin/detailDataSkripsi";
+import DataDosen from "./components/admin/dataDosen";
 import "./index.css";
 
 function App() {
@@ -31,6 +32,7 @@ function App() {
             path="/admin/detail-skripsi/:id"
             element={<DetailDataSkripsi />}
           />
+          <Route path="/admin/dosen" element={<DataDosen />} />
         </Routes>
       </BrowserRouter>
     </div>
