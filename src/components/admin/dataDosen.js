@@ -1,5 +1,16 @@
 import React, { useState, useEffect } from "react";
 import { useNavigate } from "react-router-dom";
+import {
+  Button,
+  Dialog,
+  Card,
+  CardBody,
+  CardFooter,
+  Typography,
+  Input,
+  Select,
+  Option,
+} from "@material-tailwind/react";
 import axios from "axios";
 import Swal from "sweetalert2";
 import { useMemo } from "react";
@@ -16,6 +27,8 @@ const DataDosen = () => {
   const [dropdownVisible, setDropdownVisible] = useState(false);
   const [data, setData] = useState([]);
 
+  const [open, setOpen] = React.useState(false);
+  const handleOpen = () => setOpen((cur) => !cur);
   const showMenuToggle = () => {
     setShowMenu(!showMenu);
   };
@@ -375,9 +388,56 @@ const DataDosen = () => {
             <div className=" w-full space-y-8 px-10">
               <div>
                 <h2 className="mt-6 text-center text-xl font-extrabold text-gray-900">
-                  Data Skripsi yang Belum Terkonfirmasi
+                  Data Dosen
                 </h2>
               </div>
+              <div className="flex justify-start">
+                <Button onClick={handleOpen}>Sign In</Button>
+                <Dialog
+                  size="xs"
+                  open={open}
+                  handler={handleOpen}
+                  className="bg-transparent shadow-none"
+                >
+                  <Card className="mx-auto w-full max-w-[24rem]">
+                    <CardBody className="flex flex-col gap-4">
+                      <Typography
+                        variant="h4"
+                        color="blue-gray"
+                        className="flex justify-center"
+                      >
+                        Tambah Data Dosen
+                      </Typography>
+                      <Typography className="-mb-2" variant="h6">
+                        Nama Dosen
+                      </Typography>
+                      <Input label="Nama Dosen" size="lg" />
+                      <Typography className="-mb-2" variant="h6">
+                        Jurusan
+                      </Typography>
+                      <Select
+                        size="regular"
+                        outline={false}
+                        placeholder="Jurusan"
+                        className="text-sm"
+                        label="Pilih Jurusan"
+                      >
+                        <Option value={"Manajemen"}>Manajemen</Option>
+                        <Option value={"Akuntansi"}>Akuntansi</Option>
+                        <Option value={"Ekonomi Pembangunan"}>
+                          Ekonomi Pembangunan
+                        </Option>
+                      </Select>
+                    </CardBody>
+                    <CardFooter className="pt-0">
+                      <Button variant="gradient" onClick={handleOpen} fullWidth>
+                        Tambah
+                      </Button>
+                    </CardFooter>
+                  </Card>
+                </Dialog>
+              </div>
+
               <div className="flex flex-col">
                 <MaterialReactTable table={table} />
               </div>
