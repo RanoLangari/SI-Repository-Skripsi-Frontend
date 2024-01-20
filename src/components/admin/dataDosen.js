@@ -15,6 +15,7 @@ const DataDosen = () => {
   const [showMenu, setShowMenu] = useState(false);
   const [dropdownVisible, setDropdownVisible] = useState(false);
   const [data, setData] = useState([]);
+
   const showMenuToggle = () => {
     setShowMenu(!showMenu);
   };
@@ -84,11 +85,20 @@ const DataDosen = () => {
     };
     axios.get(`${backendUrl}/api/admin/get-dosen`, config).then((res) => {
       setData(res.data.data);
+      for (let i = 0; i < res.data.data.length; i++) {
+        res.data.data[i].no = i + 1;
+      }
     });
   }, []);
 
   const columns = useMemo(
     () => [
+      // set number column
+      {
+        accessorKey: "no",
+        header: "No",
+        size: 50,
+      },
       {
         accessorKey: "nama",
         header: "Nama Mahasiswa",
