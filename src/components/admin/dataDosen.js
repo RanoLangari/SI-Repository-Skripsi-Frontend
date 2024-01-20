@@ -7,7 +7,7 @@ import {
   MaterialReactTable,
   useMaterialReactTable,
 } from "material-react-table";
-import { FaEye } from "react-icons/fa";
+import { FaPencilAlt, FaRegTrashAlt } from "react-icons/fa";
 
 const DataDosen = () => {
   const backendUrl = process.env.REACT_APP_API_URL;
@@ -20,6 +20,32 @@ const DataDosen = () => {
   };
   const toggleDropdown = () => {
     setDropdownVisible(!dropdownVisible);
+  };
+
+  const deleteDosen = (id) => {
+    const token = localStorage.getItem("token");
+    const config = {
+      headers: {
+        Authorization: `Bearer ${token}`,
+      },
+    };
+    axios
+      .put(`${backendUrl}/api/admin/delete-dosen/${id}`, {}, config)
+      .then((res) => {
+        Swal.fire({
+          icon: "success",
+          title: "Berhasil",
+          text: "Data berhasil dihapus",
+        });
+        window.location.reload();
+      })
+      .catch((err) => {
+        Swal.fire({
+          icon: "error",
+          title: "Gagal",
+          text: "Data gagal dihapus",
+        });
+      });
   };
 
   useEffect(() => {
@@ -56,30 +82,17 @@ const DataDosen = () => {
         Authorization: `Bearer ${token}`,
       },
     };
-    axios
-      .get(`${backendUrl}/api/admin/get-skripsi-process`, config)
-      .then((res) => {
-        setData(res.data.data);
-        console.log(res.data.data);
-      });
+    axios.get(`${backendUrl}/api/admin/get-dosen`, config).then((res) => {
+      setData(res.data.data);
+    });
   }, []);
 
   const columns = useMemo(
     () => [
       {
-        accessorKey: "nim", //access nested data with dot notation
-        header: "NIM",
-        size: 150,
-      },
-      {
         accessorKey: "nama",
         header: "Nama Mahasiswa",
         size: 150,
-      },
-      {
-        accessorKey: "skripsi.judul_skripsi", //normal accessorKey
-        header: "Judul Skripsi",
-        size: 200,
       },
       {
         accessorKey: "jurusan",
@@ -87,22 +100,84 @@ const DataDosen = () => {
         size: 150,
       },
       {
-        accessorKey: "skripsi.status",
-        header: "status",
-        size: 150,
-      },
-      {
         header: "Action",
         size: 150,
         Cell: ({ row }) => (
           <div>
+            {/* button edit */}
             <button
               onClick={() => {
-                window.location.href = `/admin/detail-skripsi/${row.original.id}`;
+                Swal.fire({
+                  title: "Edit Data",
+                  html:
+                    `<input type="text" id="nama" class="swal2-input" value="${row.original.nama}">` +
+                    `<input type="text" id="jurusan" class="swal2-input" value="${row.original.jurusan}">`,
+                  showCancelButton: true,
+                  confirmButtonText: "Edit",
+                  cancelButtonText: "Cancel",
+                  showLoaderOnConfirm: true,
+                  preConfirm: () => {
+                    const nama = Swal.getPopup().querySelector("#nama").value;
+                    const jurusan =
+                      Swal.getPopup().querySelector("#jurusan").value;
+                    const data = {
+                      nama,
+                      jurusan,
+                    };
+                    const token = localStorage.getItem("token");
+                    const config = {
+                      headers: {
+                        Authorization: `Bearer ${token}`,
+                      },
+                    };
+                    return axios
+                      .put(
+                        `${backendUrl}/api/admin/edit-dosen/${row.original.id}`,
+                        data,
+                        config
+                      )
+                      .then((res) => {
+                        Swal.fire({
+                          icon: "success",
+                          title: "Berhasil",
+                          text: "Data berhasil diubah",
+                        });
+                        window.location.reload();
+                      })
+                      .catch((err) => {
+                        Swal.fire({
+                          icon: "error",
+                          title: "Gagal",
+                          text: "Data gagal diubah",
+                        });
+                      });
+                  },
+                });
               }}
-              className="bg-yellow-300 hover:bg-yellow-400 text-white font-bold py-2 px-4 rounded inline-flex items-center"
+              className="bg-yellow-500 hover:bg-yellow-600 text-white font-bold py-2 px-4 rounded inline-flex items-center"
             >
-              <FaEye />
+              <FaPencilAlt />
+            </button>
+            <span className="mx-2"></span>
+            <button
+              onClick={() => {
+                Swal.fire({
+                  title: "Anda Yakin?",
+                  text: "Data yang dihapus tidak dapat dikembalikan!",
+                  icon: "warning",
+                  showCancelButton: true,
+                  confirmButtonColor: "#3085d6",
+                  cancelButtonColor: "#d33",
+                  confirmButtonText: "Ya, Hapus!",
+                }).then((result) => {
+                  if (result.isConfirmed) {
+                    deleteDosen(row.original.id);
+                  }
+                });
+              }}
+              className="bg-red-500 hover:bg-red-600 text-white font-bold py-2 px-4 rounded inline-flex items-center"
+            >
+              <FaRegTrashAlt />
             </button>
           </div>
         ),

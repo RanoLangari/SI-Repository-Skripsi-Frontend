@@ -60,7 +60,6 @@ const AdminDashboard = () => {
       .get(`${backendUrl}/api/admin/get-skripsi-process`, config)
       .then((res) => {
         setData(res.data.data);
-        console.log(res.data.data);
       });
   }, []);
 
