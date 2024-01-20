@@ -165,6 +165,12 @@ const ProfileMahasiswa = () => {
                 >
                   Beranda
                 </a>
+                <a
+                  className="py-4 px-5 text-gray-500 font-semibold hover:text-yellow-200 transition duration-300"
+                  href="/admin/dosen"
+                >
+                  Dosen
+                </a>
               </div>
             </div>
             {/* secondary navbar items */}
@@ -266,6 +272,12 @@ const ProfileMahasiswa = () => {
                 className="block py-2 px-4 text-sm text-gray-500 hover:bg-yellow-300 hover:text-white transition duration-300"
               >
                 Beranda
+              </a>
+              <a
+                onClick={() => Navigate("/admin/dosen")}
+                className="block py-2 px-4 text-sm text-gray-500 hover:bg-yellow-300 hover:text-white transition duration-300"
+              >
+                Dosen
               </a>
               <a
                 onClick={() => Navigate("/admin/profile")}
