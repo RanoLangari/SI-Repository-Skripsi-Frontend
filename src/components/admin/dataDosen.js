@@ -1,16 +1,5 @@
 import React, { useState, useEffect } from "react";
 import { useNavigate } from "react-router-dom";
-import {
-  Button,
-  Dialog,
-  Card,
-  CardBody,
-  CardFooter,
-  Typography,
-  Input,
-  Select,
-  Option,
-} from "@material-tailwind/react";
 import axios from "axios";
 import Swal from "sweetalert2";
 import { useMemo } from "react";
@@ -26,9 +15,8 @@ const DataDosen = () => {
   const [showMenu, setShowMenu] = useState(false);
   const [dropdownVisible, setDropdownVisible] = useState(false);
   const [data, setData] = useState([]);
-  const [open, setOpen] = React.useState(false);
-  const handleOpen = () => setOpen((cur) => !cur);
-
+  const [nama, setNama] = useState("");
+  const [jurusan, setJurusan] = useState("");
   const showMenuToggle = () => {
     setShowMenu(!showMenu);
   };
@@ -37,25 +25,26 @@ const DataDosen = () => {
   };
 
   const addDosen = () => {
-    handleOpen();
-    console.log("add dosen");
+    Swal.fire({
+      title: "Loading Data",
+      text: "Please wait ...",
+      showConfirmButton: false,
+      allowOutsideClick: false,
+      willOpen: () => {
+        Swal.showLoading();
+      },
+    });
+
     const data = {
-      nama: document.getElementById("namaDosen").value,
-      jurusan: document.getElementById("jurusanDosen").value,
+      nama,
+      jurusan,
     };
+    console.log(data);
     if (data.nama === "") {
       Swal.fire({
         icon: "error",
         title: "Gagal",
         text: "Nama Dosen tidak boleh kosong",
-      });
-      return;
-    }
-    if (data.jurusan === "") {
-      Swal.fire({
-        icon: "error",
-        title: "Gagal",
-        text: "Jurusan tidak boleh kosong",
       });
       return;
     }
@@ -68,6 +57,7 @@ const DataDosen = () => {
     axios
       .post(`${backendUrl}/api/admin/add-dosen`, data, config)
       .then((res) => {
+        Swal.close();
         Swal.fire({
           icon: "success",
           title: "Berhasil",
@@ -76,6 +66,7 @@ const DataDosen = () => {
         window.location.reload();
       })
       .catch((err) => {
+        Swal.close();
         Swal.fire({
           icon: "error",
           title: "Gagal",
@@ -85,14 +76,25 @@ const DataDosen = () => {
   };
 
   const deleteDosen = (id) => {
+    Swal.close();
+    Swal.fire({
+      title: "Loading Data",
+      text: "Please wait ...",
+      showConfirmButton: false,
+      allowOutsideClick: false,
+      willOpen: () => {
+        Swal.showLoading();
+      },
+    });
     const token = localStorage.getItem("token");
     const config = {
       headers: {
         Authorization: `Bearer ${token}`,
       },
     };
+    console.log(config);
     axios
-      .put(`${backendUrl}/api/admin/delete-dosen/${id}`, {}, config)
+      .delete(`${backendUrl}/api/admin/delete-dosen/${id}`, config)
       .then((res) => {
         Swal.fire({
           icon: "success",
@@ -184,13 +186,13 @@ const DataDosen = () => {
                   html: `<div class="flex flex-col gap-4">
                   <div class="flex flex-col gap-2">
                     <label for="nama" class="text-sm">Nama Dosen</label>
-                    <input type="text" id="nama" class="text-sm border rounded-md px-2 py-1" value="${
+                    <input type="text" id="nama" class="shadow appearance-none border rounded w-full py-2 px-3 text-gray-700 mb-3 leading-tight focus:outline-none focus:shadow-outline" value="${
                       row.original.nama
                     }">
                   </div>
                   <div class="flex flex-col gap-2">
                     <label for="jurusan" class="text-sm">Jurusan</label>
-                    <select id="jurusan" class="text-sm border rounded-md px-2 py-1">
+                    <select id="jurusan" class="shadow appearance-none border rounded w-full py-2 px-3 text-gray-700 mb-3 leading-tight focus:outline-none focus:shadow-outline">
                       <option value="Manajemen" ${
                         row.original.jurusan === "Manajemen" ? "selected" : ""
                       }>Manajemen</option>
@@ -452,63 +454,73 @@ const DataDosen = () => {
                 </h2>
               </div>
               <div className="flex justify-start">
-                <Button onClick={handleOpen}>Tambah Dosen</Button>
-                <Dialog
-                  size="xs"
-                  open={open}
-                  handler={handleOpen}
-                  className="bg-transparent shadow-none"
+                <button
+                  onClick={() => {
+                    Swal.fire({
+                      title: "Tambah Data Dosen",
+                      html: `<div class="flex flex-col gap-4">
+                      <div class="flex flex-col gap-2">
+                        <label for="nama" class="text-sm">Nama Dosen</label>
+                        <input type="text" id="nama" class="shadow appearance-none border rounded w-full py-2 px-3 text-gray-700 mb-3 leading-tight focus:outline-none focus:shadow-outline">
+                      </div>
+                      <div class="flex flex-col gap-2">
+                        <label for="jurusan" class="text-sm">Jurusan</label>
+                        <select id="jurusan" class="shadow appearance-none border rounded w-full py-2 px-3 text-gray-700 mb-3 leading-tight focus:outline-none focus:shadow-outline">
+                        <option value="">Pilih Jurusan</option>
+                          <option value="Manajemen">Manajemen</option>
+                          <option value="Akuntansi">Akuntansi</option>
+                          <option value="Ekonomi Pembangunan">Ekonomi Pembangunan</option>
+                        </select>
+                      </div>
+                    </div>`,
+                      showCancelButton: true,
+                      confirmButtonText: "Simpan",
+                      cancelButtonText: "Batal",
+                      showLoaderOnConfirm: true,
+                      preConfirm: () => {
+                        const nama =
+                          Swal.getPopup().querySelector("#nama").value;
+                        const jurusan =
+                          Swal.getPopup().querySelector("#jurusan").value;
+                        const data = {
+                          nama: nama,
+                          jurusan: jurusan,
+                        };
+                        const token = localStorage.getItem("token");
+                        const config = {
+                          headers: {
+                            Authorization: `Bearer ${token}`,
+                          },
+                        };
+                        axios
+                          .post(
+                            `${backendUrl}/api/admin/add-dosen`,
+                            data,
+                            config
+                          )
+                          .then((res) => {
+                            Swal.fire({
+                              icon: "success",
+                              title: "Berhasil",
+                              text: "Data berhasil ditambahkan",
+                            });
+                            window.location.reload();
+                          })
+                          .catch((err) => {
+                            Swal.fire({
+                              icon: "error",
+                              title: "Gagal",
+                              text: "Data gagal ditambahkan",
+                            });
+                          });
+                      },
+                      allowOutsideClick: () => !Swal.isLoading(),
+                    });
+                  }}
+                  className="bg-yellow-300 hover:bg-yellow-400 text-white font-bold py-2 px-4 rounded inline-flex items-center"
                 >
-                  <Card className="mx-auto w-full max-w-[24rem]">
-                    <CardBody className="flex flex-col gap-4">
-                      <Typography
-                        variant="h4"
-                        color="blue-gray"
-                        className="flex justify-center"
-                      >
-                        Tambah Data Dosen
-                      </Typography>
-                      <Typography className="-mb-2" variant="h6">
-                        Nama Dosen
-                      </Typography>
-                      <Input
-                        label="Nama Dosen"
-                        size="lg"
-                        required
-                        id="namaDosen"
-                        type="text"
-                      />
-                      <Typography className="-mb-2" variant="h6">
-                        Jurusan
-                      </Typography>
-                      <Select
-                        size="regular"
-                        outline={false}
-                        placeholder="Jurusan"
-                        className="text-sm"
-                        label="Pilih Jurusan"
-                        required
-                        id="jurusanDosen"
-                      >
-                        <Option value={"Manajemen"}>Manajemen</Option>
-                        <Option value={"Akuntansi"}>Akuntansi</Option>
-                        <Option value={"Ekonomi Pembangunan"}>
-                          Ekonomi Pembangunan
-                        </Option>
-                      </Select>
-                    </CardBody>
-                    <CardFooter className="pt-0">
-                      <Button
-                        variant="gradient"
-                        type="submit"
-                        fullWidth
-                        onClick={addDosen}
-                      >
-                        Tambah
-                      </Button>
-                    </CardFooter>
-                  </Card>
-                </Dialog>
+                  Tambah Data Dosen
+                </button>
               </div>
 
               <div className="flex flex-col">
