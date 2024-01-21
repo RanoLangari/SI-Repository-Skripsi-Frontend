@@ -330,7 +330,7 @@ const MhsDashboard = () => {
                 }
                 activeClassName={"bg-yellow-300 text-white"}
                 previousClassName={
-                  "flex items-center justify-center h-8 w-8 mr-10"
+                  "flex items-center justify-center h-8 w-8 mr-14"
                 }
                 nextClassName={"flex items-center justify-center h-8 w-8 ml-10"}
               />
