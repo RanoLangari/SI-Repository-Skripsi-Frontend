@@ -26,14 +26,62 @@ const DataDosen = () => {
   const [showMenu, setShowMenu] = useState(false);
   const [dropdownVisible, setDropdownVisible] = useState(false);
   const [data, setData] = useState([]);
-
   const [open, setOpen] = React.useState(false);
   const handleOpen = () => setOpen((cur) => !cur);
+
   const showMenuToggle = () => {
     setShowMenu(!showMenu);
   };
   const toggleDropdown = () => {
     setDropdownVisible(!dropdownVisible);
+  };
+
+  const addDosen = () => {
+    handleOpen();
+    console.log("add dosen");
+    const data = {
+      nama: document.getElementById("namaDosen").value,
+      jurusan: document.getElementById("jurusanDosen").value,
+    };
+    if (data.nama === "") {
+      Swal.fire({
+        icon: "error",
+        title: "Gagal",
+        text: "Nama Dosen tidak boleh kosong",
+      });
+      return;
+    }
+    if (data.jurusan === "") {
+      Swal.fire({
+        icon: "error",
+        title: "Gagal",
+        text: "Jurusan tidak boleh kosong",
+      });
+      return;
+    }
+    const token = localStorage.getItem("token");
+    const config = {
+      headers: {
+        Authorization: `Bearer ${token}`,
+      },
+    };
+    axios
+      .post(`${backendUrl}/api/admin/add-dosen`, data, config)
+      .then((res) => {
+        Swal.fire({
+          icon: "success",
+          title: "Berhasil",
+          text: "Data berhasil ditambahkan",
+        });
+        window.location.reload();
+      })
+      .catch((err) => {
+        Swal.fire({
+          icon: "error",
+          title: "Gagal",
+          text: "Data gagal ditambahkan",
+        });
+      });
   };
 
   const deleteDosen = (id) => {
@@ -114,7 +162,7 @@ const DataDosen = () => {
       },
       {
         accessorKey: "nama",
-        header: "Nama Mahasiswa",
+        header: "Nama Dosen",
         size: 150,
       },
       {
@@ -130,22 +178,44 @@ const DataDosen = () => {
             {/* button edit */}
             <button
               onClick={() => {
+                //  modal edit
                 Swal.fire({
-                  title: "Edit Data",
-                  html:
-                    `<input type="text" id="nama" class="swal2-input" value="${row.original.nama}">` +
-                    `<input type="text" id="jurusan" class="swal2-input" value="${row.original.jurusan}">`,
+                  title: "Edit Data Dosen",
+                  html: `<div class="flex flex-col gap-4">
+                  <div class="flex flex-col gap-2">
+                    <label for="nama" class="text-sm">Nama Dosen</label>
+                    <input type="text" id="nama" class="text-sm border rounded-md px-2 py-1" value="${
+                      row.original.nama
+                    }">
+                  </div>
+                  <div class="flex flex-col gap-2">
+                    <label for="jurusan" class="text-sm">Jurusan</label>
+                    <select id="jurusan" class="text-sm border rounded-md px-2 py-1">
+                      <option value="Manajemen" ${
+                        row.original.jurusan === "Manajemen" ? "selected" : ""
+                      }>Manajemen</option>
+                      <option value="Akuntansi" ${
+                        row.original.jurusan === "Akuntansi" ? "selected" : ""
+                      }>Akuntansi</option>
+                      <option value="Ekonomi Pembangunan" ${
+                        row.original.jurusan === "Ekonomi Pembangunan"
+                          ? "selected"
+                          : ""
+                      }>Ekonomi Pembangunan</option>
+                    </select>
+                  </div>
+                </div>`,
                   showCancelButton: true,
-                  confirmButtonText: "Edit",
-                  cancelButtonText: "Cancel",
+                  confirmButtonText: "Simpan",
+                  cancelButtonText: "Batal",
                   showLoaderOnConfirm: true,
                   preConfirm: () => {
                     const nama = Swal.getPopup().querySelector("#nama").value;
                     const jurusan =
                       Swal.getPopup().querySelector("#jurusan").value;
                     const data = {
-                      nama,
-                      jurusan,
+                      nama: nama,
+                      jurusan: jurusan,
                     };
                     const token = localStorage.getItem("token");
                     const config = {
@@ -153,7 +223,7 @@ const DataDosen = () => {
                         Authorization: `Bearer ${token}`,
                       },
                     };
-                    return axios
+                    axios
                       .put(
                         `${backendUrl}/api/admin/edit-dosen/${row.original.id}`,
                         data,
@@ -175,9 +245,10 @@ const DataDosen = () => {
                         });
                       });
                   },
+                  allowOutsideClick: () => !Swal.isLoading(),
                 });
               }}
-              className="bg-yellow-500 hover:bg-yellow-600 text-white font-bold py-2 px-4 rounded inline-flex items-center"
+              className="bg-yellow-300 hover:bg-yellow-400 text-white font-bold py-2 px-4 rounded inline-flex items-center"
             >
               <FaPencilAlt />
             </button>
@@ -373,17 +444,6 @@ const DataDosen = () => {
       </nav>
       <div className="bg-gray-100 p-10">
         <section>
-          <div className="flex justify-center bg-gray-100 py-12 px-4 sm:px-6 lg:px-8">
-            <div className="max-w-md w-full space-y-8">
-              <div>
-                <h2 className="mt-6 text-center text-3xl font-extrabold text-gray-900">
-                  Beranda Admin
-                </h2>
-              </div>
-            </div>
-          </div>
-        </section>
-        <section>
           <div className="flex justify-center bg-gray-50 py-12 px-4 sm:px-6 lg:px-2">
             <div className=" w-full space-y-8 px-10">
               <div>
@@ -392,7 +452,7 @@ const DataDosen = () => {
                 </h2>
               </div>
               <div className="flex justify-start">
-                <Button onClick={handleOpen}>Sign In</Button>
+                <Button onClick={handleOpen}>Tambah Dosen</Button>
                 <Dialog
                   size="xs"
                   open={open}
@@ -411,7 +471,13 @@ const DataDosen = () => {
                       <Typography className="-mb-2" variant="h6">
                         Nama Dosen
                       </Typography>
-                      <Input label="Nama Dosen" size="lg" />
+                      <Input
+                        label="Nama Dosen"
+                        size="lg"
+                        required
+                        id="namaDosen"
+                        type="text"
+                      />
                       <Typography className="-mb-2" variant="h6">
                         Jurusan
                       </Typography>
@@ -421,6 +487,8 @@ const DataDosen = () => {
                         placeholder="Jurusan"
                         className="text-sm"
                         label="Pilih Jurusan"
+                        required
+                        id="jurusanDosen"
                       >
                         <Option value={"Manajemen"}>Manajemen</Option>
                         <Option value={"Akuntansi"}>Akuntansi</Option>
@@ -430,7 +498,12 @@ const DataDosen = () => {
                       </Select>
                     </CardBody>
                     <CardFooter className="pt-0">
-                      <Button variant="gradient" onClick={handleOpen} fullWidth>
+                      <Button
+                        variant="gradient"
+                        type="submit"
+                        fullWidth
+                        onClick={addDosen}
+                      >
                         Tambah
                       </Button>
                     </CardFooter>
