@@ -21,14 +21,53 @@ const UploadSkripsi = () => {
 
   const handleUpload = async (e) => {
     e.preventDefault();
-    Swal.fire({
-      title: "Loading...",
-      allowOutsideClick: false,
-      didOpen: () => {
-        Swal.showLoading();
-      },
-    });
+
     try {
+      const data = {
+        pembimbing1,
+        pembimbing2,
+        penguji,
+        judul,
+        abstract,
+        file,
+      };
+      console.log(data);
+      if (!pembimbing1 || !pembimbing2 || !penguji || !judul || !abstract) {
+        Swal.fire({
+          icon: "error",
+          title: "Gagal",
+          text: "Semua field harus diisi",
+          timer: 1000,
+        });
+        return;
+      }
+      if (!file) {
+        Swal.fire({
+          icon: "error",
+          title: "Gagal",
+          text: "File skripsi harus diisi",
+          timer: 1000,
+        });
+        return;
+      }
+      if (file.type !== "application/pdf") {
+        Swal.fire({
+          icon: "error",
+          title: "Gagal",
+          text: "File skripsi harus berformat pdf",
+          timer: 1000,
+        });
+        return;
+      }
+      Swal.fire({
+        title: "Loading...",
+        showConfirmButton: false,
+        allowOutsideClick: false,
+        timerProgressBar: true,
+        didOpen: () => {
+          Swal.showLoading();
+        },
+      });
       const token = localStorage.getItem("token");
       const config = {
         headers: {
