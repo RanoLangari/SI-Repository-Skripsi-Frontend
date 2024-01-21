@@ -1,6 +1,10 @@
 import React, { useState, useEffect } from "react";
 import { useNavigate } from "react-router-dom";
+import ReactPaginate from "react-paginate";
 import axios from "axios";
+import { Button, IconButton } from "@material-tailwind/react";
+import { ArrowRightIcon, ArrowLeftIcon } from "@heroicons/react/24/outline";
+
 import Swal from "sweetalert2";
 
 const MhsDashboard = () => {
@@ -10,6 +14,14 @@ const MhsDashboard = () => {
   const [searchTerm, setSearchTerm] = useState("");
   const [dropdownVisible, setDropdownVisible] = useState(false);
   const [data, setData] = useState([]);
+  const [perPage] = useState(6);
+  const [currentPage, setCurrentPage] = useState(0);
+  const [Active, setActive] = useState(1);
+
+  const handlePageClick = (data) => {
+    const selectedPage = data.selected;
+    setCurrentPage(selectedPage);
+  };
 
   const filteredData = data.filter((item) =>
     Object.values(item).some((value) =>
@@ -67,6 +79,9 @@ const MhsDashboard = () => {
     fetchData();
   }, []);
 
+  const indexOfLastItem = (currentPage + 1) * perPage;
+  const indexOfFirstItem = indexOfLastItem - perPage;
+  const currentItems = filteredData.slice(indexOfFirstItem, indexOfLastItem);
   const SkripsiItem = ({ item }) => (
     <div className="w-full lg:max-w-full lg:flex mt-10 rounded-lg shadow-xl">
       <div className="h-20 lg:h-auto lg:w-48 flex-none bg-cover rounded-t lg:rounded-t-none lg:rounded-l text-center overflow-hidden rounded-lg">
@@ -277,24 +292,52 @@ const MhsDashboard = () => {
               </div>
             </div>
           </div>
-        </div>
-      </section>
+          <div className="bg-gray-100 py-20">
+            <div className="max-w-6xl mx-auto px-4">
+              <h2 className="text-5xl font-semibold text-center">
+                Daftar Skripsi
+              </h2>
+              <div className="flex items-center mt-12"></div>
+            </div>
+          </div>
 
-      <section className="bg-gray-100 py-20">
-        <div className="max-w-6xl mx-auto px-4">
-          <h2 className="text-5xl font-semibold text-center">Daftar Skripsi</h2>
-          <div className="flex items-center mt-12"></div>
-        </div>
-
-        <div className="container mx-auto px-4">
-          <div className="p-10 bg-white rounded shadow-xl">
-            {filteredData.map((item) => (
-              <SkripsiItem key={item.id} item={item} />
-            ))}
+          <div className="container mx-auto px-4">
+            <div className="p-10 bg-white rounded shadow-xl">
+              {currentItems.map((item) => (
+                <SkripsiItem key={item.id} item={item} />
+              ))}
+            </div>
+            {filteredData.length > 6 && (
+              <ReactPaginate
+                previousLabel={
+                  <Button variant="text" className="flex items-center gap-2">
+                    <ArrowLeftIcon strokeWidth={2} className="h-4 w-4" />{" "}
+                    Previous
+                  </Button>
+                }
+                nextLabel={
+                  <Button variant="text" className="flex items-center gap-2">
+                    Next <ArrowRightIcon strokeWidth={2} className="h-4 w-4" />
+                  </Button>
+                }
+                pageCount={Math.ceil(filteredData.length / perPage)}
+                onPageChange={handlePageClick}
+                containerClassName={
+                  "flex items-center justify-center gap-2 mt-4"
+                }
+                pageClassName={
+                  "flex items-center justify-center h-8 w-8 hover:bg-yellow-300 hover:text-white"
+                }
+                activeClassName={"bg-yellow-300 text-white"}
+                previousClassName={
+                  "flex items-center justify-center h-8 w-8 mr-10"
+                }
+                nextClassName={"flex items-center justify-center h-8 w-8 ml-10"}
+              />
+            )}
           </div>
         </div>
       </section>
-
       <div className="flex justify-center bg-gray-100">
         <p className="text-center text-gray-500 text-xs">
           &copy;2023 FEB UNDANA. All rights reserved.
