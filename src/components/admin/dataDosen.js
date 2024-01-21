@@ -15,66 +15,12 @@ const DataDosen = () => {
   const [showMenu, setShowMenu] = useState(false);
   const [dropdownVisible, setDropdownVisible] = useState(false);
   const [data, setData] = useState([]);
-  const [nama, setNama] = useState("");
-  const [jurusan, setJurusan] = useState("");
   const showMenuToggle = () => {
     setShowMenu(!showMenu);
   };
   const toggleDropdown = () => {
     setDropdownVisible(!dropdownVisible);
   };
-
-  const addDosen = () => {
-    Swal.fire({
-      title: "Loading Data",
-      text: "Please wait ...",
-      showConfirmButton: false,
-      allowOutsideClick: false,
-      willOpen: () => {
-        Swal.showLoading();
-      },
-    });
-
-    const data = {
-      nama,
-      jurusan,
-    };
-    console.log(data);
-    if (data.nama === "") {
-      Swal.fire({
-        icon: "error",
-        title: "Gagal",
-        text: "Nama Dosen tidak boleh kosong",
-      });
-      return;
-    }
-    const token = localStorage.getItem("token");
-    const config = {
-      headers: {
-        Authorization: `Bearer ${token}`,
-      },
-    };
-    axios
-      .post(`${backendUrl}/api/admin/add-dosen`, data, config)
-      .then((res) => {
-        Swal.close();
-        Swal.fire({
-          icon: "success",
-          title: "Berhasil",
-          text: "Data berhasil ditambahkan",
-        });
-        window.location.reload();
-      })
-      .catch((err) => {
-        Swal.close();
-        Swal.fire({
-          icon: "error",
-          title: "Gagal",
-          text: "Data gagal ditambahkan",
-        });
-      });
-  };
-
   const deleteDosen = (id) => {
     Swal.close();
     Swal.fire({
@@ -156,7 +102,6 @@ const DataDosen = () => {
 
   const columns = useMemo(
     () => [
-      // set number column
       {
         accessorKey: "no",
         header: "No",
@@ -177,10 +122,8 @@ const DataDosen = () => {
         size: 150,
         Cell: ({ row }) => (
           <div>
-            {/* button edit */}
             <button
               onClick={() => {
-                //  modal edit
                 Swal.fire({
                   title: "Edit Data Dosen",
                   html: `<div class="flex flex-col gap-4">
@@ -225,6 +168,15 @@ const DataDosen = () => {
                         Authorization: `Bearer ${token}`,
                       },
                     };
+                    Swal.fire({
+                      title: "Loading Data",
+                      text: "Please wait ...",
+                      showConfirmButton: false,
+                      allowOutsideClick: false,
+                      willOpen: () => {
+                        Swal.showLoading();
+                      },
+                    });
                     axios
                       .put(
                         `${backendUrl}/api/admin/edit-dosen/${row.original.id}`,
@@ -232,6 +184,7 @@ const DataDosen = () => {
                         config
                       )
                       .then((res) => {
+                        Swal.close();
                         Swal.fire({
                           icon: "success",
                           title: "Berhasil",
@@ -240,6 +193,7 @@ const DataDosen = () => {
                         window.location.reload();
                       })
                       .catch((err) => {
+                        Swal.close();
                         Swal.fire({
                           icon: "error",
                           title: "Gagal",
@@ -482,6 +436,24 @@ const DataDosen = () => {
                           Swal.getPopup().querySelector("#nama").value;
                         const jurusan =
                           Swal.getPopup().querySelector("#jurusan").value;
+                        if (nama === "" || jurusan === "") {
+                          Swal.fire({
+                            icon: "error",
+                            title: "Gagal",
+                            text: "Data tidak boleh kosong",
+                            timer: 1000,
+                          });
+                          return false;
+                        }
+                        Swal.fire({
+                          title: "Loading Data",
+                          text: "Please wait ...",
+                          showConfirmButton: false,
+                          allowOutsideClick: false,
+                          willOpen: () => {
+                            Swal.showLoading();
+                          },
+                        });
                         const data = {
                           nama: nama,
                           jurusan: jurusan,

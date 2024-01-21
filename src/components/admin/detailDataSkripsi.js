@@ -160,7 +160,7 @@ const DetailDataSkripsi = () => {
                 </a>
                 <a
                   className="py-4 px-5 text-gray-500 font-semibold hover:text-yellow-200 transition duration-300"
-                  href="/mhs/dosen"
+                  href="/admin/dosen"
                 >
                   Dosen
                 </a>
