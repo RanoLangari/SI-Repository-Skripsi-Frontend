@@ -453,8 +453,8 @@ const UploadSkripsi = () => {
             </div>
           </div>
         </div>
-        <div class="flex justify-center mt-4 text-gray-500 bg-gray-100">
-          <div class="text-center">
+        <div className="flex justify-center mt-4 text-gray-500 bg-gray-100">
+          <div className="text-center">
             <p>© Sistem Informasi Repository Skripsi 2021</p>
           </div>
         </div>
