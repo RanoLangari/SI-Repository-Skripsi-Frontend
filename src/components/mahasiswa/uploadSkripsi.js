@@ -14,6 +14,7 @@ const UploadSkripsi = () => {
   const [judul, setJudul] = useState("");
   const [abstract, setAbstract] = useState("");
   const [file, setFile] = useState(null);
+  const [data, setData] = useState([]);
 
   const handleFileChange = (event) => {
     setFile(event.target.files[0]);
@@ -115,6 +116,40 @@ const UploadSkripsi = () => {
     setDropdownVisible(!dropdownVisible);
   };
 
+  const getProfile = async () => {
+    try {
+      const token = localStorage.getItem("token");
+      const config = {
+        headers: {
+          Authorization: `Bearer ${token}`,
+        },
+      };
+      const profileResponse = await axios.get(
+        `${backendUrl}/api/mahasiswa/profile`,
+        config
+      );
+      const jurusan = profileResponse.data.data.jurusan;
+
+      const dosenResponse = await axios.post(
+        `${backendUrl}/api/mahasiswa/get-dosen-by-jurusan`,
+        { jurusan },
+        config
+      );
+      setData(dosenResponse.data.data);
+    } catch (error) {
+      console.log(error);
+      Swal.fire({
+        icon: "error",
+        title: "Gagal",
+        text: error.response.data.message,
+        timer: 1000,
+      });
+    }
+  };
+  useEffect(() => {
+    getProfile();
+    // eslint-disable-next-line react-hooks/exhaustive-deps
+  }, []);
   return (
     <div>
       <nav className="bg-white shadow-lg">
@@ -295,15 +330,18 @@ const UploadSkripsi = () => {
                       >
                         Pembimbing 1
                       </label>
-                      <input
+                      <select
                         className="border py-2 px-3 text-gray-700 rounded-lg ml-4 mr-4"
-                        type="text"
-                        name="Pembimbing1"
-                        id="Pembimbing1"
-                        placeholder="Pembimbing 1"
+                        name="pembimbing1"
+                        id="pembimbing1"
                         value={pembimbing1}
                         onChange={(e) => setPembimbing1(e.target.value)}
-                      />
+                      >
+                        <option value="">Pilih Pembimbing 1</option>
+                        {data.map((item) => (
+                          <option value={item.nama}>{item.nama}</option>
+                        ))}
+                      </select>
                     </div>
                     <div className="flex flex-col mb-4 md:w-full">
                       <label
@@ -312,15 +350,18 @@ const UploadSkripsi = () => {
                       >
                         Pembimbing 2
                       </label>
-                      <input
+                      <select
                         className="border py-2 px-3 text-gray-700 rounded-lg ml-4 mr-4"
-                        type="text"
                         name="pembimbing2"
                         id="pembimbing2"
-                        placeholder="Pembimbing 2"
                         value={pembimbing2}
                         onChange={(e) => setPembimbing2(e.target.value)}
-                      />
+                      >
+                        <option value="">Pilih Pembimbing 2</option>
+                        {data.map((item) => (
+                          <option value={item.nama}>{item.nama}</option>
+                        ))}
+                      </select>
                     </div>
                     <div className="flex flex-col mb-4 md:w-full">
                       <label
@@ -329,15 +370,18 @@ const UploadSkripsi = () => {
                       >
                         Penguji
                       </label>
-                      <input
+                      <select
                         className="border py-2 px-3 text-gray-700 rounded-lg ml-4 mr-4"
-                        type="text"
                         name="penguji"
                         id="penguji"
-                        placeholder="Penguji"
                         value={penguji}
                         onChange={(e) => setPenguji(e.target.value)}
-                      />
+                      >
+                        <option value="">Pilih Penguji</option>
+                        {data.map((item) => (
+                          <option value={item.nama}>{item.nama}</option>
+                        ))}
+                      </select>
                     </div>
                     <div className="flex flex-col mb-4 md:w-full">
                       <label
