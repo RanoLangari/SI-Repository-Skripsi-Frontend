@@ -186,7 +186,6 @@ const ProfileMahasiswa = () => {
     axios
       .get(`${backendUrl}/api/mahasiswa/skripsi-status`, config)
       .then((res) => {
-        console.log(res.data.data);
         setStatusSkripsi(res.data.data.status_skripsi);
       })
       .then(() => {

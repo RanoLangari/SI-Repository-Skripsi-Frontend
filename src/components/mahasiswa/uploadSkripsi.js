@@ -124,6 +124,15 @@ const UploadSkripsi = () => {
           Authorization: `Bearer ${token}`,
         },
       };
+      Swal.fire({
+        title: "Loading...",
+        showConfirmButton: false,
+        allowOutsideClick: false,
+        timerProgressBar: true,
+        didOpen: () => {
+          Swal.showLoading();
+        },
+      });
       const profileResponse = await axios.get(
         `${backendUrl}/api/mahasiswa/profile`,
         config
@@ -136,14 +145,10 @@ const UploadSkripsi = () => {
         config
       );
       setData(dosenResponse.data.data);
+      Swal.close();
     } catch (error) {
-      console.log(error);
-      Swal.fire({
-        icon: "error",
-        title: "Gagal",
-        text: error.response.data.message,
-        timer: 1000,
-      });
+      Swal.close();
+      console.log(error.response.data.message);
     }
   };
   useEffect(() => {
