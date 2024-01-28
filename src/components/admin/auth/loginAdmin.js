@@ -53,7 +53,7 @@ const LoginAdmin = () => {
           onSubmit={handleLogin}
         >
           <div
-            className="text-gray-800 text-2xl flex justify-center border-b-2 py-2 mb-4"
+            className="text-gray-800 text-2xl flex justify-center py-2 mb-8"
             style={{ fontFamily: "Roboto, sans-serif" }}
           >
             Login Admin
