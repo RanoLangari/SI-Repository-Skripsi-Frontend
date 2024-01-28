@@ -66,7 +66,7 @@ const RegisterMahasiswa = () => {
             onSubmit={handleRegister}
           >
             <div
-              className="text-gray-800 text-2xl flex justify-center  py-2 mb-8"
+              className="text-gray-800 text-2xl flex justify-center py-2 mb-8"
               style={{ fontFamily: "Roboto, sans-serif" }}
             >
               Register Mahasiswa
@@ -186,7 +186,7 @@ const RegisterMahasiswa = () => {
               </div>
             </div>
 
-            <div className="flex items-center justify-between mt-8">
+            <div className="flex items-center justify-between mt-4">
               <button
                 className="bg-blue-500 hover:bg-blue-700 text-white font-bold py-2 px-4 rounded focus:outline-none focus:shadow-outline"
                 type="submit"
