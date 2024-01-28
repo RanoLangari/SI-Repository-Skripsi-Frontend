@@ -2,6 +2,7 @@ import React, { useState, useEffect } from "react";
 import axios from "axios";
 import { useNavigate } from "react-router-dom";
 import Swal from "sweetalert2";
+import { Input } from "@material-tailwind/react";
 
 const LoginMhs = () => {
   const backendUrl = process.env.REACT_APP_API_URL;
@@ -62,19 +63,10 @@ const LoginMhs = () => {
           >
             Login Mahasiswa
           </div>
-          <div className="mb-4">
-            <label
-              className="block text-gray-700 text-sm font-normal mb-2"
-              htmlFor="nim"
-            >
-              <b>NIM</b>
-            </label>
-            <input
-              className="shadow appearance-none border rounded w-full py-2 px-3 text-gray-700 leading-tight focus:outline-none focus:shadow-outline"
-              name="nim"
-              id="nim"
+          <div className="mb-10">
+            <Input
+              label="NIM"
               type="text"
-              placeholder="nim"
               required
               onChange={(e) => {
                 setNim(e.target.value);
@@ -82,18 +74,9 @@ const LoginMhs = () => {
             />
           </div>
           <div className="mb-6">
-            <label
-              className="block text-gray-700 text-sm font-normal mb-2"
-              htmlFor="password"
-            >
-              <b>Password</b>
-            </label>
-            <input
-              className="shadow appearance-none border rounded w-full py-2 px-3 text-gray-700 mb-3 leading-tight focus:outline-none focus:shadow-outline"
-              name="password"
-              id="password"
+            <Input
+              label="Password"
               type="password"
-              placeholder="***"
               required
               onChange={(e) => {
                 setPassword(e.target.value);
