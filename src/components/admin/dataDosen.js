@@ -48,8 +48,10 @@ const DataDosen = () => {
           icon: "success",
           title: "Berhasil",
           text: "Data berhasil dihapus",
+          timer: 1000,
+        }).then(() => {
+          window.location.reload();
         });
-        window.location.reload();
       })
       .catch((err) => {
         Swal.fire({
@@ -170,8 +172,10 @@ const DataDosen = () => {
                           icon: "success",
                           title: "Berhasil",
                           text: "Data berhasil diubah",
+                          timer: 1000,
+                        }).then(() => {
+                          window.location.reload();
                         });
-                        window.location.reload();
                       })
                       .catch((err) => {
                         Swal.close();
@@ -460,8 +464,10 @@ const DataDosen = () => {
                               icon: "success",
                               title: "Berhasil",
                               text: "Data berhasil ditambahkan",
+                              timer: 1000,
+                            }).then(() => {
+                              window.location.reload();
                             });
-                            window.location.reload();
                           })
                           .catch((err) => {
                             Swal.fire({
