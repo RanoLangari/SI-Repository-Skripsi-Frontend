@@ -2,6 +2,7 @@ import React, { useState, useEffect } from "react";
 import { useNavigate } from "react-router-dom";
 import axios from "axios";
 import Swal from "sweetalert2";
+import { Spinner } from "@material-tailwind/react";
 
 const ProfileMahasiswa = () => {
   const backendUrl = process.env.REACT_APP_API_URL;
@@ -15,6 +16,7 @@ const ProfileMahasiswa = () => {
   const [old_password, setOldPassword] = useState("");
   const [new_password, setNewPassword] = useState("");
   const [confirm_password, setConfirmPassword] = useState("");
+  const [loading, setLoading] = useState(false);
 
   const toggleDropdown = () => {
     setDropdownVisible(!dropdownVisible);
@@ -136,12 +138,22 @@ const ProfileMahasiswa = () => {
         Authorization: `Bearer ${token}`,
       },
     };
-    axios.get(`${backendUrl}/api/admin/getadmin`, config).then((res) => {
-      setData(res.data.data);
-    });
+    axios
+      .get(`${backendUrl}/api/admin/getadmin`, config)
+      .then((res) => {
+        setData(res.data.data);
+        setLoading(true);
+      })
+      .catch((err) => {
+        Navigate("/login-admin");
+      });
   }, []);
 
-  return (
+  return !loading ? (
+    <div className="flex justify-center items-center h-screen">
+      <Spinner className="h-12 w-12" color="amber" />
+    </div>
+  ) : (
     <div>
       {/* create modern navbar using tailwind */}
       <nav className="bg-white shadow-lg">
@@ -229,7 +241,7 @@ const ProfileMahasiswa = () => {
                         role="menuitem"
                         onClick={() => {
                           localStorage.removeItem("token");
-                          Navigate("/login-mhs");
+                          Navigate("/login-admin");
                         }}
                       >
                         Log out
@@ -288,7 +300,7 @@ const ProfileMahasiswa = () => {
               <a
                 onClick={() => {
                   localStorage.removeItem("token");
-                  Navigate("/login-mhs");
+                  Navigate("/login-admin");
                 }}
                 className="block py-2 px-4 text-sm text-gray-500 hover:bg-yellow-300 hover:text-white transition duration-300"
               >
