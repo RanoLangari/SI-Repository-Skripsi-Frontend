@@ -149,7 +149,7 @@ const UploadSkripsi = () => {
   }, []);
   return !loading ? (
     <div className="flex justify-center items-center h-screen">
-      <Spinner className="h-12 w-12" />
+      <Spinner className="h-12 w-12" color="amber" />
     </div>
   ) : (
     <div>

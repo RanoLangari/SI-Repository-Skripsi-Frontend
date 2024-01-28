@@ -42,7 +42,7 @@ const DetailSkripsi = () => {
 
   return !loading ? (
     <div className="flex justify-center items-center h-screen">
-      <Spinner className="h-12 w-12" color="yellow" />
+      <Spinner className="h-12 w-12" color="amber" />
     </div>
   ) : (
     <div className="bg-gray-100 w-full min-h-screen">
