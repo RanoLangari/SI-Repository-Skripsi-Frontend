@@ -8,6 +8,7 @@ import {
   useMaterialReactTable,
 } from "material-react-table";
 import { FaPencilAlt, FaRegTrashAlt } from "react-icons/fa";
+import { Spinner } from "@material-tailwind/react";
 
 const DataDosen = () => {
   const backendUrl = process.env.REACT_APP_API_URL;
@@ -15,6 +16,7 @@ const DataDosen = () => {
   const [showMenu, setShowMenu] = useState(false);
   const [dropdownVisible, setDropdownVisible] = useState(false);
   const [data, setData] = useState([]);
+  const [loading, setLoading] = useState(false);
   const showMenuToggle = () => {
     setShowMenu(!showMenu);
   };
@@ -59,15 +61,6 @@ const DataDosen = () => {
   };
 
   useEffect(() => {
-    Swal.fire({
-      title: "Loading Data",
-      text: "Please wait ...",
-      showConfirmButton: false,
-      allowOutsideClick: false,
-      willOpen: () => {
-        Swal.showLoading();
-      },
-    });
     const token = localStorage.getItem("token");
     const config = {
       headers: {
@@ -75,29 +68,17 @@ const DataDosen = () => {
       },
     };
     axios
-      .get(`${backendUrl}/api/admin/check-login`, config)
+      .get(`${backendUrl}/api/admin/get-dosen`, config)
       .then((res) => {
-        Swal.close();
+        setData(res.data.data);
+        for (let i = 0; i < res.data.data.length; i++) {
+          res.data.data[i].no = i + 1;
+        }
+        setLoading(true);
       })
       .catch((err) => {
         Navigate("/login-admin");
-        Swal.close();
       });
-  }, []);
-
-  useEffect(() => {
-    const token = localStorage.getItem("token");
-    const config = {
-      headers: {
-        Authorization: `Bearer ${token}`,
-      },
-    };
-    axios.get(`${backendUrl}/api/admin/get-dosen`, config).then((res) => {
-      setData(res.data.data);
-      for (let i = 0; i < res.data.data.length; i++) {
-        res.data.data[i].no = i + 1;
-      }
-    });
   }, []);
 
   const columns = useMemo(
@@ -241,7 +222,11 @@ const DataDosen = () => {
     data,
   });
 
-  return (
+  return !loading ? (
+    <div className="flex justify-center items-center h-screen">
+      <Spinner className="h-12 w-12" color="amber" />
+    </div>
+  ) : (
     <div className="bg-gray-100 w-full min-h-screen">
       <nav className="bg-white shadow-lg">
         <div className="max-w-6xl mx-auto px-4">

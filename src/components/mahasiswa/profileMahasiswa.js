@@ -119,7 +119,6 @@ const ProfileMahasiswa = () => {
           showConfirmButton: false,
           timer: 1500,
         }).then(() => {
-          // reset form
           setOldPassword("");
           setNewPassword("");
           setConfirmPassword("");
