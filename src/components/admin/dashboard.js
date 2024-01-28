@@ -101,17 +101,14 @@ const AdminDashboard = () => {
       <nav className="bg-white shadow-lg">
         <div className="max-w-6xl mx-auto px-4">
           <div className="flex justify-between">
-            {/* set logo FEB.png */}
             <div className="flex space-x-7">
               <div>
-                {/* image icon */}
                 <a href="#" className="flex items-center py-4">
                   <span className="font-semibold text-gray-500 text-lg">
                     Sistem Informasi Repository Skripsi
                   </span>
                 </a>
               </div>
-              {/* primary navbar items */}
               <div className="hidden md:flex items-center space-x-1">
                 <a
                   href="/admin/dashboard"
