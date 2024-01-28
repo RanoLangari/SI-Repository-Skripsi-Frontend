@@ -66,7 +66,6 @@ const LoginMhs = () => {
           <div className="mb-10">
             <Input
               label="NIM"
-              type="text"
               required
               onChange={(e) => {
                 setNim(e.target.value);
@@ -75,8 +74,8 @@ const LoginMhs = () => {
           </div>
           <div className="mb-6">
             <Input
-              label="Password"
               type="password"
+              label="Password"
               required
               onChange={(e) => {
                 setPassword(e.target.value);
