@@ -2,6 +2,7 @@ import React, { useState, useEffect } from "react";
 import { useNavigate } from "react-router-dom";
 import axios from "axios";
 import Swal from "sweetalert2";
+import { Spinner } from "@material-tailwind/react";
 
 const UploadSkripsi = () => {
   const backendUrl = process.env.REACT_APP_API_URL;
@@ -15,6 +16,7 @@ const UploadSkripsi = () => {
   const [abstract, setAbstract] = useState("");
   const [file, setFile] = useState(null);
   const [data, setData] = useState([]);
+  const [loading, setLoading] = useState(false);
 
   const handleFileChange = (event) => {
     setFile(event.target.files[0]);
@@ -124,15 +126,6 @@ const UploadSkripsi = () => {
           Authorization: `Bearer ${token}`,
         },
       };
-      Swal.fire({
-        title: "Loading...",
-        showConfirmButton: false,
-        allowOutsideClick: false,
-        timerProgressBar: true,
-        didOpen: () => {
-          Swal.showLoading();
-        },
-      });
       const profileResponse = await axios.get(
         `${backendUrl}/api/mahasiswa/profile`,
         config
@@ -145,17 +138,20 @@ const UploadSkripsi = () => {
         config
       );
       setData(dosenResponse.data.data);
-      Swal.close();
+      setLoading(true);
     } catch (error) {
-      Swal.close();
-      console.log(error.response.data.message);
+      Navigate("/login-mhs");
     }
   };
   useEffect(() => {
     getProfile();
     // eslint-disable-next-line react-hooks/exhaustive-deps
   }, []);
-  return (
+  return !loading ? (
+    <div className="flex justify-center items-center h-screen">
+      <Spinner className="h-12 w-12" />
+    </div>
+  ) : (
     <div>
       <nav className="bg-white shadow-lg">
         <div className="max-w-6xl mx-auto px-4">
