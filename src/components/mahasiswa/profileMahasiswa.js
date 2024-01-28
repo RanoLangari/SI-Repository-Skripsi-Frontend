@@ -2,6 +2,7 @@ import React, { useState, useEffect } from "react";
 import { useNavigate } from "react-router-dom";
 import axios from "axios";
 import Swal from "sweetalert2";
+import { Spinner } from "@material-tailwind/react";
 
 const ProfileMahasiswa = () => {
   const backendUrl = process.env.REACT_APP_API_URL;
@@ -17,6 +18,7 @@ const ProfileMahasiswa = () => {
   const [old_password, setOldPassword] = useState("");
   const [new_password, setNewPassword] = useState("");
   const [confirm_password, setConfirmPassword] = useState("");
+  const [loading, setLoading] = useState(false);
 
   const showMenuToggle = () => {
     setShowMenu(!showMenu);
@@ -134,15 +136,6 @@ const ProfileMahasiswa = () => {
   };
 
   useEffect(() => {
-    Swal.fire({
-      title: "Loading Data",
-      text: "Please wait ...",
-      showConfirmButton: false,
-      allowOutsideClick: false,
-      willOpen: () => {
-        Swal.showLoading();
-      },
-    });
     const token = localStorage.getItem("token");
     const config = {
       headers: {
@@ -168,15 +161,6 @@ const ProfileMahasiswa = () => {
   }, []);
 
   useEffect(() => {
-    Swal.fire({
-      title: "Loading Data",
-      text: "Please wait ...",
-      showConfirmButton: false,
-      allowOutsideClick: false,
-      willOpen: () => {
-        Swal.showLoading();
-      },
-    });
     const token = localStorage.getItem("token");
     const config = {
       headers: {
@@ -187,16 +171,19 @@ const ProfileMahasiswa = () => {
       .get(`${backendUrl}/api/mahasiswa/skripsi-status`, config)
       .then((res) => {
         setStatusSkripsi(res.data.data.status_skripsi);
-      })
-      .then(() => {
-        Swal.close();
+        setLoading(true);
       })
       .catch((err) => {
+        Navigate("/login-mhs");
         console.log(err);
       });
   }, []);
 
-  return (
+  return !loading ? (
+    <div className="flex justify-center items-center h-screen">
+      <Spinner className="h-12 w-12" color="amber" />
+    </div>
+  ) : (
     <div>
       <nav className="bg-white shadow-lg">
         <div className="max-w-6xl mx-auto px-4">
