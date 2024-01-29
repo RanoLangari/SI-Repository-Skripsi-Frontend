@@ -13,6 +13,7 @@ const MhsDashboard = () => {
   const [searchTerm, setSearchTerm] = useState("");
   const [dropdownVisible, setDropdownVisible] = useState(false);
   const [data, setData] = useState([]);
+  const [status_kelulusan, setStatusKelulusan] = useState("");
   const [perPage] = useState(6);
   const [currentPage, setCurrentPage] = useState(0);
   const [loading, setLoading] = useState(false);
@@ -45,20 +46,20 @@ const MhsDashboard = () => {
       };
 
       const response = await axios.get(
-        `${backendUrl}/api/mahasiswa/check-login`,
+        `${backendUrl}/api/mahasiswa/profile`,
         config
       );
-
       if (response.status === 200) {
         const res = await axios.get(
           `${backendUrl}/api/mahasiswa/get-skripsi`,
           config
         );
         setData(res.data.data);
+        setStatusKelulusan(response.data.data.status_kelulusan);
         setLoading(true);
       }
     } catch (err) {
-      Navigate("/login-mhs");
+      console.log(err);
     }
   };
 
@@ -123,12 +124,14 @@ const MhsDashboard = () => {
                 >
                   Beranda
                 </a>
-                <a
-                  className="py-4 px-5 text-gray-500 font-semibold hover:text-yellow-200 transition duration-300"
-                  href="/mhs/upload-skripsi"
-                >
-                  Unggah Skripsi
-                </a>
+                {status_kelulusan === "Lulus" ? (
+                  <a
+                    href="/mhs/upload-skripsi"
+                    className="py-4 px-2 text-gray-500 font-semibold hover:text-yellow-300 transition duration-300"
+                  >
+                    Unggah Skripsi
+                  </a>
+                ) : null}
               </div>
             </div>
             <div className="hidden md:flex items-center space-x-3 ">
