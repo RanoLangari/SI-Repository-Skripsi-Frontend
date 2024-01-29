@@ -2,11 +2,10 @@ import React, { useState, useEffect } from "react";
 import { useNavigate } from "react-router-dom";
 import ReactPaginate from "react-paginate";
 import axios from "axios";
-import { Button, IconButton } from "@material-tailwind/react";
+import { Button, Input } from "@material-tailwind/react";
 import { ArrowRightIcon, ArrowLeftIcon } from "@heroicons/react/24/outline";
 import { Spinner } from "@material-tailwind/react";
-import Swal from "sweetalert2";
-
+import { Select, Option } from "@material-tailwind/react";
 const MhsDashboard = () => {
   const backendUrl = process.env.REACT_APP_API_URL;
   const Navigate = useNavigate();
@@ -16,7 +15,6 @@ const MhsDashboard = () => {
   const [data, setData] = useState([]);
   const [perPage] = useState(6);
   const [currentPage, setCurrentPage] = useState(0);
-  const [Active, setActive] = useState(1);
   const [loading, setLoading] = useState(false);
 
   const handlePageClick = (data) => {
@@ -29,7 +27,6 @@ const MhsDashboard = () => {
       value.toString().toLowerCase().includes(searchTerm.toLowerCase())
     )
   );
-
   const showMenuToggle = () => {
     setShowMenu(!showMenu);
   };
@@ -255,51 +252,62 @@ const MhsDashboard = () => {
       </nav>
       <section className="bg-gray-100 py-20">
         <div className="max-w-6xl mx-auto px-4">
-          <h2 className="text-5xl font-semibold text-center">
+          <h2 className="text-2xl font-semibold text-left">
             Masukan Judul Skripsi
           </h2>
-          <div className="flex items-center mt-12">
+          <div className="flex items-center mt-6">
             <div className="w-full">
               <div className="relative">
-                <div className="absolute top-4 left-3">
-                  <svg
-                    className="w-6 h-6 text-gray-400"
-                    fill="none"
-                    strokeLinecap="round"
-                    strokeLinejoin="round"
-                    strokeWidth="2"
-                    viewBox="0 0 24 24"
-                    stroke="currentColor"
-                  >
-                    <path
-                      d="M9 21h6M19 19l-6-6M10 8a2 2
-                      0 100-4 2 2 0 000 4z"
-                    ></path>
-                  </svg>
-                </div>
-                <input
-                  type="text"
-                  className="w-full bg-white rounded-lg pl-10 pr-4 py-2 focus:outline-none focus:shadow-outline text-gray-600 font-medium"
-                  placeholder="Search"
-                  onChange={(e) => setSearchTerm(e.target.value)}
+                <Input
+                  color="yellow"
+                  outline={false}
+                  placeholder="Cari Judul Skripsi"
+                  label="Cari Judul Skripsi"
+                  onChange={(e) => {
+                    setSearchTerm(e.target.value);
+                  }}
                 />
+              </div>
+              <div className="mt-6 w-2">
+                <Select
+                  color="yellow"
+                  outline={false}
+                  placeholder="Pilih Jurusan"
+                  label="Pilih Jurusan"
+                  dropdownHandle={true}
+                  onChange={(e) => {
+                    setSearchTerm(e);
+                  }}
+                >
+                  <Option value="">Semua</Option>
+                  <Option value="Manajemen">Manajemen</Option>
+                  <Option value="Akuntansi">Akuntansi</Option>
+                  <Option value="Ekonomi Pembangunan">
+                    Ekonomi Pembangunan
+                  </Option>
+                </Select>
               </div>
             </div>
           </div>
-          <div className="bg-gray-100 py-20">
+          <div className="bg-gray-100 py-12">
             <div className="max-w-6xl mx-auto px-4">
-              <h2 className="text-5xl font-semibold text-center">
+              <h2 className="text-3xl font-semibold text-center">
                 Daftar Skripsi
               </h2>
-              <div className="flex items-center mt-12"></div>
             </div>
           </div>
 
           <div className="container mx-auto px-4">
             <div className="p-10 bg-white rounded shadow-xl">
-              {currentItems.map((item) => (
-                <SkripsiItem key={item.id} item={item} />
-              ))}
+              {currentItems.length === 0 ? (
+                <div className="flex justify-center items-center h-20">
+                  <p className="text-2xl text-gray-500">Data Tidak Ditemukan</p>
+                </div>
+              ) : (
+                currentItems.map((item, index) => (
+                  <SkripsiItem key={index} item={item} />
+                ))
+              )}
             </div>
             {filteredData.length > 6 && (
               <ReactPaginate
