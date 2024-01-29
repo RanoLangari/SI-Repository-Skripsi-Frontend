@@ -131,7 +131,9 @@ const UploadSkripsi = () => {
         config
       );
       const jurusan = profileResponse.data.data.jurusan;
-
+      if (profileResponse.data.data.status_kelulusan !== "Lulus") {
+        Navigate("/mhs/dashboard");
+      }
       const dosenResponse = await axios.post(
         `${backendUrl}/api/mahasiswa/get-dosen-by-jurusan`,
         { jurusan },
