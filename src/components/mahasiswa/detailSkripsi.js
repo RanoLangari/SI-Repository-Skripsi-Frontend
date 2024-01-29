@@ -12,6 +12,7 @@ const DetailSkripsi = () => {
   const [data, setData] = useState([]);
   const [dropdownVisible, setDropdownVisible] = useState(false);
   const [loading, setLoading] = useState(false);
+  const [status_kelulusan, setStatusKelulusan] = useState("");
 
   const showMenuToggle = () => {
     setShowMenu(!showMenu);
@@ -29,6 +30,9 @@ const DetailSkripsi = () => {
         Authorization: `Bearer ${token}`,
       },
     };
+    axios.get(`${backendUrl}/api/mahasiswa/profile`, config).then((res) => {
+      setStatusKelulusan(res.data.data.status_kelulusan);
+    });
     axios
       .get(`${backendUrl}/api/mahasiswa/detail-skripsi/${id_mhs}`, config)
       .then((res) => {
@@ -64,12 +68,14 @@ const DetailSkripsi = () => {
                 >
                   Beranda
                 </a>
-                <a
-                  className="py-4 px-5 text-gray-500 font-semibold hover:text-yellow-200 transition duration-300"
-                  href="/mhs/upload-skripsi"
-                >
-                  Unggah Skripsi
-                </a>
+                {status_kelulusan === "Lulus" ? (
+                  <a
+                    className="py-4 px-5 text-gray-500 font-semibold hover:text-yellow-200 transition duration-300"
+                    href="/mhs/upload-skripsi"
+                  >
+                    Unggah Skripsi
+                  </a>
+                ) : null}
               </div>
             </div>
             <div className="hidden md:flex items-center space-x-3 ">
@@ -166,12 +172,14 @@ const DetailSkripsi = () => {
               >
                 Beranda
               </a>
-              <a
-                onClick={() => Navigate("/mhs/upload-skripsi")}
-                className="block py-2 px-4 text-sm text-gray-500 hover:bg-yellow-300 hover:text-white transition duration-300"
-              >
-                Unggah Skripsi
-              </a>
+              {status_kelulusan === "Lulus" ? (
+                <a
+                  onClick={() => Navigate("/mhs/upload-skripsi")}
+                  className="block py-2 px-4 text-sm text-gray-500 hover:bg-yellow-300 hover:text-white transition duration-300"
+                >
+                  Unggah Skripsi
+                </a>
+              ) : null}
               <a
                 onClick={() => Navigate("/mhs/profile")}
                 className="block py-2 px-4 text-sm text-gray-500 hover:bg-yellow-300 hover:text-white transition duration-300"

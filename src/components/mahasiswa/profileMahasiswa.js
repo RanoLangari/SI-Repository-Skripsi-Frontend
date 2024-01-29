@@ -305,12 +305,14 @@ const ProfileMahasiswa = () => {
               >
                 Beranda
               </a>
-              <a
-                onClick={() => Navigate("/mhs/upload-skripsi")}
-                className="block py-2 px-4 text-sm text-gray-500 hover:bg-yellow-300 hover:text-white transition duration-300"
-              >
-                Unggah Skripsi
-              </a>
+              {status_kelulusan === "Lulus" ? (
+                <a
+                  onClick={() => Navigate("/mhs/upload-skripsi")}
+                  className="block py-2 px-4 text-sm text-gray-500 hover:bg-yellow-300 hover:text-white transition duration-300"
+                >
+                  Unggah Skripsi
+                </a>
+              ) : null}
               <a
                 onClick={() => Navigate("/mhs/profile")}
                 className="block py-2 px-4 text-sm text-gray-500 hover:bg-yellow-300 hover:text-white transition duration-300"
@@ -507,20 +509,23 @@ const ProfileMahasiswa = () => {
             </div>
           </div>
         </div>
-        <div className="bg-white dark:bg-gray-800 w-11/12 md:w-1/2 lg:w-1/3 mx-auto rounded-lg shadow mt-5">
-          <div className="py-4 px-8 mt-3">
-            <div className="flex justify-between items-center">
-              <h1 className="text-2xl font-bold text-gray-800 dark:text-white mt-4 text-center">
-                Status Skripsi
-              </h1>
+        {status_kelulusan === "Lulus" ? (
+          <div className="bg-white dark:bg-gray-800 w-11/12 md:w-1/2 lg:w-1/3 mx-auto rounded-lg shadow mt-5">
+            <div className="py-4 px-8 mt-3">
+              <div className="flex justify-between items-center">
+                <h1 className="text-2xl font-bold text-gray-800 dark:text-white mt-4 text-center">
+                  Status Skripsi
+                </h1>
+              </div>
+            </div>
+            <div className="border-b px-4 pb-6">
+              <h5>
+                Status Skripsi Anda <b>{statusSkripsi}</b>
+              </h5>
             </div>
           </div>
-          <div className="border-b px-4 pb-6">
-            <h5>
-              Status Skripsi Anda <b>{statusSkripsi}</b>
-            </h5>
-          </div>
-        </div>
+        ) : null}
+
         <div class="flex justify-center mt-4 text-gray-500">
           <div class="text-center">
             <p>© Sistem Informasi Repository Skripsi 2021</p>

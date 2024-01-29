@@ -228,12 +228,14 @@ const MhsDashboard = () => {
               >
                 Beranda
               </a>
-              <a
-                onClick={() => Navigate("/mhs/upload-skripsi")}
-                className="block py-2 px-4 text-sm text-gray-500 hover:bg-yellow-300 hover:text-white transition duration-300"
-              >
-                Unggah Skripsi
-              </a>
+              {status_kelulusan === "Lulus" ? (
+                <a
+                  onClick={() => Navigate("/mhs/upload-skripsi")}
+                  className="block py-2 px-4 text-sm text-gray-500 hover:bg-yellow-300 hover:text-white transition duration-300"
+                >
+                  Unggah Skripsi
+                </a>
+              ) : null}
               <a
                 onClick={() => Navigate("/mhs/profile")}
                 className="block py-2 px-4 text-sm text-gray-500 hover:bg-yellow-300 hover:text-white transition duration-300"
