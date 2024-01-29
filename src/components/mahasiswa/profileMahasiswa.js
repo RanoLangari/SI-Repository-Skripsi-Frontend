@@ -203,12 +203,14 @@ const ProfileMahasiswa = () => {
                 >
                   Beranda
                 </a>
-                <a
-                  className="py-4 px-5 text-gray-500 font-semibold hover:text-yellow-200 transition duration-300"
-                  href="/mhs/upload-skripsi"
-                >
-                  Unggah Skripsi
-                </a>
+                {status_kelulusan === "Lulus" ? (
+                  <a
+                    href="/mhs/upload-skripsi"
+                    className="py-4 px-2 text-gray-500 font-semibold hover:text-yellow-300 transition duration-300"
+                  >
+                    Unggah Skripsi
+                  </a>
+                ) : null}
               </div>
             </div>
             <div className="hidden md:flex items-center space-x-3 ">
