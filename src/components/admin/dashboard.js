@@ -124,9 +124,7 @@ const AdminDashboard = () => {
                 </a>
               </div>
             </div>
-            {/* secondary navbar items */}
             <div className="hidden md:flex items-center space-x-3 ">
-              {/* dropdown profile list item */}
               <div className="flex flex-col md:flex-row items-center md:space-x-3 ">
                 <div className="relative inline-block text-left">
                   <div>

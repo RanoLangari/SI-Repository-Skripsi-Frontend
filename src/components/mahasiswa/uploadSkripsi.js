@@ -3,6 +3,7 @@ import { useNavigate } from "react-router-dom";
 import axios from "axios";
 import Swal from "sweetalert2";
 import { Spinner } from "@material-tailwind/react";
+import { Select, Textarea, Option, Input } from "@material-tailwind/react";
 
 const UploadSkripsi = () => {
   const backendUrl = process.env.REACT_APP_API_URL;
@@ -324,110 +325,80 @@ const UploadSkripsi = () => {
                     typeof="multipart/form-data"
                     onSubmit={handleUpload}
                   >
-                    <div className="flex flex-col mb-4 md:w-full">
-                      <label
-                        className="mb-2 font-bold text-lg text-gray-900"
-                        htmlFor="Pembingbing1"
+                    <div className="flex flex-col mb-6 md:w-full">
+                      <Select
+                        color="yellow"
+                        size="regular"
+                        label="Pilih Dosen Pembimbing 1"
+                        outline={false}
+                        placeholder="Pilih Pembimbing 1"
+                        dropdownHandle={true}
+                        onChange={(e) => setPembimbing1(e)}
                       >
-                        Pembimbing 1
-                      </label>
-                      <select
-                        className="border py-2 px-3 text-gray-700 rounded-lg ml-4 mr-4"
-                        name="pembimbing1"
-                        id="pembimbing1"
-                        value={pembimbing1}
-                        onChange={(e) => setPembimbing1(e.target.value)}
-                      >
-                        <option value="">Pilih Pembimbing 1</option>
                         {data.map((item) => (
-                          <option value={item.nama}>{item.nama}</option>
+                          <Option value={item.nama}>{item.nama}</Option>
                         ))}
-                      </select>
+                      </Select>
                     </div>
-                    <div className="flex flex-col mb-4 md:w-full">
-                      <label
-                        className="mb-2 font-bold text-lg text-gray-900"
-                        htmlFor="Pembingbing2"
+                    <div className="flex flex-col mb-6 md:w-full">
+                      <Select
+                        color="yellow"
+                        size="regular"
+                        label="Pilih Dosen Pembimbing 2"
+                        outline={false}
+                        placeholder="Pilih Pembimbing 2"
+                        dropdownHandle={true}
+                        onChange={(e) => setPembimbing2(e)}
                       >
-                        Pembimbing 2
-                      </label>
-                      <select
-                        className="border py-2 px-3 text-gray-700 rounded-lg ml-4 mr-4"
-                        name="pembimbing2"
-                        id="pembimbing2"
-                        value={pembimbing2}
-                        onChange={(e) => setPembimbing2(e.target.value)}
-                      >
-                        <option value="">Pilih Pembimbing 2</option>
                         {data.map((item) => (
-                          <option value={item.nama}>{item.nama}</option>
+                          <Option value={item.nama}>{item.nama}</Option>
                         ))}
-                      </select>
+                      </Select>
                     </div>
-                    <div className="flex flex-col mb-4 md:w-full">
-                      <label
-                        className="mb-2 font-bold text-lg text-gray-900"
-                        htmlFor="penguji"
+                    <div className="flex flex-col mb-6 md:w-full">
+                      <Select
+                        color="yellow"
+                        size="regular"
+                        label="Pilih Dosen Penguji"
+                        outline={false}
+                        placeholder="Pilih Penguji"
+                        dropdownHandle={true}
+                        onChange={(e) => setPenguji(e)}
                       >
-                        Penguji
-                      </label>
-                      <select
-                        className="border py-2 px-3 text-gray-700 rounded-lg ml-4 mr-4"
-                        name="penguji"
-                        id="penguji"
-                        value={penguji}
-                        onChange={(e) => setPenguji(e.target.value)}
-                      >
-                        <option value="">Pilih Penguji</option>
                         {data.map((item) => (
-                          <option value={item.nama}>{item.nama}</option>
+                          <Option value={item.nama}>{item.nama}</Option>
                         ))}
-                      </select>
+                      </Select>
                     </div>
-                    <div className="flex flex-col mb-4 md:w-full">
-                      <label
-                        className="mb-2 font-bold text-lg text-gray-900"
-                        htmlFor="judul"
-                      >
-                        Judul Skripsi
-                      </label>
-                      <input
-                        className="border py-2 px-3 text-gray-700 rounded-lg ml-4 mr-4"
-                        type="text"
-                        name="judul_skripsi"
-                        id="judul_skripsi"
-                        placeholder="Judul Skripsi"
-                        value={judul}
-                        onChange={(e) => setJudul(e.target.value)}
+                    <div className="flex flex-col mb-6 md:w-full">
+                      <Input
+                        label="Judul Skripsi"
+                        color="yellow"
+                        required
+                        onChange={(e) => {
+                          setJudul(e.target.value);
+                        }}
                       />
                     </div>
-
-                    <div className="flex flex-col mb-4 md:w-full">
-                      <label
-                        className="mb-2 font-bold text-lg text-gray-900"
-                        htmlFor="abstract"
-                      >
-                        Abstrak
-                      </label>
-                      <textarea
-                        className="border py-2 px-3 text-gray-700 rounded-lg ml-4 mr-4 text-sm h-32"
-                        type="text"
-                        name="abstract"
-                        id="abstract"
-                        placeholder="Abstrak"
-                        value={abstract}
+                    <div className="flex flex-col mb-6 md:w-full">
+                      <Textarea
+                        color="yellow"
+                        size="regular"
+                        outline={false}
+                        label="Abstrak"
                         onChange={(e) => setAbstract(e.target.value)}
+                        required
                       />
                     </div>
-                    <div className="flex flex-col mb-4 md:w-full">
+                    <div className="flex flex-col mb-6 md:w-full">
                       <label
-                        className="mb-2 font-bold text-lg text-gray-900"
+                        className="mb-2 font-bold text-sm text-gray-900 text-left"
                         htmlFor="file"
                       >
                         File Skripsi
                       </label>
                       <input
-                        className="border py-2 px-3 text-gray-700 mb-4 md:mb-0 rounded-lg ml-4 mr-4"
+                        className="border py-2 px-3 text-gray-700 mb-4 md:mb-0 rounded-lg "
                         type="file"
                         name="file"
                         id="file"
