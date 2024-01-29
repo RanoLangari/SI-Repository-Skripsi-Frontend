@@ -3,6 +3,7 @@ import { useNavigate } from "react-router-dom";
 import axios from "axios";
 import Swal from "sweetalert2";
 import { Spinner } from "@material-tailwind/react";
+import { Input, Select, Option } from "@material-tailwind/react";
 
 const ProfileMahasiswa = () => {
   const backendUrl = process.env.REACT_APP_API_URL;
@@ -353,99 +354,86 @@ const ProfileMahasiswa = () => {
               <form className="w-full max-w-lg" onSubmit={handleUpdate}>
                 <div className="flex flex-col">
                   <div className="flex flex-col md:flex-row">
-                    <div className="flex flex-col w-full md:w-1/2 md:pr-2">
-                      <label className="text-gray-700 dark:text-gray-200">
-                        NIM
-                      </label>
-                      <input
-                        type="text"
-                        className="border rounded-lg px-3 py-2 mt-1 mb-5 text-sm w-full"
+                    <div className="flex flex-col w-full md:w-1/2 md:pr-2 mt-6">
+                      <Input
+                        label="NIM"
+                        required
+                        color="yellow"
                         value={nim}
                         onChange={(e) => setNim(e.target.value)}
                       />
                     </div>
-                    <div className="flex flex-col w-full md:w-1/2 md:pl-2">
-                      <label className="text-gray-700 dark:text-gray-200">
-                        Jurusan
-                      </label>
-                      <select
-                        name="jurusan"
-                        id="jurusan"
-                        className="border rounded-lg px-3 py-2 mt-1 mb-5 text-sm w-full"
+                    <div className="flex flex-col w-full md:w-1/2 md:pl-2 mt-6">
+                      <Select
+                        color="yellow"
+                        size="regular"
+                        outline={false}
+                        label="Jurusan"
                         required
                         onChange={(e) => {
-                          setJurusan(e.target.value);
+                          setJurusan(e);
                         }}
                         value={jurusan}
                       >
-                        <option value={""}>-- Pilih Jurusan --</option>
-                        <option value={"Manajemen"}>Manajemen</option>
-                        <option value={"Akuntansi"}>Akuntansi</option>
-                        <option value={"Ekonomi Pembangunan"}>
+                        <Option value="Manajemen">Manajemen</Option>
+                        <Option value="Akuntansi">Akuntansi</Option>
+                        <Option value="Ekonomi Pembangunan">
                           Ekonomi Pembangunan
-                        </option>
-                      </select>
+                        </Option>
+                      </Select>
                     </div>
                   </div>
 
                   <div className="flex flex-col md:flex-row">
-                    <div className="flex flex-col w-full md:w-1/2 md:pr-2">
-                      <label className="text-gray-700 dark:text-gray-200">
-                        Nama
-                      </label>
-                      <input
-                        type="text"
-                        className="border rounded-lg px-3 py-2 mt-1 mb-5 text-sm w-full"
+                    <div className="flex flex-col w-full md:w-1/2 md:pr-2 mt-6">
+                      <Input
+                        label="Nama"
+                        required
+                        color="yellow"
                         value={nama}
                         onChange={(e) => setNama(e.target.value)}
                       />
                     </div>
-                    <div className="flex flex-col w-full md:w-1/2 md:pl-2">
-                      <label className="text-gray-700 dark:text-gray-200">
-                        Semester
-                      </label>
-                      <select
-                        name="semester"
-                        id="semester"
-                        className="border rounded-lg px-3 py-2 mt-1 mb-5 text-sm w-full"
+                    <div className="flex flex-col w-full md:w-1/2 md:pl-2 mt-6">
+                      <Select
+                        color="yellow"
+                        size="regular"
+                        outline={false}
+                        label="Semester"
                         required
                         onChange={(e) => {
-                          setSemester(e.target.value);
+                          setSemester(e);
                         }}
                         value={semester}
                       >
-                        <option value={""}>-- Pilih Semester --</option>
                         {[...Array(14)].map((_, index) => (
-                          <option
+                          <Option
                             key={index + 1}
                             value={(index + 1).toString()}
                           >
                             {index + 1}
-                          </option>
+                          </Option>
                         ))}
-                      </select>
+                      </Select>
                     </div>
                   </div>
 
-                  <div className="flex flex-col">
+                  <div className="flex flex-col mt-6 mb-6">
                     <div className="flex flex-col w-full">
-                      <label className="text-gray-700 dark:text-gray-200">
-                        Status Kelulusan
-                      </label>
-                      <select
-                        name="status_kelulusan"
-                        id="status_kelulusan"
-                        className="border rounded-lg px-3 py-2 mt-1 mb-5 text-sm w-full"
+                      <Select
+                        color="yellow"
+                        size="regular"
+                        outline={false}
+                        label="Status Kelulusan"
                         required
                         onChange={(e) => {
-                          setStatusKelulusan(e.target.value);
+                          setStatusKelulusan(e);
                         }}
                         value={status_kelulusan}
                       >
-                        <option value={""}>-- Pilih Status --</option>
-                        <option value={"Lulus"}>Lulus</option>
-                        <option value={"Belum Lulus"}>Belum Lulus</option>
-                      </select>
+                        <Option value="Lulus">Lulus</Option>
+                        <Option value="Belum Lulus">Belum Lulus</Option>
+                      </Select>
                     </div>
                   </div>
 
@@ -475,37 +463,31 @@ const ProfileMahasiswa = () => {
               <form className="w-full max-w-lg" onSubmit={UpdatePassword}>
                 <div className="flex flex-col">
                   <div className="flex flex-col">
-                    <label className="text-gray-700 dark:text-gray-200">
-                      Password Lama
-                    </label>
-                    <input
+                    <Input
                       type="password"
-                      className="border rounded-lg px-3 py-2 mt-1 mb-5 text-sm w-full"
-                      name="old_password"
+                      required
+                      label="Password Lama"
+                      color="yellow"
                       value={old_password}
                       onChange={(e) => setOldPassword(e.target.value)}
                     />
                   </div>
-                  <div className="flex flex-col">
-                    <label className="text-gray-700 dark:text-gray-200">
-                      Password Baru
-                    </label>
-                    <input
+                  <div className="flex flex-col mt-6">
+                    <Input
                       type="password"
-                      className="border rounded-lg px-3 py-2 mt-1 mb-5 text-sm w-full"
-                      name="new_password"
+                      required
+                      label="Password Baru"
+                      color="yellow"
                       value={new_password}
                       onChange={(e) => setNewPassword(e.target.value)}
                     />
                   </div>
-                  <div className="flex flex-col">
-                    <label className="text-gray-700 dark:text-gray-200">
-                      Konfirmasi Password Baru
-                    </label>
-                    <input
+                  <div className="flex flex-col mt-6 mb-6">
+                    <Input
                       type="password"
-                      className="border rounded-lg px-3 py-2 mt-1 mb-5 text-sm w-full"
-                      name="confirm_password"
+                      required
+                      label="Konfirmasi Password Baru"
+                      color="yellow"
                       value={confirm_password}
                       onChange={(e) => setConfirmPassword(e.target.value)}
                     />
