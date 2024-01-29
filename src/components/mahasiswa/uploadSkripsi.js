@@ -35,7 +35,6 @@ const UploadSkripsi = () => {
         abstract,
         file,
       };
-      console.log(data);
       if (!pembimbing1 || !pembimbing2 || !penguji || !judul || !abstract) {
         Swal.fire({
           icon: "error",
