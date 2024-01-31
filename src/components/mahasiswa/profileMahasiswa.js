@@ -4,6 +4,7 @@ import axios from "axios";
 import Swal from "sweetalert2";
 import { Spinner } from "@material-tailwind/react";
 import { Input, Select, Option } from "@material-tailwind/react";
+import { FaUserCircle } from "react-icons/fa";
 
 const ProfileMahasiswa = () => {
   const backendUrl = process.env.REACT_APP_API_URL;
@@ -332,29 +333,27 @@ const ProfileMahasiswa = () => {
           )}
         </div>
       </nav>
-      <div class="pt-20 bg-gray-100 items-center justify-center">
-        <div class="bg-white dark:bg-gray-800 w-11/12 md:w-1/2 lg:w-1/3 mx-auto rounded-lg shadow">
-          <div class="py-4 px-8 mt-3">
-            <div class="flex justify-between items-center">
-              <h1 class="text-2xl font-bold text-gray-800 dark:text-white mt-4 text-center">
+      <div className="pt-20 bg-gray-100 items-center justify-center">
+        <div className="bg-white dark:bg-gray-800 w-11/12 md:w-1/2 lg:w-1/3 mx-auto rounded-lg shadow">
+          <div className="py-4 px-8 mt-3">
+            <div className="flex justify-between items-center">
+              <h1 className="text-2xl font-bold text-gray-800 dark:text-white mt-4 text-center">
                 Profile Mahasiswa
               </h1>
             </div>
           </div>
-          <div class="border-b px-4 pb-6">
-            <div class="text-center my-4">
-              <img
-                class="h-32 w-32 rounded-full border-4 border-white dark:border-gray-800 mx-auto my-4"
-                src="https://randomuser.me/api/portraits/women/21.jpg"
-                alt=""
-              />
-              <div class="py-2">
-                <h3 class="font-bold text-2xl text-gray-800 dark:text-white mb-1">
+          <div className="border-b px-4 pb-6">
+            <div className="text-center my-4">
+              <div className="h-28 w-28 mx-auto my-4">
+                <FaUserCircle className="h-full w-full text-gray-300" />
+              </div>
+              <div className="py-2">
+                <h3 className="font-bold text-xl text-gray-800 dark:text-white mb-1">
                   {nama}
                 </h3>
               </div>
             </div>
-            <div class="flex justify-center">
+            <div className="flex justify-center">
               <form className="w-full max-w-lg" onSubmit={handleUpdate}>
                 <div className="flex flex-col">
                   <div className="flex flex-col md:flex-row">
@@ -526,8 +525,8 @@ const ProfileMahasiswa = () => {
           </div>
         ) : null}
 
-        <div class="flex justify-center mt-4 text-gray-500">
-          <div class="text-center">
+        <div className="flex justify-center mt-4 text-gray-500">
+          <div className="text-center">
             <p>© Sistem Informasi Repository Skripsi 2021</p>
           </div>
         </div>
