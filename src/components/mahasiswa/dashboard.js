@@ -10,7 +10,6 @@ import {
   Drawer,
   Typography,
   IconButton,
-  drawer,
 } from "@material-tailwind/react";
 import { ArrowRightIcon, ArrowLeftIcon } from "@heroicons/react/24/outline";
 import { Spinner } from "@material-tailwind/react";
@@ -76,6 +75,7 @@ const MhsDashboard = () => {
 
   const getSkripsiByDate = async () => {
     try {
+      setLoading(false);
       if (tanggalAwal === "" || tanggalAkhir === "") {
         alert("Tanggal Awal dan Tanggal Akhir Harus Diisi");
         return;
@@ -97,11 +97,13 @@ const MhsDashboard = () => {
       }
     } catch (error) {
       setData([]);
+      setLoading(true);
     }
   };
 
   const fetchData = async () => {
     try {
+      setLoading(false);
       const token = localStorage.getItem("token");
       const config = {
         headers: {
