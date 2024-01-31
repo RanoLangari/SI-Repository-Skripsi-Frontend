@@ -219,32 +219,31 @@ const DetailSkripsi = () => {
               <div className="flex flex-col px-10 py-5">
                 <span className="text-sm text-black">Abstract</span>
                 <br />
-                <span className="text-sm text-black">{data.abstract}</span>
+                <span className="text-sm text-black text-justify">
+                  {data.abstract}
+                </span>
               </div>
               <div className="flex flex-col px-10 py-5">
                 <div class="flex flex-direction-row justify-content-space-between">
-                  <div class="w-1/2">
-                    <div className="flex flex-row">
+                  <div class="flex w-3/4 text-left flex-col">
+                    <div className="flex flex-col">
                       <span className="text-sm text-black">
                         Pembimbing 1 :{" "}
                       </span>
-                      <br />
                       <span className="text-sm text-black">
                         {data.pembimbing1}
                       </span>
                     </div>
-                    <div className="flex flex-row">
+                    <div className="flex flex-col mt-2">
                       <span className="text-sm text-black">
                         Pembimbing 2 :{" "}
                       </span>
-                      <br />
                       <span className="text-sm text-black">
                         {data.pembimbing2}
                       </span>
                     </div>
-                    <div className="flex flex-row">
-                      <span className="text-sm text-black">Penguji 1 : </span>
-                      <br />
+                    <div className="flex flex-col mt-2">
+                      <span className="text-sm text-black">Penguji : </span>
                       <span className="text-sm text-black">{data.penguji}</span>
                     </div>
                   </div>
