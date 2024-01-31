@@ -2,10 +2,17 @@ import React, { useState, useEffect } from "react";
 import { useNavigate } from "react-router-dom";
 import ReactPaginate from "react-paginate";
 import axios from "axios";
-import { Button, Input } from "@material-tailwind/react";
+import {
+  Button,
+  Input,
+  Select,
+  Option,
+  Drawer,
+  Typography,
+  IconButton,
+} from "@material-tailwind/react";
 import { ArrowRightIcon, ArrowLeftIcon } from "@heroicons/react/24/outline";
 import { Spinner } from "@material-tailwind/react";
-import { Select, Option } from "@material-tailwind/react";
 const MhsDashboard = () => {
   const backendUrl = process.env.REACT_APP_API_URL;
   const Navigate = useNavigate();
@@ -18,6 +25,10 @@ const MhsDashboard = () => {
   const [perPage] = useState(6);
   const [currentPage, setCurrentPage] = useState(0);
   const [loading, setLoading] = useState(false);
+  const [open, setOpen] = React.useState(false);
+
+  const openDrawer = () => setOpen(true);
+  const closeDrawer = () => setOpen(false);
 
   const handlePageClick = (data) => {
     const selectedPage = data.selected;
@@ -53,6 +64,7 @@ const MhsDashboard = () => {
       if (response.status === 200) {
         console.log("berhasil set data");
         setData(response.data.data);
+        console.log(response);
         setLoading(true);
       }
     } catch (error) {
@@ -297,25 +309,67 @@ const MhsDashboard = () => {
                   }}
                 />
               </div>
-              <div className="mt-6 w-2">
-                <Select
-                  color="yellow"
-                  outline={false}
-                  placeholder="Pilih Jurusan"
-                  label="Pilih Jurusan"
-                  dropdownHandle={true}
-                  onChange={(e) => {
-                    setJurusan(e);
-                    getSkripsiByJurusan();
-                  }}
-                >
-                  <Option value="">Semua</Option>
-                  <Option value="Manajemen">Manajemen</Option>
-                  <Option value="Akuntansi">Akuntansi</Option>
-                  <Option value="Ekonomi Pembangunan">
-                    Ekonomi Pembangunan
-                  </Option>
-                </Select>
+              <div className="mt-6 flex items-start">
+                <div>
+                  <Button onClick={openDrawer}>Pilih Kategori</Button>
+                  <Drawer open={open} onClose={closeDrawer} className="p-4">
+                    <div className="mb-6 flex items-center justify-between">
+                      <Typography variant="h5" color="blue-gray">
+                        Pilih Kategori
+                      </Typography>
+                      <IconButton onClick={closeDrawer}>
+                        <svg
+                          xmlns="http://www.w3.org/2000/svg"
+                          className="h-6 w-6 text-gray-500 hover:text-yellow-300"
+                          fill="none"
+                          viewBox="0 0 24 24"
+                          stroke="currentColor"
+                        >
+                          <path
+                            strokeLinecap="round"
+                            strokeLinejoin="round"
+                            strokeWidth="2"
+                            d="M6 18L18 6M6 6l12 12"
+                          />
+                        </svg>
+                      </IconButton>
+                    </div>
+                    <div className="flex flex-col gap-4">
+                      <Select
+                        color="yellow"
+                        size="regular"
+                        outline={false}
+                        placeholder="Pilih Jurusan"
+                        label="Pilih Jurusan"
+                        onChange={(e) => {
+                          setJurusan(e);
+                        }}
+                      >
+                        <Option value="Akuntansi">Akuntansi</Option>
+                        <Option value="Manajemen">Manajemen</Option>
+                        <Option value="Ekonomi Pembangunan">
+                          Ekonomi Pembangunan
+                        </Option>
+                      </Select>
+                      <Button
+                        color="yellow"
+                        size="regular"
+                        onClick={
+                          jurusan === ""
+                            ? getSkripsiByJurusan
+                            : () => {
+                                setSearchTerm("");
+                                setJurusan("");
+                                getSkripsiByJurusan();
+                                closeDrawer();
+                              }
+                        }
+                      >
+                        Cari
+                      </Button>
+                    </div>
+                  </Drawer>
+                </div>
               </div>
             </div>
           </div>
