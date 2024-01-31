@@ -3,6 +3,7 @@ import { useNavigate } from "react-router-dom";
 import axios from "axios";
 import Swal from "sweetalert2";
 import { Spinner } from "@material-tailwind/react";
+import { Input, Select, Option } from "@material-tailwind/react";
 
 const ProfileMahasiswa = () => {
   const backendUrl = process.env.REACT_APP_API_URL;
@@ -335,15 +336,14 @@ const ProfileMahasiswa = () => {
             <div class="flex justify-center">
               <form className="w-full max-w-lg" onSubmit={UpdateProfile}>
                 <div className="flex flex-col">
-                  <div className="flex flex-col md:flex-row">
-                    <div className="flex flex-col w-full md:w-1/2 md:pr-2">
-                      <label className="text-gray-700 dark:text-gray-200">
-                        Email
-                      </label>
-                      <input
-                        type="text"
-                        className="border rounded-lg px-3 py-2 mt-1 mb-5 text-sm w-full"
-                        name="email"
+                  <div className="flex flex-col md:flex-row mb-4">
+                    <div className="flex flex-col w-full md:w-1/2 md:pr-2 mb-4">
+                      <Input
+                        color="yellow"
+                        size="regular"
+                        outline={true}
+                        placeholder="Email"
+                        label="Email"
                         value={data.email}
                         onChange={(e) =>
                           setData({ ...data, email: e.target.value })
@@ -351,13 +351,12 @@ const ProfileMahasiswa = () => {
                       />
                     </div>
                     <div className="flex flex-col w-full md:w-1/2 md:pl-2">
-                      <label className="text-gray-700 dark:text-gray-200">
-                        Username
-                      </label>
-                      <input
-                        type="text"
-                        className="border rounded-lg px-3 py-2 mt-1 mb-5 text-sm w-full"
-                        name="username"
+                      <Input
+                        color="yellow"
+                        size="regular"
+                        outline={true}
+                        placeholder="Username"
+                        label="Username"
                         value={data.username}
                         onChange={(e) =>
                           setData({ ...data, username: e.target.value })
@@ -380,7 +379,7 @@ const ProfileMahasiswa = () => {
         </div>
         <div className="bg-white dark:bg-gray-800 w-11/12 md:w-1/2 lg:w-1/3 mx-auto rounded-lg shadow mt-5">
           <div className="py-4 px-8 mt-3">
-            <div className="flex justify-between items-center">
+            <div className="flex justify-center items-center">
               <h1 className="text-2xl font-bold text-gray-800 dark:text-white mt-4 text-center">
                 Ganti Password
               </h1>
@@ -390,38 +389,37 @@ const ProfileMahasiswa = () => {
             <div className="flex justify-center">
               <form className="w-full max-w-lg" onSubmit={UpdatePassword}>
                 <div className="flex flex-col">
-                  <div className="flex flex-col">
-                    <label className="text-gray-700 dark:text-gray-200">
-                      Password Lama
-                    </label>
-                    <input
-                      type="password"
-                      className="border rounded-lg px-3 py-2 mt-1 mb-5 text-sm w-full"
-                      name="old_password"
+                  <div className="flex flex-col mb-4">
+                    <Input
+                      color="yellow"
+                      size="regular"
+                      outline={true}
+                      placeholder="Password Lama"
+                      label="Password Lama"
                       value={old_password}
                       onChange={(e) => setOldPassword(e.target.value)}
                     />
                   </div>
-                  <div className="flex flex-col">
-                    <label className="text-gray-700 dark:text-gray-200">
-                      Password Baru
-                    </label>
-                    <input
+                  <div className="flex flex-col mb-4">
+                    <Input
+                      color="yellow"
+                      size="regular"
                       type="password"
-                      className="border rounded-lg px-3 py-2 mt-1 mb-5 text-sm w-full"
-                      name="new_password"
+                      outline={true}
+                      placeholder="Password Baru"
+                      label="Password Baru"
                       value={new_password}
                       onChange={(e) => setNewPassword(e.target.value)}
                     />
                   </div>
-                  <div className="flex flex-col">
-                    <label className="text-gray-700 dark:text-gray-200">
-                      Konfirmasi Password Baru
-                    </label>
-                    <input
+                  <div className="flex flex-col mb-4">
+                    <Input
                       type="password"
-                      className="border rounded-lg px-3 py-2 mt-1 mb-5 text-sm w-full"
-                      name="confirm_password"
+                      color="yellow"
+                      size="regular"
+                      outline={true}
+                      placeholder="Konfirmasi Password Baru"
+                      label="Konfirmasi Password Baru"
                       value={confirm_password}
                       onChange={(e) => setConfirmPassword(e.target.value)}
                     />

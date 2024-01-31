@@ -33,6 +33,8 @@ function App() {
             element={<DetailDataSkripsi />}
           />
           <Route path="/admin/dosen" element={<DataDosen />} />
+
+          <Route path="*" element={<h1>Not Found</h1>} />
         </Routes>
       </BrowserRouter>
     </div>
