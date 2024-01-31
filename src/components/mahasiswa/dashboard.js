@@ -10,15 +10,19 @@ import {
   Drawer,
   Typography,
   IconButton,
+  drawer,
 } from "@material-tailwind/react";
 import { ArrowRightIcon, ArrowLeftIcon } from "@heroicons/react/24/outline";
 import { Spinner } from "@material-tailwind/react";
+import Swal from "sweetalert2";
 const MhsDashboard = () => {
   const backendUrl = process.env.REACT_APP_API_URL;
   const Navigate = useNavigate();
   const [showMenu, setShowMenu] = useState(false);
   const [searchTerm, setSearchTerm] = useState("");
   const [jurusan, setJurusan] = useState("");
+  const [tanggalAwal, setTanggalAwal] = useState("");
+  const [tanggalAkhir, setTanggalAkhir] = useState("");
   const [dropdownVisible, setDropdownVisible] = useState(false);
   const [data, setData] = useState([]);
   const [status_kelulusan, setStatusKelulusan] = useState("");
@@ -69,6 +73,32 @@ const MhsDashboard = () => {
       }
     } catch (error) {
       console.log(error);
+    }
+  };
+
+  const getSkripsiByDate = async () => {
+    try {
+      if (tanggalAwal === "" || tanggalAkhir === "") {
+        alert("Tanggal Awal dan Tanggal Akhir Harus Diisi");
+        return;
+      }
+
+      const token = localStorage.getItem("token");
+      const config = {
+        headers: {
+          Authorization: `Bearer ${token}`,
+        },
+      };
+      const response = await axios.get(
+        `${backendUrl}/api/mahasiswa/get-skripsi-date?tanggal_awal=${tanggalAwal}&tanggal_akhir=${tanggalAkhir}`,
+        config
+      );
+      if (response.status === 200) {
+        setData(response.data.data);
+        setLoading(true);
+      }
+    } catch (error) {
+      setData([]);
     }
   };
 
@@ -311,11 +341,11 @@ const MhsDashboard = () => {
               </div>
               <div className="mt-6 flex items-start">
                 <div>
-                  <Button onClick={openDrawer}>Pilih Kategori</Button>
+                  <Button onClick={openDrawer}>Filter Data</Button>
                   <Drawer open={open} onClose={closeDrawer} className="p-4">
                     <div className="mb-6 flex items-center justify-between">
                       <Typography variant="h5" color="blue-gray">
-                        Pilih Kategori
+                        Filter Data
                       </Typography>
                       <IconButton onClick={closeDrawer}>
                         <svg
@@ -334,7 +364,10 @@ const MhsDashboard = () => {
                         </svg>
                       </IconButton>
                     </div>
-                    <div className="flex flex-col gap-4">
+                    <div className="flex flex-col gap-4 mt-8">
+                      <Typography variant="h6" color="blue-gray">
+                        Filter Jurusan
+                      </Typography>
                       <Select
                         color="yellow"
                         size="regular"
@@ -354,6 +387,7 @@ const MhsDashboard = () => {
                       <Button
                         color="yellow"
                         size="regular"
+                        className="mb-8"
                         onClick={
                           jurusan === ""
                             ? getSkripsiByJurusan
@@ -366,6 +400,58 @@ const MhsDashboard = () => {
                         }
                       >
                         Cari
+                      </Button>
+                    </div>
+                    <div className="flex flex-col gap-2 mt-8">
+                      <Typography variant="h6" color="blue-gray">
+                        Filter Tanggal
+                      </Typography>
+                      <Input
+                        type="date"
+                        color="yellow"
+                        size="regular"
+                        outline={false}
+                        placeholder="Tanggal Awal"
+                        label="Tanggal Awal"
+                        onChange={(e) => {
+                          setTanggalAwal(e.target.value);
+                        }}
+                      />
+                      s.d.
+                      <Input
+                        type="date"
+                        color="yellow"
+                        size="regular"
+                        outline={false}
+                        placeholder="Tanggal Akhir"
+                        label="Tanggal Akhir"
+                        onChange={(e) => {
+                          setTanggalAkhir(e.target.value);
+                        }}
+                      />
+                      <Button
+                        color="yellow"
+                        className="mb-8 mt-2"
+                        size="regular"
+                        onClick={getSkripsiByDate}
+                      >
+                        Cari
+                      </Button>
+                    </div>
+                    <div className="flex flex-col gap-4 mt-8">
+                      <Button
+                        color="yellow"
+                        size="regular"
+                        onClick={() => {
+                          setSearchTerm("");
+                          setJurusan("");
+                          setTanggalAwal("");
+                          setTanggalAkhir("");
+                          fetchData();
+                          closeDrawer();
+                        }}
+                      >
+                        Clear Filter
                       </Button>
                     </div>
                   </Drawer>
