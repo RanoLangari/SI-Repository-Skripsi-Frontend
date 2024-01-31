@@ -54,7 +54,7 @@ const MhsDashboard = () => {
 
   const getSkripsiByJurusan = async () => {
     try {
-      console.log(jurusan);
+      setLoading(false);
       const token = localStorage.getItem("token");
       const config = {
         headers: {
@@ -66,9 +66,7 @@ const MhsDashboard = () => {
         config
       );
       if (response.status === 200) {
-        console.log("berhasil set data");
         setData(response.data.data);
-        console.log(response);
         setLoading(true);
       }
     } catch (error) {

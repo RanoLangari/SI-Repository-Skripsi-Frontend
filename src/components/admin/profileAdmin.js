@@ -3,7 +3,7 @@ import { useNavigate } from "react-router-dom";
 import axios from "axios";
 import Swal from "sweetalert2";
 import { Spinner } from "@material-tailwind/react";
-import { Input, Select, Option } from "@material-tailwind/react";
+import { Input } from "@material-tailwind/react";
 import { FaUserCircle } from "react-icons/fa";
 
 const ProfileMahasiswa = () => {
