@@ -4,6 +4,7 @@ import axios from "axios";
 import Swal from "sweetalert2";
 import { Spinner } from "@material-tailwind/react";
 import { Input, Select, Option } from "@material-tailwind/react";
+import { FaUserCircle } from "react-icons/fa";
 
 const ProfileMahasiswa = () => {
   const backendUrl = process.env.REACT_APP_API_URL;
@@ -322,11 +323,9 @@ const ProfileMahasiswa = () => {
           </div>
           <div class="border-b px-4 pb-6">
             <div class="text-center my-4">
-              <img
-                class="h-32 w-32 rounded-full border-4 border-white dark:border-gray-800 mx-auto my-4"
-                src="https://randomuser.me/api/portraits/women/21.jpg"
-                alt=""
-              />
+              <div className="h-28 w-28 mx-auto my-4">
+                <FaUserCircle className="h-full w-full text-gray-300" />
+              </div>
               <div class="py-2">
                 <h3 class="font-bold text-2xl text-gray-800 dark:text-white mb-1">
                   {data.username}
