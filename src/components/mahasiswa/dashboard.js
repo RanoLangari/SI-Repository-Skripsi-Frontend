@@ -11,6 +11,7 @@ const MhsDashboard = () => {
   const Navigate = useNavigate();
   const [showMenu, setShowMenu] = useState(false);
   const [searchTerm, setSearchTerm] = useState("");
+  const [jurusan, setJurusan] = useState("");
   const [dropdownVisible, setDropdownVisible] = useState(false);
   const [data, setData] = useState([]);
   const [status_kelulusan, setStatusKelulusan] = useState("");
@@ -36,6 +37,29 @@ const MhsDashboard = () => {
     setDropdownVisible(!dropdownVisible);
   };
 
+  const getSkripsiByJurusan = async () => {
+    try {
+      console.log(jurusan);
+      const token = localStorage.getItem("token");
+      const config = {
+        headers: {
+          Authorization: `Bearer ${token}`,
+        },
+      };
+      const response = await axios.get(
+        `${backendUrl}/api/mahasiswa/get-skripsi/${jurusan}`,
+        config
+      );
+      if (response.status === 200) {
+        console.log("berhasil set data");
+        setData(response.data.data);
+        setLoading(true);
+      }
+    } catch (error) {
+      console.log(error);
+    }
+  };
+
   const fetchData = async () => {
     try {
       const token = localStorage.getItem("token");
@@ -59,7 +83,7 @@ const MhsDashboard = () => {
         setLoading(true);
       }
     } catch (err) {
-      console.log(err);
+      Navigate("/login-mhs");
     }
   };
 
@@ -281,7 +305,8 @@ const MhsDashboard = () => {
                   label="Pilih Jurusan"
                   dropdownHandle={true}
                   onChange={(e) => {
-                    setSearchTerm(e);
+                    setJurusan(e);
+                    getSkripsiByJurusan();
                   }}
                 >
                   <Option value="">Semua</Option>
