@@ -154,11 +154,7 @@ const MhsDashboard = () => {
   const SkripsiItem = ({ item }) => (
     <div className="w-full lg:max-w-full lg:flex mt-10 rounded-lg shadow-xl">
       <div className="h-20 lg:h-auto lg:w-48 flex-none bg-cover rounded-t lg:rounded-t-none lg:rounded-l text-center overflow-hidden rounded-lg">
-        <img
-          src={`https://feb.undana.ac.id/wp-content/uploads/2023/02/LOGO-FEB-black.png`}
-          alt=""
-          className=" w-100 h-100 rounded-lg"
-        />
+        <img src="../FEB.png" alt="" className="mx-auto mb-4" />
       </div>
       <div className="bg-white rounded-b lg:rounded-b-none lg:rounded-r p-4 flex flex-col justify-between leading-normal">
         <div className="mb-8">
