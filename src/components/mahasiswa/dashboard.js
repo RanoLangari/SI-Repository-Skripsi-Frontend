@@ -17,8 +17,7 @@ import Navbar from "./template/Navbar";
 import { faker } from "@faker-js/faker";
 import Swal from "sweetalert2";
 const MhsDashboard = () => {
-  const backendUrl = process.env.REACT_APP_API_URL;
-  const Navigate = useNavigate();
+  // state Hooks
   const [showMenu, setShowMenu] = useState(false);
   const [searchTerm, setSearchTerm] = useState("");
   const [jurusan, setJurusan] = useState("");
@@ -32,14 +31,23 @@ const MhsDashboard = () => {
   const [loading, setLoading] = useState(false);
   const [open, setOpen] = React.useState(false);
 
+  // Variable
+  const backendUrl = process.env.REACT_APP_API_URL;
+  const Navigate = useNavigate();
+
+  // methods
   const openDrawer = () => setOpen(true);
   const closeDrawer = () => setOpen(false);
-
   const handlePageClick = (data) => {
     const selectedPage = data.selected;
     setCurrentPage(selectedPage);
   };
-
+  const showMenuToggle = () => {
+    setShowMenu(!showMenu);
+  };
+  const toggleDropdown = () => {
+    setDropdownVisible(!dropdownVisible);
+  };
   // const fetchData = async () => {
   //   const data = [];
   //   for (let i = 0; i < 2000; i++) {
@@ -53,20 +61,33 @@ const MhsDashboard = () => {
   //   setData(data);
   //   setLoading(true);
   // };
+  const fetchData = async () => {
+    try {
+      setLoading(false);
+      const token = localStorage.getItem("token");
+      const config = {
+        headers: {
+          Authorization: `Bearer ${token}`,
+        },
+      };
 
-  const filteredData = data.filter((item) =>
-    Object.values(item).some((value) =>
-      value.toString().toLowerCase().includes(searchTerm.toLowerCase())
-    )
-  );
-  const showMenuToggle = () => {
-    setShowMenu(!showMenu);
+      const response = await axios.get(
+        `${backendUrl}/api/mahasiswa/profile`,
+        config
+      );
+      if (response.status === 200) {
+        const res = await axios.get(
+          `${backendUrl}/api/mahasiswa/get-skripsi`,
+          config
+        );
+        setData(res.data.data);
+        setStatusKelulusan(response.data.data.status_kelulusan);
+        setLoading(true);
+      }
+    } catch (err) {
+      Navigate("/login-mhs");
+    }
   };
-
-  const toggleDropdown = () => {
-    setDropdownVisible(!dropdownVisible);
-  };
-
   const getSkripsiByJurusan = async () => {
     try {
       setLoading(false);
@@ -88,7 +109,6 @@ const MhsDashboard = () => {
       console.log(error);
     }
   };
-
   const getSkripsiByDate = async () => {
     try {
       setLoading(false);
@@ -117,42 +137,24 @@ const MhsDashboard = () => {
     }
   };
 
-  const fetchData = async () => {
-    try {
-      setLoading(false);
-      const token = localStorage.getItem("token");
-      const config = {
-        headers: {
-          Authorization: `Bearer ${token}`,
-        },
-      };
-
-      const response = await axios.get(
-        `${backendUrl}/api/mahasiswa/profile`,
-        config
-      );
-      if (response.status === 200) {
-        const res = await axios.get(
-          `${backendUrl}/api/mahasiswa/get-skripsi`,
-          config
-        );
-        setData(res.data.data);
-        setStatusKelulusan(response.data.data.status_kelulusan);
-        setLoading(true);
-      }
-    } catch (err) {
-      Navigate("/login-mhs");
-    }
-  };
+  // filter data
+  const filteredData = data.filter((item) =>
+    Object.values(item).some((value) =>
+      value.toString().toLowerCase().includes(searchTerm.toLowerCase())
+    )
+  );
 
   useEffect(() => {
     console.log(status_kelulusan);
     fetchData();
   }, []);
 
+  // pagination
   const indexOfLastItem = (currentPage + 1) * perPage;
   const indexOfFirstItem = indexOfLastItem - perPage;
   const currentItems = filteredData.slice(indexOfFirstItem, indexOfLastItem);
+
+  // skripsi item component
   const SkripsiItem = ({ item }) => (
     <div className="w-full lg:max-w-full lg:flex mt-10 rounded-lg shadow-xl">
       <div className="h-20 lg:h-auto lg:w-48 flex-none bg-cover rounded-t lg:rounded-t-none lg:rounded-l text-center overflow-hidden rounded-lg">
