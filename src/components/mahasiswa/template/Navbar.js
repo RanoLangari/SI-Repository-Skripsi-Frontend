@@ -27,7 +27,7 @@ const Navbar = ({
               <div className="hidden md:flex items-center space-x-1">
                 <a
                   href="/mhs/dashboard"
-                  className={`py-4 px-2 font-semibold ${
+                  className={`py-4 px-2 font-semibold hover:text-yellow-300 transition duration-300 ${
                     location.pathname === "/mhs/dashboard"
                       ? "text-yellow-300 border-b-4 border-yellow-300"
                       : "text-gray-500"
