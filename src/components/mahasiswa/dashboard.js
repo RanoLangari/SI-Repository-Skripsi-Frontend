@@ -13,6 +13,7 @@ import {
 } from "@material-tailwind/react";
 import { ArrowRightIcon, ArrowLeftIcon } from "@heroicons/react/24/outline";
 import { Spinner } from "@material-tailwind/react";
+import { faker } from "@faker-js/faker";
 import Swal from "sweetalert2";
 const MhsDashboard = () => {
   const backendUrl = process.env.REACT_APP_API_URL;
@@ -37,6 +38,20 @@ const MhsDashboard = () => {
     const selectedPage = data.selected;
     setCurrentPage(selectedPage);
   };
+
+  // const fetchData = async () => {
+  //   const data = [];
+  //   for (let i = 0; i < 1000; i++) {
+  //     data.push({
+  //       id: i,
+  //       nama: faker.animal.cat(),
+  //       jurusan: faker.company.name(),
+  //       judul_skripsi: faker.location.country(),
+  //     });
+  //   }
+  //   setData(data);
+  //   setLoading(true);
+  // };
 
   const filteredData = data.filter((item) =>
     Object.values(item).some((value) =>
@@ -121,6 +136,7 @@ const MhsDashboard = () => {
           config
         );
         setData(res.data.data);
+        console.log(res.data.data);
         setStatusKelulusan(response.data.data.status_kelulusan);
         setLoading(true);
       }
