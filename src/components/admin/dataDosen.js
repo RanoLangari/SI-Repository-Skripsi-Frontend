@@ -18,12 +18,12 @@ const DataDosen = () => {
   const [dropdownVisible, setDropdownVisible] = useState(false);
   const [data, setData] = useState([]);
   const [loading, setLoading] = useState(false);
-  const showMenuToggle = () => {
+  function showMenuToggle() {
     setShowMenu(!showMenu);
-  };
-  const toggleDropdown = () => {
+  }
+  function toggleDropdown() {
     setDropdownVisible(!dropdownVisible);
-  };
+  }
   const deleteDosen = (id) => {
     Swal.close();
     Swal.fire({
@@ -221,7 +221,6 @@ const DataDosen = () => {
     ],
     []
   );
-
   const table = useMaterialReactTable({
     columns,
     data,

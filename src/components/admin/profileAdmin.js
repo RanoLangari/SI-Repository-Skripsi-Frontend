@@ -13,17 +13,17 @@ const ProfileMahasiswa = () => {
   const [data, setData] = useState([]);
   const [showMenu, setShowMenu] = useState(false);
   const [dropdownVisible, setDropdownVisible] = useState(false);
-  const showMenuToggle = () => {
+  function showMenuToggle() {
     setShowMenu(!showMenu);
-  };
+  }
   const [old_password, setOldPassword] = useState("");
   const [new_password, setNewPassword] = useState("");
   const [confirm_password, setConfirmPassword] = useState("");
   const [loading, setLoading] = useState(false);
 
-  const toggleDropdown = () => {
+  function toggleDropdown() {
     setDropdownVisible(!dropdownVisible);
-  };
+  }
 
   const UpdatePassword = async (e) => {
     e.preventDefault();

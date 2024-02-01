@@ -14,13 +14,13 @@ const DetailDataSkripsi = () => {
   const [dropdownVisible, setDropdownVisible] = useState(false);
   const [loading, setLoading] = useState(false);
 
-  const showMenuToggle = () => {
+  function showMenuToggle() {
     setShowMenu(!showMenu);
-  };
+  }
 
-  const toggleDropdown = () => {
+  function toggleDropdown() {
     setDropdownVisible(!dropdownVisible);
-  };
+  }
 
   useEffect(() => {
     const token = localStorage.getItem("token");
