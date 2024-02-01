@@ -1,5 +1,6 @@
 import "./App.css";
 import { BrowserRouter, Routes, Route } from "react-router-dom";
+import NotFound from "./components/NotFound";
 import LoginMhs from "./components/mahasiswa/auth/login-mhs";
 import RegisterMahasiswa from "./components/mahasiswa/auth/register-mhs";
 import LoginAdmin from "./components/admin/auth/loginAdmin";
@@ -34,7 +35,7 @@ function App() {
           />
           <Route path="/admin/dosen" element={<DataDosen />} />
 
-          <Route path="*" element={<h1>Not Found</h1>} />
+          <Route path="*" element={<NotFound />} />
         </Routes>
       </BrowserRouter>
     </div>
