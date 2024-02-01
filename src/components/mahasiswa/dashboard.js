@@ -136,7 +136,6 @@ const MhsDashboard = () => {
           config
         );
         setData(res.data.data);
-        console.log(res.data.data);
         setStatusKelulusan(response.data.data.status_kelulusan);
         setLoading(true);
       }

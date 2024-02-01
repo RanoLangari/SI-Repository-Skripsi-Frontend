@@ -31,8 +31,30 @@ const RegisterMahasiswa = () => {
       password,
       confirm_password,
     };
-    console.log(data);
     try {
+      if (
+        !nim ||
+        !nama ||
+        !jurusan ||
+        !semester ||
+        !status_kelulusan ||
+        !password ||
+        !confirm_password
+      ) {
+        return Swal.fire({
+          icon: "error",
+          title: "Register gagal!",
+          text: "Semua kolom harus diisi",
+        });
+      }
+
+      if (password !== confirm_password) {
+        return Swal.fire({
+          icon: "error",
+          title: "Register gagal!",
+          text: "Password tidak sama",
+        });
+      }
       const response = await axios.post(
         `${backendUrl}/api/mahasiswa/register`,
         data
@@ -52,6 +74,7 @@ const RegisterMahasiswa = () => {
         icon: "error",
         title: "Register gagal!",
         text: error.response.data.message,
+        timer: 1000,
       });
     }
   };
