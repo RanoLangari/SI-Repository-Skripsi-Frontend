@@ -110,16 +110,16 @@ const DataDosen = () => {
               onClick={() => {
                 Swal.fire({
                   title: "Edit Data Dosen",
-                  html: `<div class="flex flex-col gap-4">
-                  <div class="flex flex-col gap-2">
-                    <label for="nama" class="text-sm">Nama Dosen</label>
-                    <input type="text" id="nama" class="shadow appearance-none border rounded w-full py-2 px-3 text-gray-700 mb-3 leading-tight focus:outline-none focus:shadow-outline" value="${
+                  html: `<div className="flex flex-col gap-4">
+                  <div className="flex flex-col gap-2">
+                    <label for="nama" className="text-sm">Nama Dosen</label>
+                    <input type="text" id="nama" className="shadow appearance-none border rounded w-full py-2 px-3 text-gray-700 mb-3 leading-tight focus:outline-none focus:shadow-outline" value="${
                       row.original.nama
                     }">
                   </div>
-                  <div class="flex flex-col gap-2">
-                    <label for="jurusan" class="text-sm">Jurusan</label>
-                    <select id="jurusan" class="shadow appearance-none border rounded w-full py-2 px-3 text-gray-700 mb-3 leading-tight focus:outline-none focus:shadow-outline">
+                  <div className="flex flex-col gap-2">
+                    <label for="jurusan" className="text-sm">Jurusan</label>
+                    <select id="jurusan" className="shadow appearance-none border rounded w-full py-2 px-3 text-gray-700 mb-3 leading-tight focus:outline-none focus:shadow-outline">
                       <option value="Manajemen" ${
                         row.original.jurusan === "Manajemen" ? "selected" : ""
                       }>Manajemen</option>
@@ -253,14 +253,14 @@ const DataDosen = () => {
                   onClick={() => {
                     Swal.fire({
                       title: "Tambah Data Dosen",
-                      html: `<div class="flex flex-col gap-4">
-                      <div class="flex flex-col gap-2">
-                        <label for="nama" class="text-sm">Nama Dosen</label>
-                        <input type="text" id="nama" class="shadow appearance-none border rounded w-full py-2 px-3 text-gray-700 mb-3 leading-tight focus:outline-none focus:shadow-outline">
+                      html: `<div className="flex flex-col gap-4">
+                      <div className="flex flex-col gap-2">
+                        <label for="nama" className="text-sm">Nama Dosen</label>
+                        <input type="text" id="nama" className="shadow appearance-none border rounded w-full py-2 px-3 text-gray-700 mb-3 leading-tight focus:outline-none focus:shadow-outline">
                       </div>
-                      <div class="flex flex-col gap-2">
-                        <label for="jurusan" class="text-sm">Jurusan</label>
-                        <select id="jurusan" class="shadow appearance-none border rounded w-full py-2 px-3 text-gray-700 mb-3 leading-tight focus:outline-none focus:shadow-outline">
+                      <div className="flex flex-col gap-2">
+                        <label for="jurusan" className="text-sm">Jurusan</label>
+                        <select id="jurusan" className="shadow appearance-none border rounded w-full py-2 px-3 text-gray-700 mb-3 leading-tight focus:outline-none focus:shadow-outline">
                         <option value="">Pilih Jurusan</option>
                           <option value="Manajemen">Manajemen</option>
                           <option value="Akuntansi">Akuntansi</option>

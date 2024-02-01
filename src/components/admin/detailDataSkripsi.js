@@ -206,8 +206,8 @@ const DetailDataSkripsi = () => {
                 </span>
               </div>
               <div className="flex flex-col px-10 py-5">
-                <div class="flex flex-direction-row justify-content-space-between">
-                  <div class="flex w-3/4 text-left flex-col">
+                <div className="flex flex-direction-row justify-content-space-between">
+                  <div className="flex w-3/4 text-left flex-col">
                     <div className="flex flex-col">
                       <span className="text-sm text-black">
                         Pembimbing 1 :{" "}
@@ -229,7 +229,7 @@ const DetailDataSkripsi = () => {
                       <span className="text-sm text-black">{data.penguji}</span>
                     </div>
                   </div>
-                  <div class="flex w-1/2 justify-end items-end">
+                  <div className="flex w-1/2 justify-end items-end">
                     {" "}
                     <div className="flex flex-row items-center">
                       <a href={`${data.skripsi_url}`} target="_blank">

@@ -160,27 +160,27 @@ const ProfileMahasiswa = () => {
         toggleDropdown={toggleDropdown}
         dropdownVisible={dropdownVisible}
       />
-      <div class="pt-20 bg-gray-100 items-center justify-center">
-        <div class="bg-white dark:bg-gray-800 w-11/12 md:w-1/2 lg:w-1/3 mx-auto rounded-lg shadow">
-          <div class="py-4 px-8 mt-3">
-            <div class="flex justify-between items-center">
-              <h1 class="text-2xl font-bold text-gray-800 dark:text-white mt-4 text-center">
+      <div className="pt-20 bg-gray-100 items-center justify-center">
+        <div className="bg-white dark:bg-gray-800 w-11/12 md:w-1/2 lg:w-1/3 mx-auto rounded-lg shadow">
+          <div className="py-4 px-8 mt-3">
+            <div className="flex justify-between items-center">
+              <h1 className="text-2xl font-bold text-gray-800 dark:text-white mt-4 text-center">
                 Profile Admin
               </h1>
             </div>
           </div>
-          <div class="border-b px-4 pb-6">
-            <div class="text-center my-4">
+          <div className="border-b px-4 pb-6">
+            <div className="text-center my-4">
               <div className="h-28 w-28 mx-auto my-4">
                 <FaUserCircle className="h-full w-full text-gray-300" />
               </div>
-              <div class="py-2">
-                <h3 class="font-bold text-2xl text-gray-800 dark:text-white mb-1">
+              <div className="py-2">
+                <h3 className="font-bold text-2xl text-gray-800 dark:text-white mb-1">
                   {data.username}
                 </h3>
               </div>
             </div>
-            <div class="flex justify-center">
+            <div className="flex justify-center">
               <form className="w-full max-w-lg" onSubmit={UpdateProfile}>
                 <div className="flex flex-col">
                   <div className="flex flex-col md:flex-row mb-4">
@@ -285,8 +285,8 @@ const ProfileMahasiswa = () => {
           </div>
         </div>
         <div className="bg-white dark:bg-gray-800 w-11/12 md:w-1/2 lg:w-1/3 mx-auto rounded-lg shadow mt-5"></div>
-        <div class="flex justify-center mt-4 text-gray-500">
-          <div class="text-center">
+        <div className="flex justify-center mt-4 text-gray-500">
+          <div className="text-center">
             <p>© Sistem Informasi Repository Skripsi 2021</p>
           </div>
         </div>
