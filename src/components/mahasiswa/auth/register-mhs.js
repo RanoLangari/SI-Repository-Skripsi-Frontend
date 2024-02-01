@@ -14,24 +14,25 @@ const RegisterMahasiswa = () => {
   const [password, setPassword] = useState("");
   const [confirm_password, setConfirmPassword] = useState("");
   const handleRegister = async (e) => {
-    e.preventDefault();
-    Swal.fire({
-      title: "Loading...",
-      allowOutsideClick: false,
-      didOpen: () => {
-        Swal.showLoading();
-      },
-    });
-    const data = {
-      nim,
-      nama,
-      jurusan,
-      semester,
-      status_kelulusan,
-      password,
-      confirm_password,
-    };
     try {
+      e.preventDefault();
+      Swal.fire({
+        title: "Loading...",
+        showConfirmButton: false,
+        allowOutsideClick: false,
+        willOpen: () => {
+          Swal.showLoading();
+        },
+      });
+      const data = {
+        nim,
+        nama,
+        jurusan,
+        semester,
+        status_kelulusan,
+        password,
+        confirm_password,
+      };
       if (
         !nim ||
         !nama ||
@@ -41,18 +42,37 @@ const RegisterMahasiswa = () => {
         !password ||
         !confirm_password
       ) {
+        Swal.close();
         return Swal.fire({
           icon: "error",
           title: "Register gagal!",
           text: "Semua kolom harus diisi",
+          timer: 1000,
         });
       }
-
+      if (isNaN(nim)) {
+        Swal.close();
+        return Swal.fire({
+          icon: "error",
+          title: "Register gagal!",
+          text: "NIM harus angka",
+          timer: 1000,
+        });
+      }
+      if (nim.length !== 10) {
+        return Swal.fire({
+          icon: "error",
+          title: "Register gagal!",
+          text: "panjang NIM harus 10 karakter",
+          timer: 1000,
+        });
+      }
       if (password !== confirm_password) {
         return Swal.fire({
           icon: "error",
           title: "Register gagal!",
           text: "Password tidak sama",
+          timer: 1000,
         });
       }
       const response = await axios.post(
@@ -104,6 +124,11 @@ const RegisterMahasiswa = () => {
                   setNim(e.target.value);
                 }}
               />
+              {isNaN(nim) && (
+                <span className="text-xs text-red-500 text-left mt-2">
+                  NIM harus angka
+                </span>
+              )}
             </div>
             <div className="flex flex-col w-full md:w-1/2 md:pl-2 mt-6 md:mt-0">
               <Select
@@ -151,6 +176,9 @@ const RegisterMahasiswa = () => {
                   setPassword(e.target.value);
                 }}
               />
+              <span className="text-xs text-gray-500 text-left mt-2">
+                Password minimal 8 karakter
+              </span>
             </div>
             <div className="flex flex-col w-full md:w-1/2 md:pl-2 mt-6 md:mt-0">
               <Input
@@ -161,6 +189,11 @@ const RegisterMahasiswa = () => {
                   setConfirmPassword(e.target.value);
                 }}
               />
+              {password !== confirm_password && (
+                <span className="text-xs text-red-500 text-left mt-2">
+                  password dan konfirmasi password tidak sama
+                </span>
+              )}
             </div>
           </div>
           <div className="flex flex-col md:flex-row mt-6">
