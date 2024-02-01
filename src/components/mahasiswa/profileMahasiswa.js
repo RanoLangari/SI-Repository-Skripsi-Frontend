@@ -152,11 +152,7 @@ const ProfileMahasiswa = () => {
         setSemester(res.data.data.semester);
         setStatusKelulusan(res.data.data.status_kelulusan);
       })
-      .then(() => {
-        Swal.close();
-      })
       .catch((err) => {
-        Swal.close();
         Navigate("/login-mhs");
       });
   }, []);
@@ -494,6 +490,13 @@ const ProfileMahasiswa = () => {
                       value={confirm_password}
                       onChange={(e) => setConfirmPassword(e.target.value)}
                     />
+                    <p>
+                      {new_password !== confirm_password ? (
+                        <span className="text-red-500 text-sm">
+                          Password baru dan konfirmasi password tidak sama
+                        </span>
+                      ) : null}
+                    </p>
                   </div>
                   <div className="flex justify-center">
                     <button

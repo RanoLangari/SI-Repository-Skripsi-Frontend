@@ -27,14 +27,6 @@ const UploadSkripsi = () => {
     e.preventDefault();
 
     try {
-      const data = {
-        pembimbing1,
-        pembimbing2,
-        penguji,
-        judul,
-        abstract,
-        file,
-      };
       if (!pembimbing1 || !pembimbing2 || !penguji || !judul || !abstract) {
         Swal.fire({
           icon: "error",
@@ -154,7 +146,7 @@ const UploadSkripsi = () => {
       <Spinner className="h-12 w-12" color="amber" />
     </div>
   ) : (
-    <div>
+    <div className="bg-gray-100 w-full min-h-screen">
       <nav className="bg-white shadow-lg">
         <div className="max-w-6xl mx-auto px-4">
           <div className="flex justify-between">

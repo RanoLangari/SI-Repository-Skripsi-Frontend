@@ -41,7 +41,7 @@ const MhsDashboard = () => {
 
   // const fetchData = async () => {
   //   const data = [];
-  //   for (let i = 0; i < 1000; i++) {
+  //   for (let i = 0; i < 2000; i++) {
   //     data.push({
   //       id: i,
   //       nama: faker.animal.cat(),
