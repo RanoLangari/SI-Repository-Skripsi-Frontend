@@ -224,7 +224,7 @@ const RegisterMahasiswa = () => {
           </div>
         </form>
         <p className="text-center text-gray-500 text-xs">
-          &copy;2023 FEB UNDANA. All rights reserved.
+          &copy;2024 FEB UNDANA. All rights reserved.
         </p>
       </div>
     </div>

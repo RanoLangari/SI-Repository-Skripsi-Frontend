@@ -384,8 +384,8 @@ const MhsDashboard = () => {
         </div>
       </section>
       <div className="flex justify-center bg-gray-100">
-        <p className="text-center text-gray-500 text-xs">
-          &copy;2023 FEB UNDANA. All rights reserved.
+        <p className="text-gray-500 text-xs">
+          &copy;2024 FEB UNDANA. All rights reserved.
         </p>
       </div>
     </div>
