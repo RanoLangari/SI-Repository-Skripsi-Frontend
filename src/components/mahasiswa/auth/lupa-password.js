@@ -8,12 +8,55 @@ const LupaPassword = () => {
   const backendUrl = process.env.REACT_APP_API_URL;
   const navigate = useNavigate();
   const [email, setEmail] = useState("");
+  const [nim, setNim] = useState("");
+
+  const handleLupaPassword = async (e) => {
+    e.preventDefault();
+    // Swal.fire({
+    //   title: "Loading...",
+    //   allowOutsideClick: false,
+    //   didOpen: () => {
+    //     Swal.showLoading();
+    //   },
+    // });
+    const data = {
+      email,
+      nim,
+    };
+    try {
+      const response = await axios.post(
+        `${backendUrl}/api/mahasiswa/lupa-password`,
+        data
+      );
+      Swal.close();
+      if (response.status === 200) {
+        Swal.fire({
+          icon: "success",
+          title: "Berhasil!",
+          text: response.data.message,
+          timer: 1000,
+        }).then(() => {
+          navigate("/lupa-password");
+        });
+      }
+    } catch (error) {
+      Swal.fire({
+        icon: "error",
+        title: "Oops...",
+        text: error.response.data.message,
+        timer: 1000,
+      });
+    }
+  };
   return (
     <div className="flex items-center justify-center h-screen bg-gray-200">
       <div className="w-full max-w-md ml-4 mr-4">
         <img src="../FEB.png" alt="" className="mx-auto mb-4" />
 
-        <form className="bg-white shadow-lg rounded px-12 pt-6 pb-8 mb-4">
+        <form
+          className="bg-white shadow-lg rounded px-12 pt-6 pb-8 mb-4"
+          onSubmit={handleLupaPassword}
+        >
           <div
             className="text-gray-800 text-2xl flex justify-center  py-2 mb-8"
             style={{ fontFamily: "Roboto, sans-serif" }}
@@ -27,6 +70,16 @@ const LupaPassword = () => {
               required
               onChange={(e) => {
                 setEmail(e.target.value);
+              }}
+            />
+          </div>
+          <div className="mb-6">
+            <Input
+              label="NIM"
+              placeholder="Masukan NIM Anda"
+              required
+              onChange={(e) => {
+                setNim(e.target.value);
               }}
             />
           </div>
