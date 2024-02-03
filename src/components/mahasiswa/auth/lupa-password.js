@@ -8,20 +8,19 @@ const LupaPassword = () => {
   const backendUrl = process.env.REACT_APP_API_URL;
   const navigate = useNavigate();
   const [email, setEmail] = useState("");
-  const [nim, setNim] = useState("");
+  const [active, setActive] = useState(false);
 
   const handleLupaPassword = async (e) => {
     e.preventDefault();
-    // Swal.fire({
-    //   title: "Loading...",
-    //   allowOutsideClick: false,
-    //   didOpen: () => {
-    //     Swal.showLoading();
-    //   },
-    // });
+    Swal.fire({
+      title: "Loading...",
+      allowOutsideClick: false,
+      didOpen: () => {
+        Swal.showLoading();
+      },
+    });
     const data = {
       email,
-      nim,
     };
     try {
       const response = await axios.post(
@@ -36,7 +35,7 @@ const LupaPassword = () => {
           text: response.data.message,
           timer: 1000,
         }).then(() => {
-          navigate("/lupa-password");
+          navigate("/mhs/lupa-password");
         });
       }
     } catch (error) {
@@ -70,16 +69,6 @@ const LupaPassword = () => {
               required
               onChange={(e) => {
                 setEmail(e.target.value);
-              }}
-            />
-          </div>
-          <div className="mb-6">
-            <Input
-              label="NIM"
-              placeholder="Masukan NIM Anda"
-              required
-              onChange={(e) => {
-                setNim(e.target.value);
               }}
             />
           </div>
