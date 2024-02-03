@@ -7,9 +7,12 @@ import { Input, Button } from "@material-tailwind/react";
 const LupaPassword = () => {
   const backendUrl = process.env.REACT_APP_API_URL;
   const navigate = useNavigate();
-  const [email, setEmail] = React.useState("");
-  const [otp, setOtp] = React.useState("");
+  const [email, setEmail] = useState("");
+  const [otp, setOtp] = useState("");
+  const [password, setPassword] = useState("");
+  const [confirmPasword, setConfirmPassword] = useState("");
   const [active, setActive] = useState(false);
+  const [verified, setVerified] = useState(false);
 
   const handleLupaPassword = async (e) => {
     e.preventDefault();
@@ -48,6 +51,94 @@ const LupaPassword = () => {
       });
     }
   };
+  const handleOTP = async (e) => {
+    e.preventDefault();
+    Swal.fire({
+      title: "Loading...",
+      allowOutsideClick: false,
+      didOpen: () => {
+        Swal.showLoading();
+      },
+    });
+    const data = {
+      email,
+      otp,
+    };
+    try {
+      const response = await axios.post(
+        `${backendUrl}/api/mahasiswa/verify-otp`,
+        data
+      );
+      Swal.close();
+      if (response.status === 200) {
+        Swal.fire({
+          icon: "success",
+          title: "Berhasil!",
+          text: response.data.message,
+          timer: 1000,
+        }).then(() => {
+          setVerified(true);
+        });
+      }
+    } catch (error) {
+      Swal.fire({
+        icon: "error",
+        title: "Oops...",
+        text: error.response.data.message,
+        timer: 1000,
+      });
+    }
+  };
+
+  const handleResetPassword = async (e) => {
+    e.preventDefault();
+    Swal.fire({
+      title: "Loading...",
+      allowOutsideClick: false,
+      didOpen: () => {
+        Swal.showLoading();
+      },
+    });
+    if (password !== confirmPasword) {
+      Swal.fire({
+        icon: "error",
+        title: "Oops...",
+        text: "Password dan Konfirmasi Password tidak sama!",
+        timer: 1000,
+      });
+      return;
+    }
+    const data = {
+      email,
+      otp,
+      password,
+    };
+    try {
+      const response = await axios.post(
+        `${backendUrl}/api/mahasiswa/reset-password`,
+        data
+      );
+      Swal.close();
+      if (response.status === 200) {
+        Swal.fire({
+          icon: "success",
+          title: "Berhasil!",
+          text: response.data.message,
+          timer: 1000,
+        }).then(() => {
+          navigate("/login-mhs");
+        });
+      }
+    } catch (error) {
+      Swal.fire({
+        icon: "error",
+        title: "Oops...",
+        text: error.response.data.message,
+        timer: 1000,
+      });
+    }
+  };
+
   return (
     <div className="flex items-center justify-center h-screen bg-gray-200">
       <div className="w-full max-w-md ml-4 mr-4">
@@ -61,7 +152,7 @@ const LupaPassword = () => {
             className="text-gray-800 text-2xl flex justify-center  py-2 mb-8"
             style={{ fontFamily: "Roboto, sans-serif" }}
           >
-            Lupa Password Mahasiswa
+            Reset Password Mahasiswa
           </div>
           <div className="mb-6">
             <div className="relative flex w-full max-w-[24rem]">
@@ -73,6 +164,7 @@ const LupaPassword = () => {
                 containerProps={{
                   className: "min-w-0",
                 }}
+                {...(active && { disabled: true })}
               />
               <Button
                 size="sm"
@@ -80,6 +172,7 @@ const LupaPassword = () => {
                 disabled={!email}
                 className="!absolute right-1 top-1 rounded"
                 onClick={handleLupaPassword}
+                {...(active && { disabled: true })}
               >
                 Kirim OTP
               </Button>
@@ -94,27 +187,49 @@ const LupaPassword = () => {
                   containerProps={{
                     className: "min-w-0",
                   }}
+                  {...(verified && { disabled: true })}
                 />
                 <Button
                   size="sm"
                   color={otp ? "blue" : "blue-gray"}
                   disabled={!otp}
                   className="!absolute right-1 top-1 rounded"
-                  onClick={handleLupaPassword}
+                  onClick={handleOTP}
+                  {...(verified && { disabled: true })}
                 >
                   Verifikasi OTP
                 </Button>
               </div>
             )}
+            {verified && (
+              <>
+                <div className="mt-8">
+                  <Input
+                    type="password"
+                    label="Password Baru"
+                    containerProps={{
+                      className: "min-w-0",
+                    }}
+                    onChange={(e) => setPassword(e.target.value)}
+                  />
+                </div>
+                <div className="mt-4">
+                  <Input
+                    type="password"
+                    label="Konfirmasi Password"
+                    containerProps={{
+                      className: "min-w-0",
+                    }}
+                    onChange={(e) => setConfirmPassword(e.target.value)}
+                  />
+                </div>
+                <div className="mt-4 flex items-start">
+                  <Button color="blue">Reset Password</Button>
+                </div>
+              </>
+            )}
           </div>
-          <div className="flex justify-between">
-            {/* <button
-              className="bg-blue-500 hover:bg-blue-700 text-white font-bold py-2 px-4 rounded focus:outline-none focus:shadow-outline"
-              type="submit"
-            >
-              Kirim OTP
-            </button> */}
-          </div>
+          <div className="flex justify-between"></div>
           <div className="flex items-end justify-end mt-2">
             <a
               className=" align-baseline font-normal text-sm text-blue-500 hover:text-blue-800 text-right"
