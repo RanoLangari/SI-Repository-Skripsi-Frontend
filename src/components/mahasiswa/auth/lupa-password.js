@@ -2,12 +2,13 @@ import React, { useState, useEffect } from "react";
 import axios from "axios";
 import { useNavigate } from "react-router-dom";
 import Swal from "sweetalert2";
-import { Input, Typography } from "@material-tailwind/react";
+import { Input, Button } from "@material-tailwind/react";
 
 const LupaPassword = () => {
   const backendUrl = process.env.REACT_APP_API_URL;
   const navigate = useNavigate();
-  const [email, setEmail] = useState("");
+  const [email, setEmail] = React.useState("");
+  const [otp, setOtp] = React.useState("");
   const [active, setActive] = useState(false);
 
   const handleLupaPassword = async (e) => {
@@ -35,7 +36,7 @@ const LupaPassword = () => {
           text: response.data.message,
           timer: 1000,
         }).then(() => {
-          navigate("/mhs/lupa-password");
+          setActive(true);
         });
       }
     } catch (error) {
@@ -63,24 +64,60 @@ const LupaPassword = () => {
             Lupa Password Mahasiswa
           </div>
           <div className="mb-6">
-            <Input
-              label="Email"
-              placeholder="Masukan Email Anda"
-              required
-              onChange={(e) => {
-                setEmail(e.target.value);
-              }}
-            />
+            <div className="relative flex w-full max-w-[24rem]">
+              <Input
+                label="Alamat Email"
+                value={email}
+                onChange={(e) => setEmail(e.target.value)}
+                className="pr-20"
+                containerProps={{
+                  className: "min-w-0",
+                }}
+              />
+              <Button
+                size="sm"
+                color={email ? "blue" : "blue-gray"}
+                disabled={!email}
+                className="!absolute right-1 top-1 rounded"
+                onClick={handleLupaPassword}
+              >
+                Kirim OTP
+              </Button>
+            </div>
+            {active && (
+              <div className="relative flex w-full max-w-[24rem] mt-8">
+                <Input
+                  label="Kode OTP"
+                  value={otp}
+                  onChange={(e) => setOtp(e.target.value)}
+                  className="pr-20"
+                  containerProps={{
+                    className: "min-w-0",
+                  }}
+                />
+                <Button
+                  size="sm"
+                  color={otp ? "blue" : "blue-gray"}
+                  disabled={!otp}
+                  className="!absolute right-1 top-1 rounded"
+                  onClick={handleLupaPassword}
+                >
+                  Verifikasi OTP
+                </Button>
+              </div>
+            )}
           </div>
-          <div className="flex items-center justify-between">
-            <button
+          <div className="flex justify-between">
+            {/* <button
               className="bg-blue-500 hover:bg-blue-700 text-white font-bold py-2 px-4 rounded focus:outline-none focus:shadow-outline"
               type="submit"
             >
               Kirim OTP
-            </button>
+            </button> */}
+          </div>
+          <div className="flex items-end justify-end mt-2">
             <a
-              className="inline-block align-baseline font-normal text-sm text-blue-500 hover:text-blue-800"
+              className=" align-baseline font-normal text-sm text-blue-500 hover:text-blue-800 text-right"
               href="register-mhs"
             >
               Register Mahasiswa
