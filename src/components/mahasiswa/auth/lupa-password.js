@@ -92,13 +92,13 @@ const LupaPassword = () => {
 
   const handleResetPassword = async (e) => {
     e.preventDefault();
-    Swal.fire({
-      title: "Loading...",
-      allowOutsideClick: false,
-      didOpen: () => {
-        Swal.showLoading();
-      },
-    });
+    // Swal.fire({
+    //   title: "Loading...",
+    //   allowOutsideClick: false,
+    //   didOpen: () => {
+    //     Swal.showLoading();
+    //   },
+    // });
     if (password !== confirmPasword) {
       Swal.fire({
         icon: "error",
@@ -110,7 +110,6 @@ const LupaPassword = () => {
     }
     const data = {
       email,
-      otp,
       password,
     };
     try {
@@ -224,7 +223,9 @@ const LupaPassword = () => {
                   />
                 </div>
                 <div className="mt-4 flex items-start">
-                  <Button color="blue">Reset Password</Button>
+                  <Button color="blue" onClick={handleResetPassword}>
+                    Reset Password
+                  </Button>
                 </div>
               </>
             )}
