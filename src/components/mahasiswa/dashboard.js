@@ -15,7 +15,6 @@ import { ArrowRightIcon, ArrowLeftIcon } from "@heroicons/react/24/outline";
 import { Spinner } from "@material-tailwind/react";
 import Navbar from "./template/Navbar";
 import { faker } from "@faker-js/faker";
-import Swal from "sweetalert2";
 const MhsDashboard = () => {
   // state Hooks
   const [showMenu, setShowMenu] = useState(false);

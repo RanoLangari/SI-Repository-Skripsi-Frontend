@@ -168,7 +168,26 @@ const RegisterMahasiswa = () => {
               </Select>
             </div>
           </div>
-
+          <div className="flex flex-col md:flex-row mt-6">
+            <div className="flex flex-col w-full md:w-1/2 md:pr-2">
+              <Select
+                label="Pilih Status Kelulusan"
+                onChange={(value) => setStatusKelulusan(value)}
+              >
+                <Option value="Lulus">Lulus</Option>
+                <Option value="Belum Lulus">Belum Lulus</Option>
+              </Select>
+            </div>
+            <div className="flex flex-col w-full md:w-1/2 md:pl-2 mt-6 md:mt-0">
+              <Input
+                label="Email"
+                required
+                onChange={(e) => {
+                  setEmail(e.target.value);
+                }}
+              />
+            </div>
+          </div>
           <div className="flex flex-col md:flex-row mt-6">
             <div className="flex flex-col w-full md:w-1/2 md:pr-2">
               <Input
@@ -197,27 +216,6 @@ const RegisterMahasiswa = () => {
                   password dan konfirmasi password tidak sama
                 </span>
               )}
-            </div>
-          </div>
-          <div className="flex flex-col md:flex-row mt-2">
-            <div className="flex flex-col w-full md:w-1/2 md:pr-2">
-              <Select
-                label="Pilih Status Kelulusan"
-                onChange={(value) => setStatusKelulusan(value)}
-              >
-                <Option value="Lulus">Lulus</Option>
-                <Option value="Belum Lulus">Belum Lulus</Option>
-              </Select>
-            </div>
-            {/* email */}
-            <div className="flex flex-col w-full md:w-1/2 md:pl-2 mt-6 md:mt-0">
-              <Input
-                label="Email"
-                required
-                onChange={(e) => {
-                  setEmail(e.target.value);
-                }}
-              />
             </div>
           </div>
 
