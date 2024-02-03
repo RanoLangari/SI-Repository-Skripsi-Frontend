@@ -242,9 +242,9 @@ const LupaPassword = () => {
           <div className="flex items-end justify-end mt-2">
             <a
               className="inline-block align-baseline font-normal text-sm text-blue-500 hover:text-blue-800"
-              href="/login-admin"
+              href="/login-mhs"
             >
-              Login Admin
+              Login Mahasiswa
             </a>
           </div>
         </form>

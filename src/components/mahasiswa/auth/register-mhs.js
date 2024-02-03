@@ -10,6 +10,7 @@ const RegisterMahasiswa = () => {
   const [nama, setNama] = useState("");
   const [jurusan, setJurusan] = useState("");
   const [semester, setSemester] = useState("");
+  const [email, setEmail] = useState("");
   const [status_kelulusan, setStatusKelulusan] = useState("");
   const [password, setPassword] = useState("");
   const [confirm_password, setConfirmPassword] = useState("");
@@ -27,6 +28,7 @@ const RegisterMahasiswa = () => {
       const data = {
         nim,
         nama,
+        email,
         jurusan,
         semester,
         status_kelulusan,
@@ -36,6 +38,7 @@ const RegisterMahasiswa = () => {
       if (
         !nim ||
         !nama ||
+        !email ||
         !jurusan ||
         !semester ||
         !status_kelulusan ||
@@ -196,7 +199,7 @@ const RegisterMahasiswa = () => {
               )}
             </div>
           </div>
-          <div className="flex flex-col md:flex-row mt-6">
+          <div className="flex flex-col md:flex-row mt-2">
             <div className="flex flex-col w-full md:w-1/2 md:pr-2">
               <Select
                 label="Pilih Status Kelulusan"
@@ -205,6 +208,16 @@ const RegisterMahasiswa = () => {
                 <Option value="Lulus">Lulus</Option>
                 <Option value="Belum Lulus">Belum Lulus</Option>
               </Select>
+            </div>
+            {/* email */}
+            <div className="flex flex-col w-full md:w-1/2 md:pl-2 mt-6 md:mt-0">
+              <Input
+                label="Email"
+                required
+                onChange={(e) => {
+                  setEmail(e.target.value);
+                }}
+              />
             </div>
           </div>
 
