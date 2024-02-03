@@ -2,7 +2,7 @@ import React, { useState, useEffect } from "react";
 import axios from "axios";
 import { useNavigate } from "react-router-dom";
 import Swal from "sweetalert2";
-import { Input } from "@material-tailwind/react";
+import { Input, Typography } from "@material-tailwind/react";
 
 const LoginMhs = () => {
   const backendUrl = process.env.REACT_APP_API_URL;
@@ -63,7 +63,7 @@ const LoginMhs = () => {
           >
             Login Mahasiswa
           </div>
-          <div className="mb-10">
+          <div className="mb-6">
             <Input
               label="NIM"
               required
@@ -73,6 +73,9 @@ const LoginMhs = () => {
             />
           </div>
           <div className="mb-6">
+            <div className="flex items-end justify-end text-sm text-blue-500 hover:text-blue-800">
+              <a href="mhs/lupa-password">Lupa Password?</a>
+            </div>
             <Input
               type="password"
               label="Password"

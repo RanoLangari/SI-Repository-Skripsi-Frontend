@@ -12,6 +12,7 @@ import AdminDashboard from "./components/admin/dashboard";
 import ProfileAdmin from "./components/admin/profileAdmin";
 import DetailDataSkripsi from "./components/admin/detailDataSkripsi";
 import DataDosen from "./components/admin/dataDosen";
+import LupaPassword from "./components/mahasiswa/auth/lupa-password";
 import "./index.css";
 
 function App() {
@@ -21,6 +22,7 @@ function App() {
         <Routes>
           <Route path="/" element={<LoginMhs />} />
           <Route path="/login-mhs" element={<LoginMhs />} />
+          <Route path="/mhs/lupa-password" element={<LupaPassword />} />
           <Route path="/login-admin" element={<LoginAdmin />} />
           <Route path="/register-mhs" element={<RegisterMahasiswa />} />
           <Route path="/mhs/dashboard" element={<MhsDashboard />} />
