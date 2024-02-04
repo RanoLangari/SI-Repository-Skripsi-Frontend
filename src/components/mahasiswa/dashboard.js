@@ -257,7 +257,7 @@ const MhsDashboard = () => {
                         </Option>
                       </Select>
                       <Button
-                        color="yellow"
+                        color="amber"
                         size="regular"
                         className="mb-8"
                         onClick={
@@ -280,7 +280,7 @@ const MhsDashboard = () => {
                       </Typography>
                       <Input
                         type="date"
-                        color="yellow"
+                        color="amber"
                         size="regular"
                         outline={false}
                         placeholder="Tanggal Awal"
@@ -292,7 +292,7 @@ const MhsDashboard = () => {
                       s.d.
                       <Input
                         type="date"
-                        color="yellow"
+                        color="amber"
                         size="regular"
                         outline={false}
                         placeholder="Tanggal Akhir"
@@ -302,7 +302,7 @@ const MhsDashboard = () => {
                         }}
                       />
                       <Button
-                        color="yellow"
+                        color="amber"
                         className="mb-8 mt-2"
                         size="regular"
                         onClick={getSkripsiByDate}
@@ -312,7 +312,7 @@ const MhsDashboard = () => {
                     </div>
                     <div className="flex flex-col gap-4 mt-8">
                       <Button
-                        color="yellow"
+                        color="amber"
                         size="regular"
                         onClick={() => {
                           setSearchTerm("");

@@ -239,7 +239,7 @@ const LupaPassword = () => {
           <div className="flex items-end justify-end mt-4">
             <a
               className=" align-baseline font-normal text-sm text-blue-500 hover:text-blue-800 text-right"
-              href="register-mhs"
+              href="../register-mhs"
             >
               Register Mahasiswa
             </a>
