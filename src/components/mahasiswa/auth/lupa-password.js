@@ -230,8 +230,7 @@ const LupaPassword = () => {
               </>
             )}
           </div>
-          <div className="flex justify-between"></div>
-          <div className="flex items-end justify-end mt-2">
+          <div className="flex items-end justify-end mt-4">
             <a
               className=" align-baseline font-normal text-sm text-blue-500 hover:text-blue-800 text-right"
               href="register-mhs"
@@ -239,7 +238,7 @@ const LupaPassword = () => {
               Register Mahasiswa
             </a>
           </div>
-          <div className="flex items-end justify-end mt-2">
+          <div className="flex items-end justify-end mt-4">
             <a
               className="inline-block align-baseline font-normal text-sm text-blue-500 hover:text-blue-800"
               href="/login-mhs"

@@ -59,7 +59,7 @@ const LoginAdmin = () => {
           >
             Login Admin
           </div>
-          <div className="mb-10">
+          <div className="mb-6">
             <Input
               label="Username"
               required
@@ -69,6 +69,9 @@ const LoginAdmin = () => {
             />
           </div>
           <div className="mb-6">
+            <div className="flex items-end justify-end text-sm text-blue-500 hover:text-blue-800">
+              <a href="admin/lupa-password">Lupa Password?</a>
+            </div>
             <Input
               label="Password"
               type="password"
