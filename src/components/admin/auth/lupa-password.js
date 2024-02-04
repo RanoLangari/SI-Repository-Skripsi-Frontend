@@ -92,13 +92,13 @@ const LupaPasswordAdmin = () => {
 
   const handleResetPassword = async (e) => {
     e.preventDefault();
-    // Swal.fire({
-    //   title: "Loading...",
-    //   allowOutsideClick: false,
-    //   didOpen: () => {
-    //     Swal.showLoading();
-    //   },
-    // });
+    Swal.fire({
+      title: "Loading...",
+      allowOutsideClick: false,
+      didOpen: () => {
+        Swal.showLoading();
+      },
+    });
     if (password !== confirmPasword) {
       Swal.fire({
         icon: "error",
@@ -114,7 +114,7 @@ const LupaPasswordAdmin = () => {
     };
     try {
       const response = await axios.post(
-        `${backendUrl}/api/mahasiswa/reset-password`,
+        `${backendUrl}/api/admin/reset-password`,
         data
       );
       Swal.close();
@@ -125,7 +125,7 @@ const LupaPasswordAdmin = () => {
           text: response.data.message,
           timer: 1000,
         }).then(() => {
-          navigate("/login-mhs");
+          navigate("/login-admin");
         });
       }
     } catch (error) {

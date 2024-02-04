@@ -92,13 +92,13 @@ const LupaPassword = () => {
 
   const handleResetPassword = async (e) => {
     e.preventDefault();
-    // Swal.fire({
-    //   title: "Loading...",
-    //   allowOutsideClick: false,
-    //   didOpen: () => {
-    //     Swal.showLoading();
-    //   },
-    // });
+    Swal.fire({
+      title: "Loading...",
+      allowOutsideClick: false,
+      didOpen: () => {
+        Swal.showLoading();
+      },
+    });
     if (password !== confirmPasword) {
       Swal.fire({
         icon: "error",
