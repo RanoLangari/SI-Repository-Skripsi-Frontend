@@ -1,8 +1,9 @@
-import React, { useState, useEffect } from "react";
+import React, { useState } from "react";
 import axios from "axios";
 import { useNavigate } from "react-router-dom";
 import Swal from "sweetalert2";
 import { Input, Button } from "@material-tailwind/react";
+import validator from "validator";
 
 const LupaPasswordAdmin = () => {
   const backendUrl = process.env.REACT_APP_API_URL;
@@ -176,6 +177,11 @@ const LupaPasswordAdmin = () => {
                 Kirim OTP
               </Button>
             </div>
+            {!validator.isEmail(email) && email && (
+              <p className="text-red-500 text-xs italic text-left mt-1">
+                Alamat email tidak valid
+              </p>
+            )}
             {active && (
               <div className="relative flex w-full max-w-[24rem] mt-8">
                 <Input
