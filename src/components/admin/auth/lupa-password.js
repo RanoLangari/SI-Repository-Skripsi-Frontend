@@ -28,7 +28,7 @@ const LupaPasswordAdmin = () => {
     };
     try {
       const response = await axios.post(
-        `${backendUrl}/api/mahasiswa/lupa-password`,
+        `${backendUrl}/api/admin/lupa-password`,
         data
       );
       Swal.close();
@@ -66,7 +66,7 @@ const LupaPasswordAdmin = () => {
     };
     try {
       const response = await axios.post(
-        `${backendUrl}/api/mahasiswa/verify-otp`,
+        `${backendUrl}/api/admin/verify-otp`,
         data
       );
       Swal.close();
@@ -151,7 +151,7 @@ const LupaPasswordAdmin = () => {
             className="text-gray-800 text-2xl flex justify-center  py-2 mb-8"
             style={{ fontFamily: "Roboto, sans-serif" }}
           >
-            Reset Password Mahasiswa
+            Reset Password Admin
           </div>
           <div className="mb-6">
             <div className="relative flex w-full max-w-[24rem]">
@@ -232,18 +232,10 @@ const LupaPasswordAdmin = () => {
           </div>
           <div className="flex items-end justify-end mt-4">
             <a
-              className=" align-baseline font-normal text-sm text-blue-500 hover:text-blue-800 text-right"
-              href="register-mhs"
-            >
-              Register Mahasiswa
-            </a>
-          </div>
-          <div className="flex items-end justify-end mt-4">
-            <a
               className="inline-block align-baseline font-normal text-sm text-blue-500 hover:text-blue-800"
-              href="/login-mhs"
+              href="/login-admin"
             >
-              Login Mahasiswa
+              Login Admin
             </a>
           </div>
         </form>
