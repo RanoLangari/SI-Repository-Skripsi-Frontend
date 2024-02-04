@@ -13,6 +13,7 @@ import ProfileAdmin from "./components/admin/profileAdmin";
 import DetailDataSkripsi from "./components/admin/detailDataSkripsi";
 import DataDosen from "./components/admin/dataDosen";
 import LupaPassword from "./components/mahasiswa/auth/lupa-password";
+import LupaPasswordAdmin from "./components/admin/auth/lupa-password";
 import "./index.css";
 
 function App() {
@@ -24,6 +25,7 @@ function App() {
           <Route path="/login-mhs" element={<LoginMhs />} />
           <Route path="/mhs/lupa-password" element={<LupaPassword />} />
           <Route path="/login-admin" element={<LoginAdmin />} />
+          <Route path="/admin/lupa-password" element={<LupaPasswordAdmin />} />
           <Route path="/register-mhs" element={<RegisterMahasiswa />} />
           <Route path="/mhs/dashboard" element={<MhsDashboard />} />
           <Route path="/mhs/profile" element={<ProfileMahasiswa />} />
