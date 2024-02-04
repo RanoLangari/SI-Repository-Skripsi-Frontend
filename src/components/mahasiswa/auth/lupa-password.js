@@ -3,6 +3,7 @@ import axios from "axios";
 import { useNavigate } from "react-router-dom";
 import Swal from "sweetalert2";
 import { Input, Button } from "@material-tailwind/react";
+import { EyeIcon, EyeSlashIcon } from "@heroicons/react/24/outline";
 import validator from "validator";
 
 const LupaPassword = () => {
@@ -14,6 +15,8 @@ const LupaPassword = () => {
   const [confirmPasword, setConfirmPassword] = useState("");
   const [active, setActive] = useState(false);
   const [verified, setVerified] = useState(false);
+  const [showPassword, setShowPassword] = useState(false);
+  const [showConfirmPassword, setShowConfirmPassword] = useState(false);
 
   const handleLupaPassword = async (e) => {
     e.preventDefault();
@@ -93,13 +96,6 @@ const LupaPassword = () => {
 
   const handleResetPassword = async (e) => {
     e.preventDefault();
-    Swal.fire({
-      title: "Loading...",
-      allowOutsideClick: false,
-      didOpen: () => {
-        Swal.showLoading();
-      },
-    });
     if (password !== confirmPasword) {
       Swal.fire({
         icon: "error",
@@ -109,6 +105,13 @@ const LupaPassword = () => {
       });
       return;
     }
+    Swal.fire({
+      title: "Loading...",
+      allowOutsideClick: false,
+      didOpen: () => {
+        Swal.showLoading();
+      },
+    });
     const data = {
       email,
       password,
@@ -172,7 +175,9 @@ const LupaPassword = () => {
                 disabled={!email}
                 className="!absolute right-1 top-1 rounded"
                 onClick={handleLupaPassword}
-                {...(active && { disabled: true })}
+                {...(active || (!validator.isEmail(email) && email)
+                  ? { disabled: true }
+                  : {})}
               >
                 Kirim OTP
               </Button>
@@ -208,25 +213,47 @@ const LupaPassword = () => {
             )}
             {verified && (
               <>
-                <div className="mt-8">
+                <div className="relative flex w-full max-w-[24rem] mt-8">
                   <Input
-                    type="password"
+                    type={showPassword ? "text" : "password"}
                     label="Password Baru"
                     containerProps={{
                       className: "min-w-0",
                     }}
                     onChange={(e) => setPassword(e.target.value)}
                   />
+                  <button
+                    type="button"
+                    className="absolute inset-y-0 right-0 pr-3 flex items-center text-sm leading-5"
+                    onClick={() => setShowPassword(!showPassword)}
+                  >
+                    {showPassword ? (
+                      <EyeSlashIcon className="h-5 w-5 text-gray-500" />
+                    ) : (
+                      <EyeIcon className="h-5 w-5 text-gray-500" />
+                    )}
+                  </button>
                 </div>
-                <div className="mt-4">
+                <div className="relative flex w-full max-w-[24rem] mt-4">
                   <Input
-                    type="password"
+                    type={showConfirmPassword ? "text" : "password"}
                     label="Konfirmasi Password"
                     containerProps={{
                       className: "min-w-0",
                     }}
                     onChange={(e) => setConfirmPassword(e.target.value)}
                   />
+                  <button
+                    type="button"
+                    className="absolute inset-y-0 right-0 pr-3 flex items-center text-sm leading-5"
+                    onClick={() => setShowConfirmPassword(!showConfirmPassword)}
+                  >
+                    {showConfirmPassword ? (
+                      <EyeSlashIcon className="h-5 w-5 text-gray-500" />
+                    ) : (
+                      <EyeIcon className="h-5 w-5 text-gray-500" />
+                    )}
+                  </button>
                 </div>
                 <div className="mt-4 flex items-start">
                   <Button color="blue" onClick={handleResetPassword}>
