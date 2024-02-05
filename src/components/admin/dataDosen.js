@@ -271,11 +271,11 @@ const DataDosen = () => {
                       html: `<div class="flex flex-col gap-4">
                       <div class="flex flex-col gap-2">
                         <label for="nama" class="text-sm">Nama Dosen</label>
-                        <input type="text" id="nama" class="shadow appearance-none border rounded w-full py-2 px-3 text-gray-700 mb-3 leading-tight focus:outline-none focus:shadow-outline">
+                        <input type="text" id="nama" class="shadow appearance-none border rounded w-full py-2 px-2 text-gray-700 mb-3 leading-tight focus:outline-none focus:shadow-outline">
                       </div>
                       <div class="flex flex-col gap-2">
                         <label for="jurusan" class="text-sm">Jurusan</label>
-                        <select id="jurusan" class="shadow appearance-none border rounded w-full py-2 px-3 text-gray-700 mb-3 leading-tight focus:outline-none focus:shadow-outline">
+                        <select id="jurusan" class="shadow appearance-none border rounded w-full py-2 px-2 text-gray-700 mb-3 leading-tight focus:outline-none focus:shadow-outline">
                         <option value="">Pilih Jurusan</option>
                           <option value="Manajemen">Manajemen</option>
                           <option value="Akuntansi">Akuntansi</option>
