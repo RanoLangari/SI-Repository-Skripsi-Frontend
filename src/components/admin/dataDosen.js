@@ -8,8 +8,6 @@ import {
   useMaterialReactTable,
 } from "material-react-table";
 import { FaPencilAlt, FaRegTrashAlt } from "react-icons/fa";
-import { Spinner } from "@material-tailwind/react";
-import Navbar from "./template/Navbar";
 
 const DataDosen = () => {
   const backendUrl = process.env.REACT_APP_API_URL;
@@ -17,13 +15,12 @@ const DataDosen = () => {
   const [showMenu, setShowMenu] = useState(false);
   const [dropdownVisible, setDropdownVisible] = useState(false);
   const [data, setData] = useState([]);
-  const [loading, setLoading] = useState(false);
-  function showMenuToggle() {
+  const showMenuToggle = () => {
     setShowMenu(!showMenu);
-  }
-  function toggleDropdown() {
+  };
+  const toggleDropdown = () => {
     setDropdownVisible(!dropdownVisible);
-  }
+  };
   const deleteDosen = (id) => {
     Swal.close();
     Swal.fire({
@@ -49,10 +46,8 @@ const DataDosen = () => {
           icon: "success",
           title: "Berhasil",
           text: "Data berhasil dihapus",
-          timer: 1000,
-        }).then(() => {
-          window.location.reload();
         });
+        window.location.reload();
       })
       .catch((err) => {
         Swal.fire({
@@ -64,6 +59,15 @@ const DataDosen = () => {
   };
 
   useEffect(() => {
+    Swal.fire({
+      title: "Loading Data",
+      text: "Please wait ...",
+      showConfirmButton: false,
+      allowOutsideClick: false,
+      willOpen: () => {
+        Swal.showLoading();
+      },
+    });
     const token = localStorage.getItem("token");
     const config = {
       headers: {
@@ -71,17 +75,29 @@ const DataDosen = () => {
       },
     };
     axios
-      .get(`${backendUrl}/api/admin/get-dosen`, config)
+      .get(`${backendUrl}/api/admin/check-login`, config)
       .then((res) => {
-        setData(res.data.data);
-        for (let i = 0; i < res.data.data.length; i++) {
-          res.data.data[i].no = i + 1;
-        }
-        setLoading(true);
+        Swal.close();
       })
       .catch((err) => {
         Navigate("/login-admin");
+        Swal.close();
       });
+  }, []);
+
+  useEffect(() => {
+    const token = localStorage.getItem("token");
+    const config = {
+      headers: {
+        Authorization: `Bearer ${token}`,
+      },
+    };
+    axios.get(`${backendUrl}/api/admin/get-dosen`, config).then((res) => {
+      setData(res.data.data);
+      for (let i = 0; i < res.data.data.length; i++) {
+        res.data.data[i].no = i + 1;
+      }
+    });
   }, []);
 
   const columns = useMemo(
@@ -110,16 +126,16 @@ const DataDosen = () => {
               onClick={() => {
                 Swal.fire({
                   title: "Edit Data Dosen",
-                  html: `<div className="flex flex-col gap-4">
-                  <div className="flex flex-col gap-2">
-                    <label for="nama" className="text-sm">Nama Dosen</label>
-                    <input type="text" id="nama" className="shadow appearance-none border rounded w-full py-2 px-3 text-gray-700 mb-3 leading-tight focus:outline-none focus:shadow-outline" value="${
+                  html: `<div class="flex flex-col gap-4">
+                  <div class="flex flex-col gap-2">
+                    <label for="nama" class="text-sm">Nama Dosen</label>
+                    <input type="text" id="nama" class="shadow appearance-none border rounded w-full py-2 px-3 text-gray-700 mb-3 leading-tight focus:outline-none focus:shadow-outline" value="${
                       row.original.nama
                     }">
                   </div>
-                  <div className="flex flex-col gap-2">
-                    <label for="jurusan" className="text-sm">Jurusan</label>
-                    <select id="jurusan" className="shadow appearance-none border rounded w-full py-2 px-3 text-gray-700 mb-3 leading-tight focus:outline-none focus:shadow-outline">
+                  <div class="flex flex-col gap-2">
+                    <label for="jurusan" class="text-sm">Jurusan</label>
+                    <select id="jurusan" class="shadow appearance-none border rounded w-full py-2 px-3 text-gray-700 mb-3 leading-tight focus:outline-none focus:shadow-outline">
                       <option value="Manajemen" ${
                         row.original.jurusan === "Manajemen" ? "selected" : ""
                       }>Manajemen</option>
@@ -173,10 +189,8 @@ const DataDosen = () => {
                           icon: "success",
                           title: "Berhasil",
                           text: "Data berhasil diubah",
-                          timer: 1000,
-                        }).then(() => {
-                          window.location.reload();
                         });
+                        window.location.reload();
                       })
                       .catch((err) => {
                         Swal.close();
@@ -221,23 +235,169 @@ const DataDosen = () => {
     ],
     []
   );
+
   const table = useMaterialReactTable({
     columns,
     data,
   });
 
-  return !loading ? (
-    <div className="flex justify-center items-center h-screen">
-      <Spinner className="h-12 w-12" color="amber" />
-    </div>
-  ) : (
+  return (
     <div className="bg-gray-100 w-full min-h-screen">
-      <Navbar
-        showMenu={showMenu}
-        toggleDropdown={toggleDropdown}
-        dropdownVisible={dropdownVisible}
-        showMenuToggle={showMenuToggle}
-      />
+      <nav className="bg-white shadow-lg">
+        <div className="max-w-6xl mx-auto px-4">
+          <div className="flex justify-between">
+            {/* set logo FEB.png */}
+            <div className="flex space-x-7">
+              <div>
+                {/* image icon */}
+                <a href="#" className="flex items-center py-4">
+                  <span className="font-semibold text-gray-500 text-lg">
+                    Sistem Informasi Repository Skripsi
+                  </span>
+                </a>
+              </div>
+              {/* primary navbar items */}
+              <div className="hidden md:flex items-center space-x-1">
+                <a
+                  href="/admin/dashboard"
+                  className="py-4 px-5 text-gray-500 font-semibold hover:text-yellow-200 transition duration-300"
+                >
+                  Beranda
+                </a>
+                <a
+                  className="py-4 px-2 text-yellow-300 border-b-4 border-yellow-300 font-semibold"
+                  href="/admin/dosen"
+                >
+                  Dosen
+                </a>
+              </div>
+            </div>
+            {/* secondary navbar items */}
+            <div className="hidden md:flex items-center space-x-3 ">
+              {/* dropdown profile list item */}
+              <div className="flex flex-col md:flex-row items-center md:space-x-3 ">
+                <div className="relative inline-block text-left">
+                  <div>
+                    <button
+                      type="button"
+                      className="inline-flex justify-center w-full rounded-md border border-gray-300 shadow-sm px-4 py-2 bg-white text-sm font-medium text-gray-500 hover:bg-yellow-300 hover:text-white transition duration-300"
+                      id="options-menu"
+                      aria-haspopup="true"
+                      aria-expanded="true"
+                      onClick={toggleDropdown}
+                    >
+                      <span>Profile</span>
+                      {/* chevron down icon */}
+                      <svg
+                        className="w-5 h-5 ml-2 -mr-1"
+                        xmlns="http://www.w3.org/2000/svg"
+                        viewBox="0 0 20 20"
+                        fill="currentColor"
+                      >
+                        {/* chevron down icon */}
+                        <path
+                          fillRule="evenodd"
+                          d="M6.293 6.293a1 1 0 011.414 0L10
+                          8.586l2.293-2.293a1 1 0 111.414 1.414l-3
+                          3a1 1 0 01-1.414 0l-3-3a1 1 0
+                          010-1.414z"
+                          clipRule="evenodd"
+                        ></path>
+                      </svg>
+                    </button>
+                  </div>
+                  {/* dropdown profile items */}
+                  <div
+                    className={`origin-top-right absolute right-0 mt-2 w-40 rounded-md shadow-lg bg-white ring-1 ring-black ring-opacity-5 focus:outline-none ${
+                      dropdownVisible ? "block" : "hidden"
+                    }`}
+                    role="menu"
+                    aria-orientation="vertical"
+                    aria-labelledby="options-menu"
+                  >
+                    <div className="py-1" role="none">
+                      <button
+                        className="block px-4 py-2 text-sm text-gray-700 hover:bg-yellow-300 hover:text-white transition duration-300 w-full text-left"
+                        role="menuitem"
+                        onClick={() => Navigate("/admin/profile")}
+                      >
+                        Profile
+                      </button>
+                      <button
+                        className="block px-4 py-2 text-sm text-gray-700 hover:bg-yellow-300 hover:text-white transition duration-300 w-full text-left"
+                        role="menuitem"
+                        onClick={() => {
+                          localStorage.removeItem("token");
+                          Navigate("/login-admin");
+                        }}
+                      >
+                        Log out
+                      </button>
+                    </div>
+                  </div>
+                </div>
+              </div>
+            </div>
+
+            {/* mobile menu button */}
+            <div className="md:hidden flex items-center">
+              <button
+                className="outline-none mobile-menu-button"
+                onClick={showMenuToggle}
+              >
+                <svg
+                  className="w-6 h-6 text-gray-500 hover:text-yellow-300"
+                  fill="none"
+                  strokeLinecap="round"
+                  strokeLinejoin="round"
+                  strokeWidth="2"
+                  viewBox="0 0 24 24"
+                  stroke="currentColor"
+                >
+                  {showMenu ? (
+                    <path d="M6 18L18 6M6 6l12 12"></path>
+                  ) : (
+                    <path d="M4 6h16M4 12h16M4 18h16"></path>
+                  )}
+                </svg>
+              </button>
+            </div>
+          </div>
+          {/* mobile menu */}
+          {showMenu && (
+            <div className="md:hidden mt-2">
+              <a
+                onClick={() => Navigate("/admin/dashboard")}
+                className="block py-2 px-4 text-sm text-gray-500 hover:bg-yellow-300 hover:text-white transition duration-300"
+              >
+                Beranda
+              </a>
+              <a
+                onClick={() => Navigate("/admin/dosen")}
+                className="block py-2 px-4 text-sm text-gray-500 hover:bg-yellow-300 hover:text-white transition duration-300"
+              >
+                Dosen
+              </a>
+
+              <a
+                onClick={() => Navigate("/admin/profile")}
+                className="block py-2 px-4 text-sm text-gray-500 hover:bg-yellow-300 hover:text-white transition duration-300"
+              >
+                Profile
+              </a>
+              <a
+                onClick={() => {
+                  localStorage.removeItem("token");
+                  Navigate("/login-mhs");
+                }}
+                className="block py-2 px-4 text-sm text-gray-500 hover:bg-yellow-300 hover:text-white transition duration-300"
+              >
+                Log out
+              </a>
+            </div>
+          )}
+        </div>
+      </nav>
       <div className="bg-gray-100 p-10">
         <section>
           <div className="flex justify-center bg-gray-50 py-12 px-4 sm:px-6 lg:px-2">
@@ -252,14 +412,14 @@ const DataDosen = () => {
                   onClick={() => {
                     Swal.fire({
                       title: "Tambah Data Dosen",
-                      html: `<div className="flex flex-col gap-4">
-                      <div className="flex flex-col gap-2">
-                        <label for="nama" className="text-sm">Nama Dosen</label>
-                        <input type="text" id="nama" className="shadow appearance-none border rounded w-full py-2 px-3 text-gray-700 mb-3 leading-tight focus:outline-none focus:shadow-outline">
+                      html: `<div class="flex flex-col gap-4">
+                      <div class="flex flex-col gap-2">
+                        <label for="nama" class="text-sm">Nama Dosen</label>
+                        <input type="text" id="nama" class="shadow appearance-none border rounded w-full py-2 px-3 text-gray-700 mb-3 leading-tight focus:outline-none focus:shadow-outline">
                       </div>
-                      <div className="flex flex-col gap-2">
-                        <label for="jurusan" className="text-sm">Jurusan</label>
-                        <select id="jurusan" className="shadow appearance-none border rounded w-full py-2 px-3 text-gray-700 mb-3 leading-tight focus:outline-none focus:shadow-outline">
+                      <div class="flex flex-col gap-2">
+                        <label for="jurusan" class="text-sm">Jurusan</label>
+                        <select id="jurusan" class="shadow appearance-none border rounded w-full py-2 px-3 text-gray-700 mb-3 leading-tight focus:outline-none focus:shadow-outline">
                         <option value="">Pilih Jurusan</option>
                           <option value="Manajemen">Manajemen</option>
                           <option value="Akuntansi">Akuntansi</option>
@@ -315,10 +475,8 @@ const DataDosen = () => {
                               icon: "success",
                               title: "Berhasil",
                               text: "Data berhasil ditambahkan",
-                              timer: 1000,
-                            }).then(() => {
-                              window.location.reload();
                             });
+                            window.location.reload();
                           })
                           .catch((err) => {
                             Swal.fire({
