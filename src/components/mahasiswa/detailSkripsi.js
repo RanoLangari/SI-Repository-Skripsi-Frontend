@@ -1,7 +1,6 @@
 import React, { useState, useEffect } from "react";
 import { useNavigate } from "react-router-dom";
 import axios from "axios";
-import Swal from "sweetalert2";
 import { FaFilePdf } from "react-icons/fa";
 import { Spinner } from "@material-tailwind/react";
 import Navbar from "./template/Navbar";
@@ -41,6 +40,7 @@ const DetailSkripsi = () => {
         setLoading(true);
       })
       .catch((err) => {
+        console.log(err);
         Navigate("/mhs/dashboard");
       });
   }, []);

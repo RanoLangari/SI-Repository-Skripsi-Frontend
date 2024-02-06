@@ -1,8 +1,8 @@
-import React, { useState, useEffect } from "react";
+import React, { useState } from "react";
 import axios from "axios";
 import { useNavigate } from "react-router-dom";
 import Swal from "sweetalert2";
-import { Input, Typography } from "@material-tailwind/react";
+import { Input } from "@material-tailwind/react";
 
 const LoginMhs = () => {
   const backendUrl = process.env.REACT_APP_API_URL;

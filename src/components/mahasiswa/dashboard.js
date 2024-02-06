@@ -162,7 +162,7 @@ const MhsDashboard = () => {
       <div className="bg-white rounded-b lg:rounded-b-none lg:rounded-r p-4 flex flex-col justify-between leading-normal">
         <div className="mb-8">
           <button
-            className=" text-black flex items-center align-middle text-bold font-bold uppercase text-start hover:text-yellow-300 transition duration-300"
+            className=" text-black flex items-center align-middle text-bold font-bold uppercase text-start hover:text-yellow-300 transition duration-300 text-sm"
             onClick={() => Navigate(`/mhs/detail-skripsi/${item.id}`)}
           >
             {item.judul_skripsi}
