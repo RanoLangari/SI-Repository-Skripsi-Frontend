@@ -271,7 +271,7 @@ const DataDosen = () => {
                         <option value="">Pilih Jurusan</option>
                           <option value="Manajemen">Manajemen</option>
                           <option value="Akuntansi">Akuntansi</option>
-                          <option value="Ekonomi Pe mbangunan">Ekonomi Pembangunan</option>
+                          <option value="Ekonomi Pembangunan">Ekonomi Pembangunan</option>
                         </select>
                       </div>
                     </div>`,
