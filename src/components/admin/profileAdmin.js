@@ -196,6 +196,7 @@ const ProfileMahasiswa = () => {
                         onChange={(e) =>
                           setData({ ...data, email: e.target.value })
                         }
+                        required
                       />
                       {!validator.isEmail(data.email) && data.email && (
                         <p className="text-red-500 text-xs italic text-left mt-1">
@@ -214,6 +215,7 @@ const ProfileMahasiswa = () => {
                         onChange={(e) =>
                           setData({ ...data, username: e.target.value })
                         }
+                        required
                       />
                     </div>
                   </div>
