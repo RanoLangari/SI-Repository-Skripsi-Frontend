@@ -1,15 +1,19 @@
 import React, { useState, useEffect } from "react";
 import { useNavigate } from "react-router-dom";
 import axios from "axios";
-import Swal from "sweetalert2";
 import { useMemo } from "react";
 import {
   MaterialReactTable,
+  createMRTColumnHelper,
   useMaterialReactTable,
 } from "material-react-table";
+import { Box, Button } from "@mui/material";
+import FileDownloadIcon from "@mui/icons-material/FileDownload";
 import { FaEye } from "react-icons/fa";
 import { Spinner } from "@material-tailwind/react";
 import Navbar from "./template/Navbar";
+import { mkConfig, generateCsv, download } from "export-to-csv";
+const columnHelper = createMRTColumnHelper();
 
 const AdminDashboard = () => {
   const backendUrl = process.env.REACT_APP_API_URL;
@@ -108,31 +112,51 @@ const AdminDashboard = () => {
     []
   );
 
-  const columnsSkripsiVerified = useMemo(
-    () => [
-      {
-        accessorKey: "nim",
-        header: "NIM",
-        size: 150,
-      },
-      {
-        accessorKey: "nama",
-        header: "Nama Mahasiswa",
-        size: 150,
-      },
-      {
-        accessorKey: "skripsi.judul_skripsi",
-        header: "Judul Skripsi",
-        size: 200,
-      },
-      {
-        accessorKey: "jurusan",
-        header: "Jurusan",
-        size: 150,
-      },
-    ],
-    []
-  );
+  const columnsSkripsiVerified = [
+    columnHelper.accessor("nama", {
+      header: "Nama Mahasiswa",
+      size: 40,
+    }),
+    columnHelper.accessor("jurusan", {
+      header: "Jurusan",
+      size: 120,
+    }),
+    columnHelper.accessor("nim", {
+      header: "NIM",
+      size: 120,
+    }),
+    columnHelper.accessor("semester", {
+      header: "Semester",
+      size: 60,
+    }),
+    columnHelper.accessor("judul_skripsi", {
+      header: "Judul Skripsi",
+      size: 220,
+    }),
+    columnHelper.accessor("pembimbing1", {
+      header: "Pembimbing 1",
+      size: 220,
+    }),
+    columnHelper.accessor("pembimbing2", {
+      header: "Pembimbing 2",
+      size: 220,
+    }),
+    columnHelper.accessor("penguji", {
+      header: "Penguji",
+      size: 220,
+    }),
+  ];
+
+  const csvConfig = mkConfig({
+    fieldSeparator: ",",
+    decimalSeparator: ".",
+    useKeysAsHeaders: true,
+  });
+
+  const handleExportData = () => {
+    const csv = generateCsv(csvConfig)(dataSkripsiVerified);
+    download(csvConfig)(csv);
+  };
 
   const tableSkripsiProses = useMaterialReactTable({
     columns: columnsSkripsiProses,
@@ -142,6 +166,27 @@ const AdminDashboard = () => {
   const tableSkripsiVerified = useMaterialReactTable({
     columns: columnsSkripsiVerified,
     data: dataSkripsiVerified,
+    columnFilterDisplayMode: "popover",
+    paginationDisplayMode: "pages",
+    positionToolbarAlertBanner: "bottom",
+    renderTopToolbarCustomActions: ({ table }) => (
+      <Box
+        sx={{
+          display: "flex",
+          gap: "16px",
+          padding: "8px",
+          flexWrap: "wrap",
+        }}
+      >
+        <Button
+          //export all data that is currently in the table (ignore pagination, sorting, filtering, etc.)
+          onClick={handleExportData}
+          startIcon={<FileDownloadIcon />}
+        >
+          Export All Data
+        </Button>
+      </Box>
+    ),
   });
 
   return !loading ? (
@@ -149,14 +194,14 @@ const AdminDashboard = () => {
       <Spinner className="h-12 w-12" color="amber" />
     </div>
   ) : (
-    <div className="bg-gray-100 w-full min-h-screen">
+    <div>
       <Navbar
         showMenu={showMenu}
         toggleDropdown={toggleDropdown}
         dropdownVisible={dropdownVisible}
         showMenuToggle={showMenuToggle}
       />
-      <div className="bg-gray-100 p-10">
+      <div>
         <section>
           <div className="flex justify-center bg-gray-100 py-12 px-4 sm:px-6 lg:px-8">
             <div className="max-w-md w-full space-y-8">
@@ -179,21 +224,23 @@ const AdminDashboard = () => {
               <div className="flex flex-col ext-center text-xl font-extrabold text-gray-900 px-10">
                 <MaterialReactTable table={tableSkripsiProses} />
               </div>
-              <div className=" w-full space-y-8 px-10 mt-10">
-                <div>
-                  <h2 className="mt-6 text-center text-xl font-extrabold text-gray-900">
-                    Data Skripsi yang Telah Terkonfirmasi
-                  </h2>
-                </div>
-                <div className="flex flex-col">
-                  <MaterialReactTable table={tableSkripsiVerified} />
-                </div>
+            </div>
+          </div>
+          <div className="flex justify-center bg-gray-50 py-12 px-4 sm:px-6 lg:px-2">
+            <div className=" w-full space-y-8 px-10">
+              <div>
+                <h2 className="mt-6 text-center text-xl font-extrabold text-gray-900">
+                  Data Skripsi yang telah Terkonfirmasi
+                </h2>
+              </div>
+              <div className="flex flex-col ext-center text-xl font-extrabold text-gray-900 px-10">
+                <MaterialReactTable table={tableSkripsiVerified} />
               </div>
             </div>
           </div>
         </section>
       </div>
-      <div className="flex justify-center bg-gray-100 mb-10">
+      <div className="flex justify-center ">
         <p className="text-center text-gray-500 text-xs">
           &copy;2024 FEB UNDANA. All rights reserved.
         </p>
