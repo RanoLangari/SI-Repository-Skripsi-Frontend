@@ -5,6 +5,7 @@ import Swal from "sweetalert2";
 import { Spinner } from "@material-tailwind/react";
 import { Input, Select, Option } from "@material-tailwind/react";
 import { FaUserCircle } from "react-icons/fa";
+import validator from "validator";
 import Navbar from "./template/Navbar";
 
 const ProfileMahasiswa = () => {
@@ -308,6 +309,11 @@ const ProfileMahasiswa = () => {
                         value={email}
                         onChange={(e) => setEmail(e.target.value)}
                       />
+                      {!validator.isEmail(email) && email && (
+                        <p className="text-red-500 text-xs italic text-left mt-1">
+                          Alamat email tidak valid
+                        </p>
+                      )}
                     </div>
                   </div>
 
