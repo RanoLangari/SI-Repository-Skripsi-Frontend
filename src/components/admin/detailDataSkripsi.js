@@ -69,7 +69,7 @@ const DetailDataSkripsi = () => {
         title: "Berhasil",
         text: res.data.message,
         timer: 1500,
-      }).finally(() => {
+      }).then(() => {
         Navigate("/admin/dashboard");
       });
     } catch (error) {
@@ -111,7 +111,7 @@ const DetailDataSkripsi = () => {
         title: "Berhasil",
         text: res.data.message,
         timer: 1500,
-      }).finally(() => {
+      }).then(() => {
         Navigate("/admin/dashboard");
       });
     } catch (error) {
