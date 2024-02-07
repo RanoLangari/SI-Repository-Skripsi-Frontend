@@ -16,7 +16,8 @@ const AdminDashboard = () => {
   const Navigate = useNavigate();
   const [showMenu, setShowMenu] = useState(false);
   const [dropdownVisible, setDropdownVisible] = useState(false);
-  const [data, setData] = useState([]);
+  const [dataSkripsiProses, setDataSkripsiProses] = useState([]);
+  const [dataSkripsiVerified, setDataSkripsiVerified] = useState([]);
   const [loading, setLoading] = useState(false);
   const showMenuToggle = () => {
     setShowMenu(!showMenu);
@@ -35,7 +36,24 @@ const AdminDashboard = () => {
     axios
       .get(`${backendUrl}/api/admin/get-skripsi-process`, config)
       .then((res) => {
-        setData(res.data.data);
+        setDataSkripsiProses(res.data.data);
+        setLoading(true);
+      })
+      .catch((err) => {
+        Navigate("/login-admin");
+      });
+  }, []);
+  useEffect(() => {
+    const token = localStorage.getItem("token");
+    const config = {
+      headers: {
+        Authorization: `Bearer ${token}`,
+      },
+    };
+    axios
+      .get(`${backendUrl}/api/admin/get-mahasiswa-skripsi-verified`, config)
+      .then((res) => {
+        setDataSkripsiVerified(res.data.data);
         setLoading(true);
       })
       .catch((err) => {
@@ -43,7 +61,7 @@ const AdminDashboard = () => {
       });
   }, []);
 
-  const columns = useMemo(
+  const columnsSkripsiProses = useMemo(
     () => [
       {
         accessorKey: "nim",
@@ -89,10 +107,43 @@ const AdminDashboard = () => {
     ],
     []
   );
-  const table = useMaterialReactTable({
-    columns,
-    data,
+
+  const columnsSkripsiVerified = useMemo(
+    () => [
+      {
+        accessorKey: "nim",
+        header: "NIM",
+        size: 150,
+      },
+      {
+        accessorKey: "nama",
+        header: "Nama Mahasiswa",
+        size: 150,
+      },
+      {
+        accessorKey: "skripsi.judul_skripsi",
+        header: "Judul Skripsi",
+        size: 200,
+      },
+      {
+        accessorKey: "jurusan",
+        header: "Jurusan",
+        size: 150,
+      },
+    ],
+    []
+  );
+
+  const tableSkripsiProses = useMaterialReactTable({
+    columns: columnsSkripsiProses,
+    data: dataSkripsiProses,
   });
+
+  const tableSkripsiVerified = useMaterialReactTable({
+    columns: columnsSkripsiVerified,
+    data: dataSkripsiVerified,
+  });
+
   return !loading ? (
     <div className="flex justify-center items-center h-screen">
       <Spinner className="h-12 w-12" color="amber" />
@@ -125,8 +176,18 @@ const AdminDashboard = () => {
                   Data Skripsi yang Belum Terkonfirmasi
                 </h2>
               </div>
-              <div className="flex flex-col">
-                <MaterialReactTable table={table} />
+              <div className="flex flex-col ext-center text-xl font-extrabold text-gray-900 px-10">
+                <MaterialReactTable table={tableSkripsiProses} />
+              </div>
+              <div className=" w-full space-y-8 px-10 mt-10">
+                <div>
+                  <h2 className="mt-6 text-center text-xl font-extrabold text-gray-900">
+                    Data Skripsi yang Telah Terkonfirmasi
+                  </h2>
+                </div>
+                <div className="flex flex-col">
+                  <MaterialReactTable table={tableSkripsiVerified} />
+                </div>
               </div>
             </div>
           </div>
