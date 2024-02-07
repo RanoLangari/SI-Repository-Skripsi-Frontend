@@ -15,6 +15,7 @@ const ProfileMahasiswa = () => {
   const [nama, setNama] = useState("");
   const [nim, setNim] = useState("");
   const [jurusan, setJurusan] = useState("");
+  const [email, setEmail] = useState("");
   const [semester, setSemester] = useState("");
   const [status_kelulusan, setStatusKelulusan] = useState("");
   const [statusSkripsi, setStatusSkripsi] = useState("");
@@ -55,6 +56,7 @@ const ProfileMahasiswa = () => {
           jurusan: jurusan,
           semester: semester,
           status_kelulusan: status_kelulusan,
+          email: email,
         },
         config
       );
@@ -152,6 +154,7 @@ const ProfileMahasiswa = () => {
         setJurusan(res.data.data.jurusan);
         setSemester(res.data.data.semester);
         setStatusKelulusan(res.data.data.status_kelulusan);
+        setEmail(res.data.data.email);
       })
       .catch((err) => {
         Navigate("/login-mhs");
@@ -279,8 +282,8 @@ const ProfileMahasiswa = () => {
                     </div>
                   </div>
 
-                  <div className="flex flex-col mt-6 mb-6">
-                    <div className="flex flex-col w-full">
+                  <div className="flex flex-col md:flex-row mb-6">
+                    <div className="flex flex-col w-full md:w-1/2 md:pr-2 mt-6">
                       <Select
                         color="yellow"
                         size="regular"
@@ -295,6 +298,16 @@ const ProfileMahasiswa = () => {
                         <Option value="Lulus">Lulus</Option>
                         <Option value="Belum Lulus">Belum Lulus</Option>
                       </Select>
+                    </div>
+                    {/* email */}
+                    <div className="flex flex-col w-full md:w-1/2 md:pl-2 mt-6">
+                      <Input
+                        label="Email"
+                        required
+                        color="yellow"
+                        value={email}
+                        onChange={(e) => setEmail(e.target.value)}
+                      />
                     </div>
                   </div>
 
