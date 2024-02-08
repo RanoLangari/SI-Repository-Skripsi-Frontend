@@ -300,7 +300,6 @@ const ProfileMahasiswa = () => {
                         <Option value="Belum Lulus">Belum Lulus</Option>
                       </Select>
                     </div>
-                    {/* email */}
                     <div className="flex flex-col w-full md:w-1/2 md:pl-2 mt-6">
                       <Input
                         label="Email"
