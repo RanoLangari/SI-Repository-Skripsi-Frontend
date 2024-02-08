@@ -137,8 +137,8 @@ const DetailDataSkripsi = () => {
         showMenuToggle={showMenuToggle}
       />
       <section>
-        <div className="flex flex-col items-center justify-center">
-          <div className="flex flex-col w-full sm:w-2/8 md:w-3/4 lg:w-1/2 mt-10">
+        <div className="flex flex-col items-center justify-center mt-24">
+          <div className="flex flex-col w-full sm:w-2/8 md:w-3/4 lg:w-1/2">
             <div className="flex flex-col items-center">
               <h1 className="text-2xl font-bold text-gray-700 mb-5">
                 Detail Skripsi
