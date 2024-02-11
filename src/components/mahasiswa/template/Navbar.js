@@ -18,12 +18,12 @@ const Navbar = ({
         <div className="max-w-6xl mx-auto px-4">
           <div className="flex justify-between">
             <div className="flex space-x-7">
-              <div>
+              <div className="flex space-x-7">
                 <a href="#" className="flex items-center py-4">
-                  <img src="../FEB.png" alt="FEB" className="w-28" />
+                  <img src="../FEB.png" alt="FEB" className="w-32" />
                 </a>
               </div>
-              <div>
+              <div className="hidden md:flex items-center space-x-1">
                 <a href="#" className="flex items-center py-4">
                   <span className="font-semibold text-gray-500 text-lg">
                     Sistem Informasi Repository Skripsi
