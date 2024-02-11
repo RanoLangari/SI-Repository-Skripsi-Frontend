@@ -13,11 +13,16 @@ const Navbar = ({
   const location = useLocation();
 
   return (
-    <nav className="bg-white shadow-lg">
+    <>
       <nav className="bg-white shadow-lg">
         <div className="max-w-6xl mx-auto px-4">
           <div className="flex justify-between">
             <div className="flex space-x-7">
+              <div>
+                <a href="#" className="flex items-center py-4">
+                  <img src="../FEB.png" alt="FEB" className="w-28" />
+                </a>
+              </div>
               <div>
                 <a href="#" className="flex items-center py-4">
                   <span className="font-semibold text-gray-500 text-lg">
@@ -199,7 +204,7 @@ const Navbar = ({
           )}
         </div>
       </nav>
-    </nav>
+    </>
   );
 };
 
