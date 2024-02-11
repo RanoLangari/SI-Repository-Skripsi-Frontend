@@ -1,5 +1,6 @@
 import React from "react";
 import { useNavigate, useLocation } from "react-router-dom";
+import Swal from "sweetalert2";
 
 const Navbar = ({
   status_kelulusan,
@@ -101,7 +102,24 @@ const Navbar = ({
                         role="menuitem"
                         onClick={() => {
                           localStorage.removeItem("token");
-                          Navigate("/login-mhs");
+                          Swal.fire({
+                            title: "Berhasil Log Out",
+                            icon: "success",
+                            timer: 800,
+                            timerProgressBar: true,
+                            didOpen: (toast) => {
+                              toast.addEventListener(
+                                "mouseenter",
+                                Swal.stopTimer
+                              );
+                              toast.addEventListener(
+                                "mouseleave",
+                                Swal.resumeTimer
+                              );
+                            },
+                          }).then(() => {
+                            Navigate("/login-mhs");
+                          });
                         }}
                       >
                         Log out
