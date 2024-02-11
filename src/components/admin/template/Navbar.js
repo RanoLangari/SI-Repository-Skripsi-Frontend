@@ -177,7 +177,18 @@ const Navbar = ({
               <a
                 onClick={() => {
                   localStorage.removeItem("token");
-                  Navigate("/login-mhs");
+                  Swal.fire({
+                    title: "Berhasil Log Out",
+                    icon: "success",
+                    timer: 800,
+                    timerProgressBar: true,
+                    didOpen: (toast) => {
+                      toast.addEventListener("mouseenter", Swal.stopTimer);
+                      toast.addEventListener("mouseleave", Swal.resumeTimer);
+                    },
+                  }).then(() => {
+                    Navigate("/login-admin");
+                  });
                 }}
                 className="block py-2 px-4 text-sm text-gray-500 hover:bg-yellow-300 hover:text-white transition duration-300"
               >
