@@ -408,7 +408,7 @@ const ProfileMahasiswa = () => {
           </div>
         ) : null}
 
-        <div className="flex justify-center mt-4 text-gray-500">
+        <div className="flex justify-center items-center h-24 bg-gray-100">
           <div className="text-center">
             <p className="text-gray-500 text-xs">
               &copy;2024 FEB UNDANA. All rights reserved.
