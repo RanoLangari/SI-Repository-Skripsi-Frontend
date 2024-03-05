@@ -293,7 +293,7 @@ const ProfileMahasiswa = () => {
           </div>
         </div>
         <div className="bg-white dark:bg-gray-800 w-11/12 md:w-1/2 lg:w-1/3 mx-auto rounded-lg shadow mt-5"></div>
-        <div className="flex justify-center mt-4 text-gray-500">
+        <div className="flex justify-center items-center h-24 bg-gray-100">
           <div className="text-center">
             <p className="text-gray-500 text-xs">
               &copy;2024 FEB UNDANA. All rights reserved.

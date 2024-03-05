@@ -240,7 +240,7 @@ const AdminDashboard = () => {
           </div>
         </section>
       </div>
-      <div className="flex justify-center ">
+      <div className="flex justify-center items-center h-24 bg-gray-100">
         <p className="text-center text-gray-500 text-xs">
           &copy;2024 FEB UNDANA. All rights reserved.
         </p>
