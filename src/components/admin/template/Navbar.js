@@ -18,7 +18,11 @@ const Navbar = ({
             <div className="flex space-x-7">
               <div className="flex space-x-7">
                 <a href="#" className="flex items-center py-4">
-                  <img src="https://feb.undana.ac.id/wp-content/uploads/2023/02/LOGO-FEB-black.png" alt="FEB" className="w-32" />
+                  <img
+                    src="https://feb.undana.ac.id/wp-content/uploads/2023/02/LOGO-FEB-black.png"
+                    alt="FEB"
+                    className="w-32"
+                  />
                 </a>
               </div>
               <div className="hidden md:flex items-center space-x-1">
@@ -109,17 +113,6 @@ const Navbar = ({
                             title: "Berhasil Log Out",
                             icon: "success",
                             timer: 800,
-                            timerProgressBar: true,
-                            didOpen: (toast) => {
-                              toast.addEventListener(
-                                "mouseenter",
-                                Swal.stopTimer
-                              );
-                              toast.addEventListener(
-                                "mouseleave",
-                                Swal.resumeTimer
-                              );
-                            },
                           }).then(() => {
                             Navigate("/login-admin");
                           });

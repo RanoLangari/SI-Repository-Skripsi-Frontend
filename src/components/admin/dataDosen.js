@@ -24,6 +24,83 @@ const DataDosen = () => {
   const toggleDropdown = () => {
     setDropdownVisible(!dropdownVisible);
   };
+  const tambahDataDosen = () => {
+    Swal.fire({
+      title: "Tambah Data Dosen",
+      html: `<div class="flex flex-col gap-4">
+        <div class="flex flex-col gap-2">
+          <label for="nama" class="text-sm">Nama Dosen</label>
+          <input type="text" id="nama" class="shadow appearance-none border rounded w-full py-2 px-2 text-gray-700 mb-3 leading-tight focus:outline-none focus:shadow-outline">
+        </div>
+        <div class="flex flex-col gap-2">
+          <label for="jurusan" class="text-sm">Jurusan</label>
+          <select id="jurusan" class="shadow appearance-none border rounded w-full py-2 px-2 text-gray-700 mb-3 leading-tight focus:outline-none focus:shadow-outline">
+          <option value="">Pilih Jurusan</option>
+            <option value="Manajemen">Manajemen</option>
+            <option value="Akuntansi">Akuntansi</option>
+            <option value="Ekonomi Pembangunan">Ekonomi Pembangunan</option>
+          </select>
+        </div>
+      </div>`,
+      showCancelButton: true,
+      confirmButtonText: "Simpan",
+      cancelButtonText: "Batal",
+      showLoaderOnConfirm: true,
+      preConfirm: () => {
+        const nama = Swal.getPopup().querySelector("#nama").value;
+        const jurusan = Swal.getPopup().querySelector("#jurusan").value;
+        if (nama === "" || jurusan === "") {
+          Swal.fire({
+            icon: "error",
+            title: "Gagal",
+            text: "Data tidak boleh kosong",
+            timer: 1000,
+          });
+          return false;
+        }
+        Swal.fire({
+          title: "Loading Data",
+          text: "Please wait ...",
+          showConfirmButton: false,
+          allowOutsideClick: false,
+          willOpen: () => {
+            Swal.showLoading();
+          },
+        });
+        const data = {
+          nama: nama,
+          jurusan: jurusan,
+        };
+        const token = localStorage.getItem("token");
+        const config = {
+          headers: {
+            Authorization: `Bearer ${token}`,
+          },
+        };
+        axios
+          .post(`${backendUrl}/api/admin/add-dosen`, data, config)
+          .then((res) => {
+            Swal.fire({
+              icon: "success",
+              title: "Berhasil",
+              text: "Data berhasil ditambahkan",
+              timer: 1000,
+            }).then(() => {
+              window.location.reload();
+            });
+          })
+          .catch((err) => {
+            Swal.fire({
+              icon: "error",
+              title: "Gagal",
+              text: "Data gagal ditambahkan",
+              timer: 1000,
+            });
+          });
+      },
+      allowOutsideClick: () => !Swal.isLoading(),
+    });
+  };
   const deleteDosen = (id) => {
     Swal.close();
     Swal.fire({
@@ -257,89 +334,7 @@ const DataDosen = () => {
               </div>
               <div className="flex justify-start">
                 <button
-                  onClick={() => {
-                    Swal.fire({
-                      title: "Tambah Data Dosen",
-                      html: `<div class="flex flex-col gap-4">
-                      <div class="flex flex-col gap-2">
-                        <label for="nama" class="text-sm">Nama Dosen</label>
-                        <input type="text" id="nama" class="shadow appearance-none border rounded w-full py-2 px-2 text-gray-700 mb-3 leading-tight focus:outline-none focus:shadow-outline">
-                      </div>
-                      <div class="flex flex-col gap-2">
-                        <label for="jurusan" class="text-sm">Jurusan</label>
-                        <select id="jurusan" class="shadow appearance-none border rounded w-full py-2 px-2 text-gray-700 mb-3 leading-tight focus:outline-none focus:shadow-outline">
-                        <option value="">Pilih Jurusan</option>
-                          <option value="Manajemen">Manajemen</option>
-                          <option value="Akuntansi">Akuntansi</option>
-                          <option value="Ekonomi Pembangunan">Ekonomi Pembangunan</option>
-                        </select>
-                      </div>
-                    </div>`,
-                      showCancelButton: true,
-                      confirmButtonText: "Simpan",
-                      cancelButtonText: "Batal",
-                      showLoaderOnConfirm: true,
-                      preConfirm: () => {
-                        const nama =
-                          Swal.getPopup().querySelector("#nama").value;
-                        const jurusan =
-                          Swal.getPopup().querySelector("#jurusan").value;
-                        if (nama === "" || jurusan === "") {
-                          Swal.fire({
-                            icon: "error",
-                            title: "Gagal",
-                            text: "Data tidak boleh kosong",
-                            timer: 1000,
-                          });
-                          return false;
-                        }
-                        Swal.fire({
-                          title: "Loading Data",
-                          text: "Please wait ...",
-                          showConfirmButton: false,
-                          allowOutsideClick: false,
-                          willOpen: () => {
-                            Swal.showLoading();
-                          },
-                        });
-                        const data = {
-                          nama: nama,
-                          jurusan: jurusan,
-                        };
-                        const token = localStorage.getItem("token");
-                        const config = {
-                          headers: {
-                            Authorization: `Bearer ${token}`,
-                          },
-                        };
-                        axios
-                          .post(
-                            `${backendUrl}/api/admin/add-dosen`,
-                            data,
-                            config
-                          )
-                          .then((res) => {
-                            Swal.fire({
-                              icon: "success",
-                              title: "Berhasil",
-                              text: "Data berhasil ditambahkan",
-                              timer: 1000,
-                            }).then(() => {
-                              window.location.reload();
-                            });
-                          })
-                          .catch((err) => {
-                            Swal.fire({
-                              icon: "error",
-                              title: "Gagal",
-                              text: "Data gagal ditambahkan",
-                              timer: 1000,
-                            });
-                          });
-                      },
-                      allowOutsideClick: () => !Swal.isLoading(),
-                    });
-                  }}
+                  onClick={tambahDataDosen}
                   className="bg-yellow-300 hover:bg-yellow-400 text-white font-bold py-2 px-4 rounded inline-flex items-center"
                 >
                   Tambah Data Dosen
