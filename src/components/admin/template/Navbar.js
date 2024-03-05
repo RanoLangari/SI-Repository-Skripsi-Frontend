@@ -180,10 +180,6 @@ const Navbar = ({
                     icon: "success",
                     timer: 800,
                     timerProgressBar: true,
-                    didOpen: (toast) => {
-                      toast.addEventListener("mouseenter", Swal.stopTimer);
-                      toast.addEventListener("mouseleave", Swal.resumeTimer);
-                    },
                   }).then(() => {
                     Navigate("/login-admin");
                   });
