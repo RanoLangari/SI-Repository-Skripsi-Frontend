@@ -14,6 +14,7 @@ import DetailDataSkripsi from "./components/admin/detailDataSkripsi";
 import DataDosen from "./components/admin/dataDosen";
 import LupaPassword from "./components/mahasiswa/auth/lupa-password";
 import LupaPasswordAdmin from "./components/admin/auth/lupa-password";
+import TestPDF from "./components/mahasiswa/testPDF";
 import "./index.css";
 
 function App() {
@@ -31,6 +32,7 @@ function App() {
           <Route path="/mhs/profile" element={<ProfileMahasiswa />} />
           <Route path="/mhs/upload-skripsi" element={<UploadSkripsi />} />
           <Route path="/mhs/detail-skripsi/:id" element={<DetailSkripsi />} />
+          <Route path="/mhs/test-pdf" element={<TestPDF />} />
           <Route path="/admin/dashboard" element={<AdminDashboard />} />
           <Route path="/admin/profile" element={<ProfileAdmin />} />
           <Route

@@ -10,9 +10,9 @@ import {
   Drawer,
   Typography,
   IconButton,
+  Spinner,
 } from "@material-tailwind/react";
 import { ArrowRightIcon, ArrowLeftIcon } from "@heroicons/react/24/outline";
-import { Spinner } from "@material-tailwind/react";
 import Navbar from "./template/Navbar";
 import { faker } from "@faker-js/faker";
 const MhsDashboard = () => {
