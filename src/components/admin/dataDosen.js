@@ -146,19 +146,14 @@ const DataDosen = () => {
         Authorization: `Bearer ${token}`,
       },
     };
-
-    axios
-      .get(`${backendUrl}/api/admin/check-login`, config)
+  
+    axios.get(`${backendUrl}/api/admin/get-dosen`, config)
       .then((res) => {
-        Swal.close();
-
-        return axios.get(`${backendUrl}/api/admin/get-dosen`, config);
-      })
-      .then((res) => {
-        setData(res.data.data);
-        for (let i = 0; i < res.data.data.length; i++) {
-          res.data.data[i].no = i + 1;
-        }
+        const newData = res.data.data.map((item, index) => ({
+          ...item,
+          no: index + 1,
+        }));
+        setData(newData);
         setLoading(true);
       })
       .catch((err) => {

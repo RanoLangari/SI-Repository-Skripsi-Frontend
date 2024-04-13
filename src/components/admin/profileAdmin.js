@@ -132,21 +132,24 @@ const ProfileMahasiswa = () => {
   };
 
   useEffect(() => {
-    const token = localStorage.getItem("token");
-    const config = {
-      headers: {
-        Authorization: `Bearer ${token}`,
-      },
-    };
-    axios
-      .get(`${backendUrl}/api/admin/getadmin`, config)
-      .then((res) => {
-        setData(res.data.data);
-        setLoading(true);
-      })
-      .catch((err) => {
+    const fetchData = async () => {
+      try {
+        const token = localStorage.getItem("token");
+        const config = {
+          headers: {
+            Authorization: `Bearer ${token}`,
+          },
+        };
+        const res = await axios.get(`${backendUrl}/api/admin/getadmin`, config);
+        if(res.status === 200){
+          setData(res.data.data);
+          setLoading(true);
+        }
+      } catch (err) {
         Navigate("/login-admin");
-      });
+      }
+    };
+    fetchData();
   }, []);
 
   return !loading ? (
