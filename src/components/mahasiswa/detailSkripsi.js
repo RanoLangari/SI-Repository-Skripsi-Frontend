@@ -37,6 +37,7 @@ const DetailSkripsi = () => {
       .get(`${backendUrl}/api/mahasiswa/detail-skripsi/${id_mhs}`, config)
       .then((res) => {
         setData(res.data.data);
+        console.log(res.data.data);
         setLoading(true);
       })
       .catch((err) => {
@@ -104,6 +105,12 @@ const DetailSkripsi = () => {
                     <div className="flex flex-col mt-2">
                       <span className="text-sm text-black">Penguji : </span>
                       <span className="text-sm text-black">{data.penguji}</span>
+                    </div>
+                    <div className="flex flex-col mt-2">
+                      <span className="text-sm text-black">peminatan : </span>
+                      <span className="text-sm text-black">
+                        {data.peminatan}
+                      </span>
                     </div>
                   </div>
                   <div className="flex w-1/2 justify-end items-end">

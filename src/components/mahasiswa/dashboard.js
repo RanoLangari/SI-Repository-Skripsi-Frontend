@@ -20,6 +20,7 @@ const MhsDashboard = () => {
   const [showMenu, setShowMenu] = useState(false);
   const [searchTerm, setSearchTerm] = useState("");
   const [jurusan, setJurusan] = useState("");
+  const [peminatan, setPeminatan] = useState("");
   const [tanggalAwal, setTanggalAwal] = useState("");
   const [tanggalAkhir, setTanggalAkhir] = useState("");
   const [dropdownVisible, setDropdownVisible] = useState(false);
@@ -33,6 +34,23 @@ const MhsDashboard = () => {
   // Variable
   const backendUrl = process.env.REACT_APP_API_URL;
   const Navigate = useNavigate();
+  const peminatanByJurusan = {
+    "Ekonomi Pembangunan": [
+      "Keuangan Daerah",
+      "Perencanaan",
+      "Moneter Perbankan",
+    ],
+    Manajemen: [
+      "Manajemen Keuangan",
+      "Manajemen Sumberdaya Manusia",
+      "Manajemen Pemasaran",
+    ],
+    Akuntansi: [
+      "Akuntansi Keuangan",
+      "Akuntansi Sektor Publik",
+      "Akuntansi Manajemen",
+    ],
+  };
 
   // methods
   const openDrawer = () => setOpen(true);
@@ -60,6 +78,7 @@ const MhsDashboard = () => {
   //   setData(data);
   //   setLoading(true);
   // };
+
   const fetchData = async () => {
     try {
       setLoading(false);
@@ -91,13 +110,18 @@ const MhsDashboard = () => {
     try {
       setLoading(false);
       const token = localStorage.getItem("token");
+      const data = {
+        jurusan,
+        peminatan,
+      };
       const config = {
         headers: {
           Authorization: `Bearer ${token}`,
         },
       };
-      const response = await axios.get(
-        `${backendUrl}/api/mahasiswa/get-skripsi/${jurusan}`,
+      const response = await axios.post(
+        `${backendUrl}/api/mahasiswa/get-skripsi-jurusan`,
+        data,
         config
       );
       if (response.status === 200) {
@@ -142,11 +166,24 @@ const MhsDashboard = () => {
       value.toString().toLowerCase().includes(searchTerm.toLowerCase())
     )
   );
-
   useEffect(() => {
-    console.log(status_kelulusan);
+    const params = new URLSearchParams(window.location.search);
+    const query = {};
+    for (let param of params) {
+      query[param[0]] = param[1];
+    }
+    if (query.nama) {
+      setSearchTerm(query.nama);
+    } else if (query.jurusan) {
+      setSearchTerm(query.jurusan);
+    } else if (query.peminatan) {
+      setSearchTerm(query.peminatan);
+    }
+
     fetchData();
-  }, []);
+
+    // fetchData();
+  }, [window.location.search]);
 
   // pagination
   const indexOfLastItem = (currentPage + 1) * perPage;
@@ -169,11 +206,31 @@ const MhsDashboard = () => {
           </button>
         </div>
         <div className="flex">
-          <div className="text-sm">
-            <p className="text-gray-600 text-start">Oleh {item.nama}</p>
-            <p className="text-gray-600 text-start">
-              Program Studi {item.jurusan}
-            </p>
+          <div className="text-sm text-left col-span-2">
+            <div className="col-span-2">
+              <a
+                className="text-gray-600 hover:text-yellow-300 text-start"
+                href={`dashboard?nama=${item.nama}`}
+              >
+                Oleh {item.nama}
+              </a>
+            </div>
+            <div className="col-span-2">
+              <a
+                className="text-gray-600 hover:text-yellow-300 text-start"
+                href={`dashboard?jurusan=${item.jurusan}`}
+              >
+                Jurusan {item.jurusan}
+              </a>
+            </div>
+            <div className="col-span-2">
+              <a
+                className="text-gray-600 hover:text-yellow-300 text-start"
+                href={`dashboard?peminatan=${item.peminatan}`}
+              >
+                Peminatan {item.peminatan}
+              </a>
+            </div>
           </div>
         </div>
       </div>
@@ -238,7 +295,7 @@ const MhsDashboard = () => {
                     </div>
                     <div className="flex flex-col gap-4 mt-8">
                       <Typography variant="h6" color="blue-gray">
-                        Filter Jurusan
+                        Filter Jurusan dan Peminatan
                       </Typography>
                       <Select
                         color="yellow"
@@ -255,6 +312,24 @@ const MhsDashboard = () => {
                         <Option value="Ekonomi Pembangunan">
                           Ekonomi Pembangunan
                         </Option>
+                      </Select>
+                      <Select
+                        color="yellow"
+                        size="regular"
+                        outline={false}
+                        placeholder="Pilih Peminatan"
+                        label="Pilih Peminatan"
+                        onChange={(e) => {
+                          setPeminatan(e);
+                        }}
+                        {...(jurusan === "" && { disabled: true })}
+                      >
+                        {jurusan &&
+                          peminatanByJurusan[jurusan].map((item, index) => (
+                            <Option key={index} value={item}>
+                              {item}
+                            </Option>
+                          ))}
                       </Select>
                       <Button
                         color="amber"

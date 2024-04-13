@@ -15,6 +15,8 @@ const UploadSkripsi = () => {
   const [pembimbing2, setPembimbing2] = useState("");
   const [penguji, setPenguji] = useState("");
   const [judul, setJudul] = useState("");
+  const [jurusan, setJurusan] = useState("");
+  const [peminatan, setPeminatan] = useState("");
   const [abstract, setAbstract] = useState("");
   const [file, setFile] = useState(null);
   const [data, setData] = useState([]);
@@ -75,6 +77,7 @@ const UploadSkripsi = () => {
       formData.append("pembimbing2", pembimbing2);
       formData.append("penguji", penguji);
       formData.append("judul_skripsi", judul);
+      formData.append("peminatan", peminatan);
       formData.append("abstract", abstract);
       formData.append("file", file);
       const res = await axios.post(
@@ -102,7 +105,23 @@ const UploadSkripsi = () => {
       });
     }
   };
-
+  const peminatanByJurusan = {
+    "Ekonomi Pembangunan": [
+      "Keuangan Daerah",
+      "Perencanaan",
+      "Moneter Perbankan",
+    ],
+    Manajemen: [
+      "Manajemen Keuangan",
+      "Manajemen Sumberdaya Manusia",
+      "Manajemen Pemasaran",
+    ],
+    Akuntansi: [
+      "Akuntansi Keuangan",
+      "Akuntansi Sektor Publik",
+      "Akuntansi Manajemen",
+    ],
+  };
   const showMenuToggle = () => {
     setShowMenu(!showMenu);
   };
@@ -124,6 +143,7 @@ const UploadSkripsi = () => {
         config
       );
       const jurusan = profileResponse.data.data.jurusan;
+      setJurusan(jurusan);
       if (profileResponse.data.data.status_kelulusan !== "Lulus") {
         Navigate("/mhs/dashboard");
       }
@@ -226,6 +246,21 @@ const UploadSkripsi = () => {
                           setJudul(e.target.value);
                         }}
                       />
+                    </div>
+                    <div className="flex flex-col mb-6 md:w-full">
+                      <Select
+                        color="yellow"
+                        size="regular"
+                        label="Pilih Peminatan"
+                        outline={false}
+                        placeholder="Pilih Peminatan"
+                        dropdownHandle={true}
+                        onChange={(e) => setPeminatan(e)}
+                      >
+                        {peminatanByJurusan[jurusan].map((item) => (
+                          <Option value={item}>{item}</Option>
+                        ))}
+                      </Select>
                     </div>
                     <div className="flex flex-col mb-6 md:w-full">
                       <Textarea
