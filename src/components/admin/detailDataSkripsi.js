@@ -1,26 +1,26 @@
 import React, { useState, useEffect } from "react";
 import { useNavigate } from "react-router-dom";
 import axios from "axios";
+import Swal from "sweetalert2";
 import { FaFilePdf } from "react-icons/fa";
 import { Spinner } from "@material-tailwind/react";
 import Navbar from "./template/Navbar";
 
-const DetailSkripsi = () => {
+const DetailDataSkripsi = () => {
   const backendUrl = process.env.REACT_APP_API_URL;
   const Navigate = useNavigate();
   const [showMenu, setShowMenu] = useState(false);
   const [data, setData] = useState([]);
   const [dropdownVisible, setDropdownVisible] = useState(false);
   const [loading, setLoading] = useState(false);
-  const [status_kelulusan, setStatusKelulusan] = useState("");
 
-  const showMenuToggle = () => {
+  function showMenuToggle() {
     setShowMenu(!showMenu);
-  };
+  }
 
-  const toggleDropdown = () => {
+  function toggleDropdown() {
     setDropdownVisible(!dropdownVisible);
-  };
+  }
 
   useEffect(() => {
     const token = localStorage.getItem("token");
@@ -30,21 +30,99 @@ const DetailSkripsi = () => {
         Authorization: `Bearer ${token}`,
       },
     };
-    axios.get(`${backendUrl}/api/mahasiswa/profile`, config).then((res) => {
-      setStatusKelulusan(res.data.data.status_kelulusan);
-    });
     axios
       .get(`${backendUrl}/api/mahasiswa/detail-skripsi/${id_mhs}`, config)
       .then((res) => {
         setData(res.data.data);
-        console.log(res.data.data);
         setLoading(true);
       })
       .catch((err) => {
-        console.log(err);
-        Navigate("/mhs/dashboard");
+        Navigate("/admin/dashboard");
       });
   }, []);
+
+  const KonfirmasiSkripsi = async (e) => {
+    try {
+      Swal.fire({
+        title: "Loading Data",
+        text: "Please wait ...",
+        showConfirmButton: false,
+        allowOutsideClick: false,
+        willOpen: () => {
+          Swal.showLoading();
+        },
+      });
+      const token = localStorage.getItem("token");
+      const id = window.location.pathname.split("/")[3];
+      const config = {
+        headers: {
+          Authorization: `Bearer ${token}`,
+        },
+      };
+      const res = await axios.put(
+        `${backendUrl}/api/admin/konfirmasi-skripsi/${id}`,
+        {},
+        config
+      );
+      Swal.fire({
+        icon: "success",
+        title: "Berhasil",
+        text: res.data.message,
+        timer: 1500,
+      }).then(() => {
+        Navigate("/admin/dashboard");
+      });
+    } catch (error) {
+      Swal.fire({
+        icon: "error",
+        title: "Gagal",
+        text: error.response.data.message,
+        timer: 1500,
+      });
+    }
+  };
+
+  const deleteSkripsi = async (e) => {
+    try {
+      Swal.fire({
+        title: "Loading Data",
+        text: "Please wait ...",
+        showConfirmButton: false,
+        allowOutsideClick: false,
+        willOpen: () => {
+          Swal.showLoading();
+        },
+      });
+      const token = localStorage.getItem("token");
+      const id = window.location.pathname.split("/")[3];
+      const config = {
+        headers: {
+          Authorization: `Bearer ${token}`,
+        },
+      };
+      console.log(token);
+      const res = await axios.put(
+        `${backendUrl}/api/admin/delete-skripsi/${id}`,
+        {},
+        config
+      );
+      Swal.fire({
+        icon: "success",
+        title: "Berhasil",
+        text: res.data.message,
+        timer: 1500,
+      }).then(() => {
+        Navigate("/admin/dashboard");
+      });
+    } catch (error) {
+      Swal.fire({
+        icon: "error",
+        title: "Gagal",
+        text: error.response.data.message,
+        timer: 1500,
+      });
+    }
+  };
 
   return !loading ? (
     <div className="flex justify-center items-center h-screen">
@@ -53,7 +131,6 @@ const DetailSkripsi = () => {
   ) : (
     <div className="bg-gray-100 w-full min-h-screen">
       <Navbar
-        status_kelulusan={status_kelulusan}
         showMenu={showMenu}
         toggleDropdown={toggleDropdown}
         dropdownVisible={dropdownVisible}
@@ -68,6 +145,52 @@ const DetailSkripsi = () => {
               </h1>
             </div>
             <div className="flex flex-col bg-white shadow-md rounded my-2">
+              <div className="flex flex-row justify-end p-5">
+                <div className="flex flex-row space-x-2">
+                  <button
+                    className="bg-red-500 hover:bg-red-400 px-4 py-2 rounded-md text-white focus:outline-none"
+                    onClick={() => {
+                      Swal.fire({
+                        title: "Tolak Skripsi",
+                        icon: "question",
+                        text: "Apakah anda yakin ingin menolak skripsi ini?",
+                        showCancelButton: true,
+                        confirmButtonText: "Tolak",
+                        cancelButtonText: "Batal",
+                        confirmButtonColor: "#3085d6",
+                        cancelButtonColor: "#d33",
+                      }).then((result) => {
+                        if (result.isConfirmed) {
+                          deleteSkripsi();
+                        }
+                      });
+                    }}
+                  >
+                    Tolak
+                  </button>
+                  <button
+                    className="bg-green-500 hover:bg-green-400 px-4 py-2 rounded-md text-white focus:outline-none"
+                    onClick={() => {
+                      Swal.fire({
+                        title: "Konfirmasi Skripsi",
+                        text: "Apakah anda yakin ingin mengkonfirmasi skripsi ini?",
+                        icon: "question",
+                        showCancelButton: true,
+                        confirmButtonText: "Konfirmasi",
+                        cancelButtonText: "Batal",
+                        confirmButtonColor: "#3085d6",
+                        cancelButtonColor: "#d33",
+                      }).then((result) => {
+                        if (result.isConfirmed) {
+                          KonfirmasiSkripsi();
+                        }
+                      });
+                    }}
+                  >
+                    Konfirmasi
+                  </button>
+                </div>
+              </div>
               <div className="flex flex-col justify-center p-5 border-b border-gray-100">
                 <div className="flex flex-col">
                   <span className="text-lg font-bold">
@@ -79,7 +202,7 @@ const DetailSkripsi = () => {
               <div className="flex flex-col px-10 py-5">
                 <span className="text-sm text-black">Abstract</span>
                 <br />
-                <span className="text-sm text-black text-justify">
+                <span className="text-sm text-justify text-black">
                   {data.abstract}
                 </span>
               </div>
@@ -106,17 +229,11 @@ const DetailSkripsi = () => {
                       <span className="text-sm text-black">Penguji : </span>
                       <span className="text-sm text-black">{data.penguji}</span>
                     </div>
-                    <div className="flex flex-col mt-2">
-                      <span className="text-sm text-black">peminatan : </span>
-                      <span className="text-sm text-black">
-                        {data.peminatan}
-                      </span>
-                    </div>
                   </div>
                   <div className="flex w-1/2 justify-end items-end">
                     {" "}
                     <div className="flex flex-row items-center">
-                      <a href={`/mhs/preview/${data.id}`}>
+                      <a href={`${data.skripsi_url}`} target="_blank">
                         <FaFilePdf className="text-5xl text-red-400" />
                         <span className="text-sm text-black">Full View</span>
                       </a>
@@ -137,4 +254,4 @@ const DetailSkripsi = () => {
   );
 };
 
-export default DetailSkripsi;
+export default DetailDataSkripsi;

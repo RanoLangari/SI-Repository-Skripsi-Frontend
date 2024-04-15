@@ -1,338 +1,469 @@
 import React, { useState, useEffect } from "react";
-import { Pagination } from "flowbite-react";
 import { useNavigate } from "react-router-dom";
-import { faker } from "@faker-js/faker";
+import ReactPaginate from "react-paginate";
 import axios from "axios";
-import Swal from "sweetalert2";
-
-// export function createRandomUser(): User {
-//   return {
-//     email: faker.internet.email(),
-//     name: faker.name.fullName(),
-//     birthdate: faker.date.birthdate(),
-//     age: faker.datatype.number({ min: 18, max: 80 }),
-//   };
-// }
-
-// export const USERS: User[] = faker.helpers.multiple(createRandomUser, {
-//   count: 15,
-// });
-
-const Dashboard = () => {
-  const Navigate = useNavigate();
+import {
+  Button,
+  Input,
+  Select,
+  Option,
+  Drawer,
+  Typography,
+  IconButton,
+  Spinner,
+} from "@material-tailwind/react";
+import { ArrowRightIcon, ArrowLeftIcon } from "@heroicons/react/24/outline";
+import Navbar from "./template/Navbar";
+import { faker } from "@faker-js/faker";
+const MhsDashboard = () => {
+  // state Hooks
   const [showMenu, setShowMenu] = useState(false);
   const [searchTerm, setSearchTerm] = useState("");
+  const [jurusan, setJurusan] = useState("");
+  const [peminatan, setPeminatan] = useState("");
+  const [tanggalAwal, setTanggalAwal] = useState("");
+  const [tanggalAkhir, setTanggalAkhir] = useState("");
   const [dropdownVisible, setDropdownVisible] = useState(false);
-  // const [data, setData] = useState(USERS);
   const [data, setData] = useState([]);
+  const [status_kelulusan, setStatusKelulusan] = useState("");
+  const [perPage] = useState(6);
+  const [currentPage, setCurrentPage] = useState(0);
+  const [loading, setLoading] = useState(false);
+  const [open, setOpen] = React.useState(false);
+
+  // Variable
+  const backendUrl = process.env.REACT_APP_API_URL;
+  const Navigate = useNavigate();
+  const peminatanByJurusan = {
+    "Ekonomi Pembangunan": [
+      "Keuangan Daerah",
+      "Perencanaan",
+      "Moneter Perbankan",
+    ],
+    Manajemen: [
+      "Manajemen Keuangan",
+      "Manajemen Sumberdaya Manusia",
+      "Manajemen Pemasaran",
+    ],
+    Akuntansi: [
+      "Akuntansi Keuangan",
+      "Akuntansi Sektor Publik",
+      "Akuntansi Manajemen",
+    ],
+  };
+
+  // methods
+  const openDrawer = () => setOpen(true);
+  const closeDrawer = () => setOpen(false);
+  const handlePageClick = (data) => {
+    const selectedPage = data.selected;
+    setCurrentPage(selectedPage);
+  };
+  const showMenuToggle = () => {
+    setShowMenu(!showMenu);
+  };
+  const toggleDropdown = () => {
+    setDropdownVisible(!dropdownVisible);
+  };
+  // const fetchData = async () => {
+  //   const data = [];
+  //   for (let i = 0; i < 2000; i++) {
+  //     data.push({
+  //       id: i,
+  //       nama: faker.animal.cat(),
+  //       jurusan: faker.company.name(),
+  //       judul_skripsi: faker.location.country(),
+  //     });
+  //   }
+  //   setData(data);
+  //   setLoading(true);
+  // };
+
+  const fetchData = async () => {
+    try {
+      setLoading(false);
+      const token = localStorage.getItem("token");
+      const config = {
+        headers: {
+          Authorization: `Bearer ${token}`,
+        },
+      };
+
+      const response = await axios.get(
+        `${backendUrl}/api/mahasiswa/profile`,
+        config
+      );
+      if (response.status === 200) {
+        const res = await axios.get(
+          `${backendUrl}/api/mahasiswa/get-skripsi`,
+          config
+        );
+        setData(res.data.data);
+        setStatusKelulusan(response.data.data.status_kelulusan);
+        setLoading(true);
+      }
+    } catch (err) {
+      Navigate("/login-mhs");
+    }
+  };
+  const getSkripsiByJurusan = async () => {
+    try {
+      setLoading(false);
+      const token = localStorage.getItem("token");
+      const data = {
+        jurusan,
+        peminatan,
+      };
+      const config = {
+        headers: {
+          Authorization: `Bearer ${token}`,
+        },
+      };
+      const response = await axios.post(
+        `${backendUrl}/api/mahasiswa/get-skripsi-jurusan`,
+        data,
+        config
+      );
+      if (response.status === 200) {
+        setData(response.data.data);
+        setLoading(true);
+      }
+    } catch (error) {
+      console.log(error);
+    }
+  };
+  const getSkripsiByDate = async () => {
+    try {
+      setLoading(false);
+      if (tanggalAwal === "" || tanggalAkhir === "") {
+        alert("Tanggal Awal dan Tanggal Akhir Harus Diisi");
+        return;
+      }
+
+      const token = localStorage.getItem("token");
+      const config = {
+        headers: {
+          Authorization: `Bearer ${token}`,
+        },
+      };
+      const response = await axios.get(
+        `${backendUrl}/api/mahasiswa/get-skripsi-date?tanggal_awal=${tanggalAwal}&tanggal_akhir=${tanggalAkhir}`,
+        config
+      );
+      if (response.status === 200) {
+        setData(response.data.data);
+        setLoading(true);
+      }
+    } catch (error) {
+      setData([]);
+      setLoading(true);
+    }
+  };
+
+  // filter data
   const filteredData = data.filter((item) =>
     Object.values(item).some((value) =>
       value.toString().toLowerCase().includes(searchTerm.toLowerCase())
     )
   );
-
-  const showMenuToggle = () => {
-    setShowMenu(!showMenu);
-  };
-
-  const toggleDropdown = () => {
-    setDropdownVisible(!dropdownVisible);
-  };
-
   useEffect(() => {
-    const token = localStorage.getItem("token");
-    const config = {
-      headers: {
-        Authorization: `Bearer ${token}`,
-      },
-    };
-    axios
-      .get("http://localhost:5001/api/mahasiswa/get-skripsi", config)
-      .then((res) => {
-        setData(res.data.data);
-      })
-      .catch((err) => {
-        Navigate("/login-mhs");
-      });
-    Swal.close();
-  }, []);
+    const params = new URLSearchParams(window.location.search);
+    const query = {};
+    for (let param of params) {
+      query[param[0]] = param[1];
+    }
+    if (query.nama) {
+      setSearchTerm(query.nama);
+    } else if (query.jurusan) {
+      setSearchTerm(query.jurusan);
+    } else if (query.peminatan) {
+      setSearchTerm(query.peminatan);
+    }
 
-  return (
-    <div>
-      {/* create modern navbar using tailwind */}
-      <nav className="bg-white shadow-lg">
-        <div className="max-w-6xl mx-auto px-4">
-          <div className="flex justify-between">
-            {/* set logo FEB.png */}
-            <div className="flex space-x-7">
-              <div>
-                {/* image icon */}
-                <a href="#" className="flex items-center py-4">
-                  <span className="font-semibold text-gray-500 text-lg">
-                    Sistem Informasi Repository Skripsi
-                  </span>
-                </a>
-              </div>
-              {/* primary navbar items */}
-              <div className="hidden md:flex items-center space-x-1">
-                <a
-                  href="/mhs/dashboard"
-                  className="py-4 px-2 text-yellow-300 border-b-4 border-yellow-300 font-semibold"
-                >
-                  Dashboard
-                </a>
-                <a
-                  className="py-4 px-5 text-gray-500 font-semibold hover:text-yellow-200 transition duration-300"
-                  href="/mhs/upload-skripsi"
-                >
-                  Upload Skripsi
-                </a>
-              </div>
-            </div>
-            {/* secondary navbar items */}
-            <div className="hidden md:flex items-center space-x-3 ">
-              {/* dropdown profile list item */}
-              <div className="flex flex-col md:flex-row items-center md:space-x-3 ">
-                <div className="relative inline-block text-left">
-                  <div>
-                    <button
-                      type="button"
-                      className="inline-flex justify-center w-full rounded-md border border-gray-300 shadow-sm px-4 py-2 bg-white text-sm font-medium text-gray-500 hover:bg-yellow-300 hover:text-white transition duration-300"
-                      id="options-menu"
-                      aria-haspopup="true"
-                      aria-expanded="true"
-                      onClick={toggleDropdown}
-                    >
-                      <span>Profile</span>
-                      {/* chevron down icon */}
-                      <svg
-                        className="w-5 h-5 ml-2 -mr-1"
-                        xmlns="http://www.w3.org/2000/svg"
-                        viewBox="0 0 20 20"
-                        fill="currentColor"
-                      >
-                        {/* chevron down icon */}
-                        <path
-                          fillRule="evenodd"
-                          d="M6.293 6.293a1 1 0 011.414 0L10
-                          8.586l2.293-2.293a1 1 0 111.414 1.414l-3
-                          3a1 1 0 01-1.414 0l-3-3a1 1 0
-                          010-1.414z"
-                          clipRule="evenodd"
-                        ></path>
-                      </svg>
-                    </button>
-                  </div>
-                  {/* dropdown profile items */}
-                  <div
-                    className={`origin-top-right absolute right-0 mt-2 w-40 rounded-md shadow-lg bg-white ring-1 ring-black ring-opacity-5 focus:outline-none ${
-                      dropdownVisible ? "block" : "hidden"
-                    }`}
-                    role="menu"
-                    aria-orientation="vertical"
-                    aria-labelledby="options-menu"
-                  >
-                    <div className="py-1" role="none">
-                      <button
-                        className="block px-4 py-2 text-sm text-gray-700 hover:bg-yellow-300 hover:text-white transition duration-300 w-full text-left"
-                        role="menuitem"
-                        onClick={() => Navigate("/mhs/profile")}
-                      >
-                        Profile
-                      </button>
-                      <button
-                        className="block px-4 py-2 text-sm text-gray-700 hover:bg-yellow-300 hover:text-white transition duration-300 w-full text-left"
-                        role="menuitem"
-                        onClick={() => {
-                          localStorage.removeItem("token");
-                          Navigate("/login-mhs");
-                        }}
-                      >
-                        Log out
-                      </button>
-                    </div>
-                  </div>
-                </div>
-              </div>
-            </div>
+    fetchData();
 
-            {/* mobile menu button */}
-            <div className="md:hidden flex items-center">
-              <button
-                className="outline-none mobile-menu-button"
-                onClick={showMenuToggle}
-              >
-                <svg
-                  className="w-6 h-6 text-gray-500 hover:text-yellow-300"
-                  fill="none"
-                  strokeLinecap="round"
-                  strokeLinejoin="round"
-                  strokeWidth="2"
-                  viewBox="0 0 24 24"
-                  stroke="currentColor"
-                >
-                  {showMenu ? (
-                    <path d="M6 18L18 6M6 6l12 12"></path>
-                  ) : (
-                    <path d="M4 6h16M4 12h16M4 18h16"></path>
-                  )}
-                </svg>
-              </button>
-            </div>
-          </div>
-          {/* mobile menu */}
-          {showMenu && (
-            <div className="md:hidden mt-2">
-              <a
-                onClick={() => Navigate("/mhs/dashboard")}
-                className="block py-2 px-4 text-sm text-gray-500 hover:bg-yellow-300 hover:text-white transition duration-300"
-              >
-                Dashboard
-              </a>
-              <a
-                onClick={() => Navigate("/mhs/upload-skripsi")}
-                className="block py-2 px-4 text-sm text-gray-500 hover:bg-yellow-300 hover:text-white transition duration-300"
-              >
-                Upload Skripsi
-              </a>
-              <a
-                onClick={() => Navigate("/mhs/profile")}
-                className="block py-2 px-4 text-sm text-gray-500 hover:bg-yellow-300 hover:text-white transition duration-300"
-              >
-                Profile
-              </a>
-              <a
-                onClick={() => {
-                  localStorage.removeItem("token");
-                  Navigate("/login-mhs");
-                }}
-                className="block py-2 px-4 text-sm text-gray-500 hover:bg-yellow-300 hover:text-white transition duration-300"
-              >
-                Log out
-              </a>
-            </div>
-          )}
+    // fetchData();
+  }, [window.location.search]);
+
+  // pagination
+  const indexOfLastItem = (currentPage + 1) * perPage;
+  const indexOfFirstItem = indexOfLastItem - perPage;
+  const currentItems = filteredData.slice(indexOfFirstItem, indexOfLastItem);
+
+  // skripsi item component
+  const SkripsiItem = ({ item }) => (
+    <div className="w-full lg:max-w-full lg:flex mt-10 rounded-lg shadow-xl">
+      <div className="h-20 lg:h-auto lg:w-48 flex-none bg-cover rounded-t lg:rounded-t-none lg:rounded-l text-center overflow-hidden rounded-lg">
+        <img src="../FEB.png" alt="" className="mx-auto mb-4" />
+      </div>
+      <div className="bg-white rounded-b lg:rounded-b-none lg:rounded-r p-4 flex flex-col justify-between leading-normal">
+        <div className="mb-8">
+          <button
+            className=" text-black flex items-center align-middle text-bold font-bold uppercase text-start hover:text-yellow-300 transition duration-300 text-sm"
+            onClick={() => Navigate(`/mhs/detail-skripsi/${item.id}`)}
+          >
+            {item.judul_skripsi}
+          </button>
         </div>
-      </nav>
-
-      {/* end of navbar */}
-
-      {/* start of hero section */}
-      {/* <section className="bg-yellow-300 py-20 px-10">
-        <div className="max-w-6xl mx-auto flex items-center justify-between">
-          <div className="w-1/2">
-            <h1 className="text-white text-6xl font-semibold">
-              Belajar pemrograman web dengan mudah
-            </h1>
-            <p className="text-gray-300 text-2xl mt-8 font-semibold">
-              Lorem ipsum dolor sit amet consectetur adipisicing elit. Quisquam
-              quibusdam, quia, voluptatum, voluptates voluptate quod quos
-              doloribus debitis tempora eveniet voluptatibus. Quisquam
-              quibusdam, quia, voluptatum, voluptates voluptate quod quos
-              doloribus debitis tempora eveniet voluptatibus.
-            </p>
-            <button className="block bg-white hover:bg-gray-100 py-3 px-4 mt-10 rounded-lg shadow-lg uppercase font-semibold">
-              Get Started
-            </button>
-          </div>
-          <div className="w-1/2">
-            <img src="https://source.unsplash.com/IXUM4cJynP0" alt="" />
+        <div className="flex">
+          <div className="text-sm text-left col-span-2">
+            <div className="col-span-2">
+              <a
+                className="text-gray-600 hover:text-yellow-300 text-start"
+                href={`dashboard?nama=${item.nama}`}
+              >
+                Oleh {item.nama}
+              </a>
+            </div>
+            <div className="col-span-2">
+              <a
+                className="text-gray-600 hover:text-yellow-300 text-start"
+                href={`dashboard?jurusan=${item.jurusan}`}
+              >
+                Jurusan {item.jurusan}
+              </a>
+            </div>
+            <div className="col-span-2">
+              <a
+                className="text-gray-600 hover:text-yellow-300 text-start"
+                href={`dashboard?peminatan=${item.peminatan}`}
+              >
+                Peminatan {item.peminatan}
+              </a>
+            </div>
           </div>
         </div>
-      </section> */}
-      {/* end of hero section */}
+      </div>
+    </div>
+  );
 
-      {/* start of stats section */}
+  return !loading ? (
+    <div className="flex justify-center items-center h-screen">
+      <Spinner className="h-12 w-12" color="amber" />
+    </div>
+  ) : (
+    <div className="bg-gray-100 w-full min-h-screen">
+      <Navbar
+        status_kelulusan={status_kelulusan}
+        showMenuToggle={showMenuToggle}
+        showMenu={showMenu}
+        toggleDropdown={toggleDropdown}
+        dropdownVisible={dropdownVisible}
+      />
       <section className="bg-gray-100 py-20">
         <div className="max-w-6xl mx-auto px-4">
-          <h2 className="text-5xl font-semibold text-center">
+          <h2 className="text-2xl font-semibold text-left">
             Masukan Judul Skripsi
           </h2>
-          {/* icon search */}
-          <div className="flex items-center mt-12">
+          <div className="flex items-center mt-6">
             <div className="w-full">
               <div className="relative">
-                <div className="absolute top-4 left-3">
-                  <svg
-                    className="w-6 h-6 text-gray-400"
-                    fill="none"
-                    strokeLinecap="round"
-                    strokeLinejoin="round"
-                    strokeWidth="2"
-                    viewBox="0 0 24 24"
-                    stroke="currentColor"
-                  >
-                    {/* search icon */}
-                    <path
-                      d="M9 21h6M19 19l-6-6M10 8a2 2
-                      0 100-4 2 2 0 000 4z"
-                    ></path>
-                  </svg>
-                </div>
-                <input
-                  type="text"
-                  className="w-full bg-white rounded-lg pl-10 pr-4 py-2 focus:outline-none focus:shadow-outline text-gray-600 font-medium"
-                  placeholder="Search"
-                  onChange={(e) => setSearchTerm(e.target.value)}
+                <Input
+                  color="yellow"
+                  outline={false}
+                  placeholder="Cari Judul Skripsi"
+                  label="Cari Judul Skripsi"
+                  onChange={(e) => {
+                    setSearchTerm(e.target.value);
+                  }}
                 />
+              </div>
+              <div className="mt-6 flex items-start">
+                <div>
+                  <Button onClick={openDrawer}>Filter Data</Button>
+                  <Drawer open={open} onClose={closeDrawer} className="p-4">
+                    <div className="mb-6 flex items-center justify-between">
+                      <Typography variant="h5" color="blue-gray">
+                        Filter Data
+                      </Typography>
+                      <IconButton onClick={closeDrawer}>
+                        <svg
+                          xmlns="http://www.w3.org/2000/svg"
+                          className="h-6 w-6 text-gray-500 hover:text-yellow-300"
+                          fill="none"
+                          viewBox="0 0 24 24"
+                          stroke="currentColor"
+                        >
+                          <path
+                            strokeLinecap="round"
+                            strokeLinejoin="round"
+                            strokeWidth="2"
+                            d="M6 18L18 6M6 6l12 12"
+                          />
+                        </svg>
+                      </IconButton>
+                    </div>
+                    <div className="flex flex-col gap-4 mt-8">
+                      <Typography variant="h6" color="blue-gray">
+                        Filter Jurusan dan Peminatan
+                      </Typography>
+                      <Select
+                        color="yellow"
+                        size="regular"
+                        outline={false}
+                        placeholder="Pilih Jurusan"
+                        label="Pilih Jurusan"
+                        onChange={(e) => {
+                          setJurusan(e);
+                        }}
+                      >
+                        <Option value="Akuntansi">Akuntansi</Option>
+                        <Option value="Manajemen">Manajemen</Option>
+                        <Option value="Ekonomi Pembangunan">
+                          Ekonomi Pembangunan
+                        </Option>
+                      </Select>
+                      <Select
+                        color="yellow"
+                        size="regular"
+                        outline={false}
+                        placeholder="Pilih Peminatan"
+                        label="Pilih Peminatan"
+                        onChange={(e) => {
+                          setPeminatan(e);
+                        }}
+                        {...(jurusan === "" && { disabled: true })}
+                      >
+                        {jurusan &&
+                          peminatanByJurusan[jurusan].map((item, index) => (
+                            <Option key={index} value={item}>
+                              {item}
+                            </Option>
+                          ))}
+                      </Select>
+                      <Button
+                        color="amber"
+                        size="regular"
+                        className="mb-8"
+                        onClick={
+                          jurusan === ""
+                            ? getSkripsiByJurusan
+                            : () => {
+                                setSearchTerm("");
+                                setJurusan("");
+                                getSkripsiByJurusan();
+                                closeDrawer();
+                              }
+                        }
+                      >
+                        Cari
+                      </Button>
+                    </div>
+                    <div className="flex flex-col gap-2 mt-8">
+                      <Typography variant="h6" color="blue-gray">
+                        Filter Tanggal
+                      </Typography>
+                      <Input
+                        type="date"
+                        color="amber"
+                        size="regular"
+                        outline={false}
+                        placeholder="Tanggal Awal"
+                        label="Tanggal Awal"
+                        onChange={(e) => {
+                          setTanggalAwal(e.target.value);
+                        }}
+                      />
+                      s.d.
+                      <Input
+                        type="date"
+                        color="amber"
+                        size="regular"
+                        outline={false}
+                        placeholder="Tanggal Akhir"
+                        label="Tanggal Akhir"
+                        onChange={(e) => {
+                          setTanggalAkhir(e.target.value);
+                        }}
+                      />
+                      <Button
+                        color="amber"
+                        className="mb-8 mt-2"
+                        size="regular"
+                        onClick={getSkripsiByDate}
+                      >
+                        Cari
+                      </Button>
+                    </div>
+                    <div className="flex flex-col gap-4 mt-8">
+                      <Button
+                        color="amber"
+                        size="regular"
+                        onClick={() => {
+                          setSearchTerm("");
+                          setJurusan("");
+                          setTanggalAwal("");
+                          setTanggalAkhir("");
+                          fetchData();
+                          closeDrawer();
+                        }}
+                      >
+                        Clear Filter
+                      </Button>
+                    </div>
+                  </Drawer>
+                </div>
               </div>
             </div>
           </div>
-        </div>
-      </section>
-      {/* end of stats section */}
-      {/* tampilkan data dummy skripsi */}
-      <section className="bg-gray-100 py-20">
-        <div className="max-w-6xl mx-auto px-4">
-          <h2 className="text-5xl font-semibold text-center">Daftar Skripsi</h2>
-          <div className="flex items-center mt-12"></div>
-        </div>
-        {/* cretae modern konten(not table to show data like paragraf) */}
-        <div className="max-w-6xl mx-auto px-4">
-          <div className="flex flex-wrap -mx-4">
-            {filteredData.map((user) => (
-              <div className="w-full md:w-1/2 lg:w-1/3 xl:w-1/4 px-4 mb-4">
-                <div className="bg-white rounded-lg shadow-md">
-                  <img
-                    src="https://source.unsplash.com/IXUM4cJynP0"
-                    alt=""
-                    className="rounded-t-lg"
-                  />
-                  <div className="p-4">
-                    <button
-                      className="block text-lg font-semibold"
-                      onClick={() => Navigate(`/mhs/detail-skripsi/${user.id}`)}
-                    >
-                      {user.judul_skripsi}
-                    </button>
-                    <div className="flex items-center justify-between mt-4">
-                      <a
-                        href="#"
-                        className="text-gray-500 hover:text-yellow-300 transition duration-300"
-                      >
-                        {user.jurusan}
-                      </a>
-                    </div>
-                    <div className="flex items-center justify-between mt-4">
-                      <a
-                        href="#"
-                        className="text-gray-500 hover:text-yellow-300 transition duration-300"
-                      >
-                        {user.nama}
-                      </a>
-                    </div>
-                  </div>
+          <div className="bg-gray-100 py-12">
+            <div className="max-w-6xl mx-auto px-4">
+              <h2 className="text-3xl font-semibold text-center">
+                Daftar Skripsi
+              </h2>
+            </div>
+          </div>
+
+          <div className="container mx-auto px-4">
+            <div className="p-10 bg-white rounded shadow-xl">
+              {currentItems.length === 0 ? (
+                <div className="flex justify-center items-center h-20">
+                  <p className="text-2xl text-gray-500">Data Tidak Ditemukan</p>
                 </div>
-              </div>
-            ))}
+              ) : (
+                currentItems.map((item, index) => (
+                  <SkripsiItem key={index} item={item} />
+                ))
+              )}
+            </div>
+            {filteredData.length > 6 && (
+              <ReactPaginate
+                previousLabel={
+                  <Button variant="text" className="flex items-center gap-2">
+                    <ArrowLeftIcon strokeWidth={2} className="h-4 w-4" />{" "}
+                    Previous
+                  </Button>
+                }
+                nextLabel={
+                  <Button variant="text" className="flex items-center gap-2">
+                    Next <ArrowRightIcon strokeWidth={2} className="h-4 w-4" />
+                  </Button>
+                }
+                pageCount={Math.ceil(filteredData.length / perPage)}
+                onPageChange={handlePageClick}
+                containerClassName={
+                  "flex items-center justify-center gap-2 mt-4"
+                }
+                pageClassName={
+                  "flex items-center justify-center h-8 w-8 hover:bg-yellow-300 hover:text-white"
+                }
+                activeClassName={"bg-yellow-300 text-white"}
+                previousClassName={
+                  "flex items-center justify-center h-8 w-8 mr-14"
+                }
+                nextClassName={"flex items-center justify-center h-8 w-8 ml-10"}
+              />
+            )}
           </div>
         </div>
       </section>
-      {/* end of konten */}
-      {/* start of pagination */}
-      {/* create modern pagination tailwind */}
+      <div className="flex justify-center items-center h-24 bg-gray-100">
+        <p className="text-gray-500 text-xs">
+          &copy;2024 FEB UNDANA. All rights reserved.
+        </p>
+      </div>
     </div>
   );
 };
 
-export default Dashboard;
+export default MhsDashboard;

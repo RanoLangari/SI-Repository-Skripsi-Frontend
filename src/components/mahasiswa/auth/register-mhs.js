@@ -2,36 +2,84 @@ import React, { useState, useEffect } from "react";
 import axios from "axios";
 import { useNavigate } from "react-router-dom";
 import Swal from "sweetalert2";
+import { Input, Select, Option } from "@material-tailwind/react";
 const RegisterMahasiswa = () => {
+  const backendUrl = process.env.REACT_APP_API_URL;
   const navigate = useNavigate();
   const [nim, setNim] = useState("");
   const [nama, setNama] = useState("");
   const [jurusan, setJurusan] = useState("");
   const [semester, setSemester] = useState("");
+  const [email, setEmail] = useState("");
   const [status_kelulusan, setStatusKelulusan] = useState("");
   const [password, setPassword] = useState("");
   const [confirm_password, setConfirmPassword] = useState("");
   const handleRegister = async (e) => {
-    e.preventDefault();
-    Swal.fire({
-      title: "Loading...",
-      allowOutsideClick: false,
-      didOpen: () => {
-        Swal.showLoading();
-      },
-    });
-    const data = {
-      nim,
-      nama,
-      jurusan,
-      semester,
-      status_kelulusan,
-      password,
-      confirm_password,
-    };
     try {
+      e.preventDefault();
+      Swal.fire({
+        title: "Loading...",
+        showConfirmButton: false,
+        allowOutsideClick: false,
+        willOpen: () => {
+          Swal.showLoading();
+        },
+      });
+      const data = {
+        nim,
+        nama,
+        email,
+        jurusan,
+        semester,
+        status_kelulusan,
+        password,
+        confirm_password,
+      };
+      if (
+        !nim ||
+        !nama ||
+        !email ||
+        !jurusan ||
+        !semester ||
+        !status_kelulusan ||
+        !password ||
+        !confirm_password
+      ) {
+        Swal.close();
+        return Swal.fire({
+          icon: "error",
+          title: "Register gagal!",
+          text: "Semua kolom harus diisi",
+          timer: 1000,
+        });
+      }
+      if (isNaN(nim)) {
+        Swal.close();
+        return Swal.fire({
+          icon: "error",
+          title: "Register gagal!",
+          text: "NIM harus angka",
+          timer: 1000,
+        });
+      }
+      if (nim.length !== 10) {
+        return Swal.fire({
+          icon: "error",
+          title: "Register gagal!",
+          text: "panjang NIM harus 10 karakter",
+          timer: 1000,
+        });
+      }
+      if (password !== confirm_password) {
+        return Swal.fire({
+          icon: "error",
+          title: "Register gagal!",
+          text: "Password tidak sama",
+          timer: 1000,
+        });
+      }
       const response = await axios.post(
-        "http://localhost:5001/api/mahasiswa/register",
+        `${backendUrl}/api/mahasiswa/register`,
         data
       );
       Swal.close();
@@ -39,24 +87,23 @@ const RegisterMahasiswa = () => {
         Swal.fire({
           icon: "success",
           title: "Register berhasil!",
-          showConfirmButton: false,
           timer: 1000,
+        }).then(() => {
+          navigate("/login-mhs");
         });
-        console.log(response.data);
-        navigate("/login-mhs");
       }
     } catch (error) {
       Swal.fire({
         icon: "error",
-        title: "Oops...",
+        title: "Register gagal!",
         text: error.response.data.message,
         timer: 1000,
       });
     }
   };
   return (
-    <div className="flex items-center justify-center bg-gray-200">
-      <div className="w-full max-w-md">
+    <div className="flex items-center justify-center bg-gray-200 w-full min-h-screen">
+      <div className="w-full max-w-lg">
         <div className="flex justify-center mb-4">
           <img src="./FEB.png" alt="" className="mx-auto mb-4" />
         </div>
@@ -66,167 +113,118 @@ const RegisterMahasiswa = () => {
           onSubmit={handleRegister}
         >
           <div
-            className="text-gray-800 text-2xl flex justify-center border-b-2 py-2 mb-4"
+            className="text-gray-800 text-2xl flex justify-center py-2 mb-8"
             style={{ fontFamily: "Roboto, sans-serif" }}
           >
             Register Mahasiswa
           </div>
-          <div className="mb-4">
-            <label
-              className="block text-gray-700 text-sm font-normal mb-2"
-              htmlFor="nim"
-            >
-              <b>NIM</b>
-            </label>
-            <input
-              className="shadow appearance-none border rounded w-full py-2 px-3 text-gray-700 leading-tight focus:outline-none focus:shadow-outline"
-              name="nim"
-              id="nim"
-              type="text"
-              placeholder="nim"
-              required
-              onChange={(e) => {
-                setNim(e.target.value);
-              }}
-            />
-          </div>
-          {/* nama */}
-          <div className="mb-4">
-            <label
-              className="block text-gray-700 text-sm font-normal mb-2"
-              htmlFor="nama"
-            >
-              <b>Nama</b>
-            </label>
-            <input
-              className="shadow appearance-none border rounded w-full py-2 px-3 text-gray-700 leading-tight focus:outline-none focus:shadow-outline"
-              name="nama"
-              id="nama"
-              type="text"
-              placeholder="nama"
-              required
-              onChange={(e) => {
-                setNama(e.target.value);
-              }}
-            />
-          </div>
-          {/* jurusan */}
-          <div className="mb-4">
-            <label
-              className="block text-gray-700 text-sm font-normal mb-2"
-              htmlFor="jurusan"
-            >
-              <b>Jurusan</b>
-            </label>
-            <select
-              name="jurusan"
-              id="jurusan"
-              className="shadow appearance-none border rounded w-full py-2 px-3 text-gray-700 leading-tight focus:outline-none focus:shadow-outline"
-              required
-              onChange={(e) => {
-                setJurusan(e.target.value);
-              }}
-            >
-              <option value={""}>-- Pilih Jurusan --</option>
-              <option value={"Manajemen"}>Manajemen</option>
-              <option value={"Akuntansi"}>Akuntansi</option>
-              <option value={"Ekonomi Pembangunan"}>Ekonomi Pembangunan</option>
-            </select>
-          </div>
-          {/* semester */}
-          <div className="mb-4">
-            <label
-              className="block text-gray-700 text-sm font-normal mb-2"
-              htmlFor="semester"
-            >
-              <b>Semester</b>
-            </label>
-            <input
-              className="shadow appearance-none border rounded w-full py-2 px-3 text-gray-700 leading-tight focus:outline-none focus:shadow-outline"
-              name="semester"
-              id="semester"
-              type="text"
-              placeholder="semester"
-              required
-              onChange={(e) => {
-                setSemester(e.target.value);
-              }}
-            />
-          </div>
-          {/* status kelulusan */}
-          <div className="mb-4">
-            <label
-              className="block text-gray-700 text-sm font-normal mb-2"
-              htmlFor="status_kelulusan"
-            >
-              <b>Status Kelulusan</b>
-            </label>
-            <select
-              name="status_kelulusan"
-              id="status_kelulusan"
-              className="shadow appearance-none border rounded w-full py-2 px-3 text-gray-700 leading-tight focus:outline-none focus:shadow-outline"
-              required
-              onChange={(e) => {
-                setStatusKelulusan(e.target.value);
-              }}
-            >
-              <option value={""}>-- Pilih Status Kelulusan --</option>
-              <option value={"Lulus"}>Lulus</option>
-              <option value={"Belum Lulus"}>Belum Lulus</option>
-            </select>
-          </div>
-          <div className="mb-6">
-            <label
-              className="block text-gray-700 text-sm font-normal mb-2"
-              htmlFor="password"
-            >
-              <b>Password</b>
-            </label>
-            <input
-              className="shadow appearance-none border border-red-500 rounded w-full py-2 px-3 text-gray-700 mb-3 leading-tight focus:outline-none focus:shadow-outline"
-              name="password"
-              id="password"
-              type="password"
-              placeholder="******************"
-              required
-              onChange={(e) => {
-                setPassword(e.target.value);
-              }}
-            />
-            <p className="text-red-500 text-xs italic">
-              Please choose a password.
-            </p>
-          </div>
-          {/* confirm-password */}
-          <div className="mb-6">
-            <label
-              className="block text-gray-700 text-sm font-normal mb-2"
-              htmlFor="confirm-password"
-            >
-              <b>Confirm Password</b>
-            </label>
-            <input
-              className="shadow appearance-none border border-red-500 rounded w-full py-2 px-3 text-gray-700 mb-3 leading-tight focus:outline-none focus:shadow-outline"
-              name="confirm-password"
-              id="confirm-password"
-              type="password"
-              placeholder="******************"
-              required
-              onChange={(e) => {
-                setConfirmPassword(e.target.value);
-              }}
-            />
-            <p className="text-red-500 text-xs italic">
-              Please choose a password.
-            </p>
+          <div className="flex flex-col md:flex-row">
+            <div className="flex flex-col w-full md:w-1/2 md:pr-2">
+              <Input
+                label="NIM"
+                required
+                onChange={(e) => {
+                  setNim(e.target.value);
+                }}
+              />
+              {isNaN(nim) && (
+                <span className="text-xs text-red-500 text-left mt-2">
+                  NIM harus angka
+                </span>
+              )}
+            </div>
+            <div className="flex flex-col w-full md:w-1/2 md:pl-2 mt-6 md:mt-0">
+              <Select
+                label="Pilih Jurusan"
+                onChange={(value) => setJurusan(value)}
+              >
+                <Option value="Manajemen">Manajemen</Option>
+                <Option value="Akuntansi">Akuntansi</Option>
+                <Option value="Ekonomi Pembangunan">Ekonomi Pembangunan</Option>
+              </Select>
+            </div>
           </div>
 
-          <div className="flex items-center justify-between">
+          <div className="flex flex-col md:flex-row mt-6">
+            <div className="flex flex-col w-full md:w-1/2 md:pr-2">
+              <Input
+                label="Nama"
+                required
+                onChange={(e) => {
+                  setNama(e.target.value);
+                }}
+              />
+            </div>
+            <div className="flex flex-col w-full md:w-1/2 md:pl-2 mt-6 md:mt-0">
+              <Select
+                label="Pilih Semester"
+                onChange={(value) => setSemester(value)}
+              >
+                {[...Array(14)].map((_, index) => (
+                  <Option key={index + 1} value={(index + 1).toString()}>
+                    {index + 1}
+                  </Option>
+                ))}
+              </Select>
+            </div>
+          </div>
+          <div className="flex flex-col md:flex-row mt-6">
+            <div className="flex flex-col w-full md:w-1/2 md:pr-2">
+              <Select
+                label="Pilih Status Kelulusan"
+                onChange={(value) => setStatusKelulusan(value)}
+              >
+                <Option value="Lulus">Lulus</Option>
+                <Option value="Belum Lulus">Belum Lulus</Option>
+              </Select>
+            </div>
+            <div className="flex flex-col w-full md:w-1/2 md:pl-2 mt-6 md:mt-0">
+              <Input
+                label="Email"
+                required
+                onChange={(e) => {
+                  setEmail(e.target.value);
+                }}
+              />
+            </div>
+          </div>
+          <div className="flex flex-col md:flex-row mt-6">
+            <div className="flex flex-col w-full md:w-1/2 md:pr-2">
+              <Input
+                type="password"
+                label="Password"
+                required
+                onChange={(e) => {
+                  setPassword(e.target.value);
+                }}
+              />
+              <span className="text-xs text-gray-500 text-left mt-2">
+                Password minimal 8 karakter
+              </span>
+            </div>
+            <div className="flex flex-col w-full md:w-1/2 md:pl-2 mt-6 md:mt-0">
+              <Input
+                type="password"
+                label="Confirm Password"
+                required
+                onChange={(e) => {
+                  setConfirmPassword(e.target.value);
+                }}
+              />
+              {password !== confirm_password && (
+                <span className="text-xs text-red-500 text-left mt-2">
+                  password dan konfirmasi password tidak sama
+                </span>
+              )}
+            </div>
+          </div>
+
+          <div className="flex items-center justify-between mt-4">
             <button
               className="bg-blue-500 hover:bg-blue-700 text-white font-bold py-2 px-4 rounded focus:outline-none focus:shadow-outline"
               type="submit"
             >
-              Daftar Akun
+              Register
             </button>
             <a
               className="inline-block align-baseline font-normal text-sm text-blue-500 hover:text-blue-800"
@@ -237,7 +235,7 @@ const RegisterMahasiswa = () => {
           </div>
         </form>
         <p className="text-center text-gray-500 text-xs">
-          &copy;2023 FEB UNDANA. All rights reserved.
+          &copy;2024 FEB UNDANA. All rights reserved.
         </p>
       </div>
     </div>
