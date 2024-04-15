@@ -116,7 +116,7 @@ const DetailSkripsi = () => {
                   <div className="flex w-1/2 justify-end items-end">
                     {" "}
                     <div className="flex flex-row items-center">
-                      <a href={`${data.skripsi_url}`} target="_blank">
+                      <a href={`/mhs/preview/${data.id}`}>
                         <FaFilePdf className="text-5xl text-red-400" />
                         <span className="text-sm text-black">Full View</span>
                       </a>
