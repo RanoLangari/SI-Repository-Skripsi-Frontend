@@ -37,7 +37,7 @@ const MhsDashboard = () => {
   const peminatanByJurusan = {
     "Ekonomi Pembangunan": [
       "Keuangan Daerah",
-      "Perencanaan",
+      "Perencanaan Pembangunan",
       "Moneter Perbankan",
     ],
     Manajemen: [
