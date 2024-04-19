@@ -8,7 +8,7 @@ import {
   useMaterialReactTable,
 } from "material-react-table";
 import { FaPencilAlt, FaRegTrashAlt } from "react-icons/fa";
-import Navbar from "./template/Navbar";
+import NavbarAdmin from "./template/NavbarAdmin";
 import { Spinner } from "@material-tailwind/react";
 
 const DataDosen = () => {
@@ -311,17 +311,13 @@ const DataDosen = () => {
       <Spinner className="h-12 w-12" color="amber" />
     </div>
   ) : (
-    <div className="bg-gray-100 w-full min-h-screen">
-      <Navbar
-        showMenu={showMenu}
-        showMenuToggle={showMenuToggle}
-        toggleDropdown={toggleDropdown}
-        dropdownVisible={dropdownVisible}
+    <div className="bg-gray-100">
+      <NavbarAdmin
       />
-      <div className="bg-gray-100 p-10">
+      <div className="container mx-auto mt-8">
         <section>
-          <div className="flex justify-center bg-gray-50 py-12 px-4 sm:px-6 lg:px-2">
-            <div className=" w-full space-y-8 px-10">
+          <div className="flex justify-center py-12 px-4 sm:px-6 lg:px-2">
+            <div className=" w-full space-y-8 px-10 bg-white py-10">
               <div>
                 <h2 className="mt-6 text-center text-xl font-extrabold text-gray-900">
                   Data Dosen
@@ -343,7 +339,7 @@ const DataDosen = () => {
           </div>
         </section>
       </div>
-      <div className="flex justify-center items-center bg-gray-50 py-20">
+      <div className="flex justify-center items-center py-20">
         <p className="text-center text-gray-500 text-xs">
           &copy;2024 FEB UNDANA. All rights reserved.
         </p>

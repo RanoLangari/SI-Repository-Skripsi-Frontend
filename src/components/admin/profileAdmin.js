@@ -6,7 +6,7 @@ import { Spinner } from "@material-tailwind/react";
 import { Input } from "@material-tailwind/react";
 import { FaUserCircle } from "react-icons/fa";
 import validator from "validator";
-import Navbar from "./template/Navbar";
+import NavbarAdmin from "./template/NavbarAdmin";
 
 const ProfileMahasiswa = () => {
   const backendUrl = process.env.REACT_APP_API_URL;
@@ -158,7 +158,7 @@ const ProfileMahasiswa = () => {
     </div>
   ) : (
     <div className="bg-gray-100 w-full min-h-screen">
-      <Navbar
+      <NavbarAdmin
         showMenu={showMenu}
         showMenuToggle={showMenuToggle}
         toggleDropdown={toggleDropdown}

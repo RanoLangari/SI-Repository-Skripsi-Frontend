@@ -4,7 +4,7 @@ import axios from "axios";
 import Swal from "sweetalert2";
 import { FaFilePdf } from "react-icons/fa";
 import { Spinner } from "@material-tailwind/react";
-import Navbar from "./template/Navbar";
+import NavbarAdmin from "./template/NavbarAdmin";
 
 const DetailDataSkripsi = () => {
   const backendUrl = process.env.REACT_APP_API_URL;
@@ -130,7 +130,7 @@ const DetailDataSkripsi = () => {
     </div>
   ) : (
     <div className="bg-gray-100 w-full min-h-screen">
-      <Navbar
+      <NavbarAdmin
         showMenu={showMenu}
         toggleDropdown={toggleDropdown}
         dropdownVisible={dropdownVisible}
