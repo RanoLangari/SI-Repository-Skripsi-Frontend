@@ -10,8 +10,6 @@ import {
   MenuHandler,
   MenuList,
   MenuItem,
-  Avatar,
-  Card,
   IconButton,
 } from "@material-tailwind/react";
 import {
@@ -111,7 +109,7 @@ function ProfileMenu() {
 // nav list component
 const navListItems = [
   {
-    label: "Dashboard",
+    label: "Beranda",
     href: '/admin/dashboard',
     icon: HomeModernIcon,
   },
