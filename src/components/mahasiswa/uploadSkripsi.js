@@ -194,11 +194,12 @@ const UploadSkripsi = () => {
                         placeholder="Pilih Pembimbing 1"
                         onChange={(e) => setPembimbing1(e)}
                       >
-                        {data.map((item) => (
-                          <Option key={item.nama} value={item.nama}>
-                            {item.nama}
-                          </Option>
-                        ))}
+                        {data &&
+                          data.map((item) => (
+                            <Option key={item.nama} value={item.nama}>
+                              {item.nama}
+                            </Option>
+                          ))}
                       </Select>
                     </div>
                     <div className="flex flex-col mb-6 md:w-full">

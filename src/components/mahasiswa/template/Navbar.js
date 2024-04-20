@@ -154,8 +154,13 @@ export function NavbarMahasiswaTemplate({ status_kelulusan }) {
   }, []);
 
   return (
-    <Navbar className="mx-auto max-w-screen-xl p-2 lg:rounded-full lg:pl-6">
+    <Navbar className="mx-auto max-w-screen-xl p-2 lg:rounded-full lg:pl-6 sticky top-0 z-50 bg-white">
       <div className="relative mx-auto flex items-center justify-between text-blue-gray-900">
+        <img
+          src="../FEB.png"
+          alt=""
+          className="mx-auto mb-4 w-28 mt-4 lg:ml-4 lg:mr-0"
+        />
         <Typography
           as="a"
           href="#"
@@ -163,7 +168,7 @@ export function NavbarMahasiswaTemplate({ status_kelulusan }) {
         >
           Sistem Informasi Repository Skripsi
         </Typography>
-        <div className="ml-32 hidden lg:block">
+        <div className=" ml-24 hidden lg:block">
           <NavList status_kelulusan={status_kelulusan} />
         </div>
         <IconButton
