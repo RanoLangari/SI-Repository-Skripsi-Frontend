@@ -3,7 +3,7 @@ import Swal from "sweetalert2";
 import { useNavigate } from "react-router-dom";
 import {
   Navbar,
-  MobileNav,
+  Collapse,
   Typography,
   Button,
   Menu,
@@ -25,15 +25,15 @@ function ProfileMenu() {
   const [isMenuOpen, setIsMenuOpen] = React.useState(false);
   const Navigate = useNavigate();
   const closeMenu = () => setIsMenuOpen(false);
-  
+
   const profileMenuItems = [
     {
       label: "My Profile",
       icon: UserCircleIcon,
       clicked: () => {
         closeMenu();
-      Navigate('/admin/profile')
-      }
+        Navigate("/admin/profile");
+      },
     },
     {
       label: "Sign Out",
@@ -49,11 +49,10 @@ function ProfileMenu() {
         }).then(() => {
           Navigate("/login-admin");
         });
-      }
+      },
     },
   ];
- 
- 
+
   return (
     <Menu open={isMenuOpen} handler={setIsMenuOpen} placement="bottom-end">
       <MenuHandler>
@@ -103,21 +102,21 @@ function ProfileMenu() {
     </Menu>
   );
 }
- 
+
 // nav list component
 const navListItems = [
   {
     label: "Beranda",
-    href: '/admin/dashboard',
+    href: "/admin/dashboard",
     icon: HomeModernIcon,
   },
   {
     label: "Data Dosen",
     icon: CodeBracketSquareIcon,
-    href:'/admin/dosen'
+    href: "/admin/dosen",
   },
 ];
- 
+
 function NavList() {
   return (
     <ul className="mt-2 mb-4 flex flex-col gap-2 lg:mb-0 lg:mt-0 lg:flex-row lg:items-center">
@@ -139,19 +138,19 @@ function NavList() {
     </ul>
   );
 }
- 
+
 export function NavbarAdminTemplate() {
   const [isNavOpen, setIsNavOpen] = React.useState(false);
- 
+
   const toggleIsNavOpen = () => setIsNavOpen((cur) => !cur);
- 
+
   React.useEffect(() => {
     window.addEventListener(
       "resize",
-      () => window.innerWidth >= 960 && setIsNavOpen(false),
+      () => window.innerWidth >= 960 && setIsNavOpen(false)
     );
   }, []);
- 
+
   return (
     <Navbar className="mx-auto max-w-screen-xl p-2 lg:rounded-full lg:pl-6">
       <div className="relative mx-auto flex items-center justify-between text-blue-gray-900">
@@ -176,9 +175,9 @@ export function NavbarAdminTemplate() {
         </IconButton>
         <ProfileMenu />
       </div>
-      <MobileNav open={isNavOpen} className="overflow-scroll">
+      <Collapse open={isNavOpen} className="overflow-scroll">
         <NavList />
-      </MobileNav>
+      </Collapse>
     </Navbar>
   );
 }

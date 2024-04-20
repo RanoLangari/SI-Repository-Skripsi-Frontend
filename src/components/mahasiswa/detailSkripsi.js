@@ -27,7 +27,6 @@ const DetailSkripsi = () => {
       .get(`${backendUrl}/api/mahasiswa/detail-skripsi/${id_mhs}`, config)
       .then((res) => {
         setData(res.data.data);
-        console.log(res.data.data);
         setLoading(true);
       })
       .catch((err) => {
@@ -42,9 +41,7 @@ const DetailSkripsi = () => {
     </div>
   ) : (
     <div className="bg-gray-100 w-full min-h-screen">
-      <Navbar
-        status_kelulusan={status_kelulusan}
-      />
+      <Navbar status_kelulusan={status_kelulusan} />
       <section>
         <div className="flex flex-col items-center justify-center mt-24">
           <div className="flex flex-col w-full sm:w-2/8 md:w-3/4 lg:w-1/2">

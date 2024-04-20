@@ -64,6 +64,14 @@ const UploadSkripsi = () => {
           Swal.showLoading();
         },
       });
+      console.log({
+        pembimbing1,
+        pembimbing2,
+        penguji,
+        judul,
+        peminatan,
+        abstract,
+      });
       const token = localStorage.getItem("token");
       const config = {
         headers: {
@@ -159,9 +167,7 @@ const UploadSkripsi = () => {
     </div>
   ) : (
     <div className="bg-gray-100 w-full min-h-screen">
-      <Navbar
-        status_kelulusan={"Lulus"}
-      />
+      <Navbar status_kelulusan={"Lulus"} />
       <div className="bg-gray-100 py-20 px-10">
         <div className="container mx-auto">
           <div className="bg-white dark:bg-gray-800 lg:w-1/2 mx-auto rounded-lg shadow">
@@ -182,45 +188,48 @@ const UploadSkripsi = () => {
                     <div className="flex flex-col mb-6 md:w-full">
                       <Select
                         color="yellow"
-                        size="regular"
+                        size="md"
                         label="Pilih Dosen Pembimbing 1"
-                        outline={false}
+                        outline="false"
                         placeholder="Pilih Pembimbing 1"
-                        dropdownHandle={true}
                         onChange={(e) => setPembimbing1(e)}
                       >
                         {data.map((item) => (
-                          <Option value={item.nama}>{item.nama}</Option>
+                          <Option key={item.nama} value={item.nama}>
+                            {item.nama}
+                          </Option>
                         ))}
                       </Select>
                     </div>
                     <div className="flex flex-col mb-6 md:w-full">
                       <Select
                         color="yellow"
-                        size="regular"
+                        size="md"
                         label="Pilih Dosen Pembimbing 2"
-                        outline={false}
+                        outline="false"
                         placeholder="Pilih Pembimbing 2"
-                        dropdownHandle={true}
                         onChange={(e) => setPembimbing2(e)}
                       >
                         {data.map((item) => (
-                          <Option value={item.nama}>{item.nama}</Option>
+                          <Option key={item.nama} value={item.nama}>
+                            {item.nama}
+                          </Option>
                         ))}
                       </Select>
                     </div>
                     <div className="flex flex-col mb-6 md:w-full">
                       <Select
                         color="yellow"
-                        size="regular"
+                        size="md"
                         label="Pilih Dosen Penguji"
-                        outline={false}
+                        outline="false"
                         placeholder="Pilih Penguji"
-                        dropdownHandle={true}
                         onChange={(e) => setPenguji(e)}
                       >
                         {data.map((item) => (
-                          <Option value={item.nama}>{item.nama}</Option>
+                          <Option key={item.nama} value={item.nama}>
+                            {item.nama}
+                          </Option>
                         ))}
                       </Select>
                     </div>
@@ -237,23 +246,24 @@ const UploadSkripsi = () => {
                     <div className="flex flex-col mb-6 md:w-full">
                       <Select
                         color="yellow"
-                        size="regular"
+                        size="md"
                         label="Pilih Peminatan"
-                        outline={false}
+                        outline="false"
                         placeholder="Pilih Peminatan"
-                        dropdownHandle={true}
                         onChange={(e) => setPeminatan(e)}
                       >
                         {peminatanByJurusan[jurusan].map((item) => (
-                          <Option value={item}>{item}</Option>
+                          <Option key={item} value={item}>
+                            {item}
+                          </Option>
                         ))}
                       </Select>
                     </div>
                     <div className="flex flex-col mb-6 md:w-full">
                       <Textarea
                         color="yellow"
-                        size="regular"
-                        outline={false}
+                        size="md"
+                        outline="false"
                         label="Abstrak"
                         onChange={(e) => setAbstract(e.target.value)}
                         required

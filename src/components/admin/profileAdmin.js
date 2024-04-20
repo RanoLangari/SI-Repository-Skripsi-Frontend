@@ -141,7 +141,7 @@ const ProfileMahasiswa = () => {
           },
         };
         const res = await axios.get(`${backendUrl}/api/admin/getadmin`, config);
-        if(res.status === 200){
+        if (res.status === 200) {
           setData(res.data.data);
           setLoading(true);
         }
@@ -158,8 +158,7 @@ const ProfileMahasiswa = () => {
     </div>
   ) : (
     <div className="bg-gray-100 w-full min-h-screen">
-      <NavbarAdmin
-      />
+      <NavbarAdmin />
       <div className="pt-20 bg-gray-100 items-center justify-center">
         <div className="bg-white dark:bg-gray-800 w-11/12 md:w-1/2 lg:w-1/3 mx-auto rounded-lg shadow">
           <div className="py-4 px-8 mt-3">
@@ -187,8 +186,8 @@ const ProfileMahasiswa = () => {
                     <div className="flex flex-col w-full md:w-1/2 md:pr-2 mb-4">
                       <Input
                         color="yellow"
-                        size="regular"
-                        outline={true}
+                        size="md"
+                        outline="true"
                         placeholder="Email"
                         label="Email"
                         value={data.email}
@@ -206,8 +205,8 @@ const ProfileMahasiswa = () => {
                     <div className="flex flex-col w-full md:w-1/2 md:pl-2">
                       <Input
                         color="yellow"
-                        size="regular"
-                        outline={true}
+                        size="md"
+                        outline="true"
                         placeholder="Username"
                         label="Username"
                         value={data.username}
@@ -246,8 +245,8 @@ const ProfileMahasiswa = () => {
                   <div className="flex flex-col mb-4">
                     <Input
                       color="yellow"
-                      size="regular"
-                      outline={true}
+                      size="md"
+                      outline="true"
                       placeholder="Password Lama"
                       label="Password Lama"
                       value={old_password}
@@ -257,9 +256,9 @@ const ProfileMahasiswa = () => {
                   <div className="flex flex-col mb-4">
                     <Input
                       color="yellow"
-                      size="regular"
+                      size="md"
                       type="password"
-                      outline={true}
+                      outline="true"
                       placeholder="Password Baru"
                       label="Password Baru"
                       value={new_password}
@@ -270,8 +269,8 @@ const ProfileMahasiswa = () => {
                     <Input
                       type="password"
                       color="yellow"
-                      size="regular"
-                      outline={true}
+                      size="md"
+                      outline="true"
                       placeholder="Konfirmasi Password Baru"
                       label="Konfirmasi Password Baru"
                       value={confirm_password}

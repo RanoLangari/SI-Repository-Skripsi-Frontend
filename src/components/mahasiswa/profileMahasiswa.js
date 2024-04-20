@@ -176,12 +176,10 @@ const ProfileMahasiswa = () => {
       <Spinner className="h-12 w-12" color="amber" />
     </div>
   ) : (
-    <div>
-      <Navbar
-        status_kelulusan={status_kelulusan}
-      />
+    <div className="bg-gray-100">
+      <Navbar status_kelulusan={status_kelulusan} />
 
-      <div className="pt-20 bg-gray-100 items-center justify-center">
+      <div className="pt-20 items-center justify-center">
         <div className="bg-white dark:bg-gray-800 w-11/12 md:w-1/2 lg:w-1/3 mx-auto rounded-lg shadow">
           <div className="py-4 px-8 mt-3">
             <div className="flex justify-between items-center">
@@ -217,8 +215,8 @@ const ProfileMahasiswa = () => {
                     <div className="flex flex-col w-full md:w-1/2 md:pl-2 mt-6">
                       <Select
                         color="yellow"
-                        size="regular"
-                        outline={false}
+                        size="md"
+                        outline="false"
                         label="Jurusan"
                         required
                         onChange={(e) => {
@@ -248,8 +246,8 @@ const ProfileMahasiswa = () => {
                     <div className="flex flex-col w-full md:w-1/2 md:pl-2 mt-6">
                       <Select
                         color="yellow"
-                        size="regular"
-                        outline={false}
+                        size="md"
+                        outline="false"
                         label="Semester"
                         required
                         onChange={(e) => {
@@ -273,8 +271,8 @@ const ProfileMahasiswa = () => {
                     <div className="flex flex-col w-full md:w-1/2 md:pr-2 mt-6">
                       <Select
                         color="yellow"
-                        size="regular"
-                        outline={false}
+                        size="md"
+                        outline="false"
                         label="Status Kelulusan"
                         required
                         onChange={(e) => {

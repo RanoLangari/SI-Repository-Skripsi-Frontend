@@ -158,7 +158,7 @@ const MhsDashboard = () => {
     }
 
     fetchData();
-  }, [fetchData]);
+  }, []);
 
   // pagination
   const indexOfLastItem = (currentPage + 1) * perPage;
@@ -218,9 +218,7 @@ const MhsDashboard = () => {
     </div>
   ) : (
     <div className="bg-gray-100 w-full min-h-screen">
-      <NavbarMahasiswaTemplate
-        status_kelulusan={status_kelulusan}
-      />
+      <NavbarMahasiswaTemplate status_kelulusan={status_kelulusan} />
       <section className="bg-gray-100 py-20">
         <div className="max-w-6xl mx-auto px-4">
           <h2 className="text-2xl font-semibold text-left">
@@ -231,7 +229,7 @@ const MhsDashboard = () => {
               <div className="relative">
                 <Input
                   color="yellow"
-                  outline={false}
+                  outline="false"
                   placeholder="Cari Judul Skripsi"
                   label="Cari Judul Skripsi"
                   onChange={(e) => {
@@ -241,11 +239,11 @@ const MhsDashboard = () => {
               </div>
               <div className="mt-6 flex items-start">
                 <div>
-                  <Button onClick={openDrawer}>Filter Data</Button>
+                  <Button onClick={openDrawer}>Filter Skripsi</Button>
                   <Drawer open={open} onClose={closeDrawer} className="p-4">
                     <div className="mb-6 flex items-center justify-between">
                       <Typography variant="h5" color="blue-gray">
-                        Filter Data
+                        Filter Skripsi
                       </Typography>
                       <IconButton onClick={closeDrawer}>
                         <svg
@@ -270,8 +268,8 @@ const MhsDashboard = () => {
                       </Typography>
                       <Select
                         color="yellow"
-                        size="regular"
-                        outline={false}
+                        size="md"
+                        outline="false"
                         placeholder="Pilih Jurusan"
                         label="Pilih Jurusan"
                         onChange={(e) => {
@@ -286,8 +284,8 @@ const MhsDashboard = () => {
                       </Select>
                       <Select
                         color="yellow"
-                        size="regular"
-                        outline={false}
+                        size="md"
+                        outline="false"
                         placeholder="Pilih Peminatan"
                         label="Pilih Peminatan"
                         onChange={(e) => {
@@ -304,7 +302,7 @@ const MhsDashboard = () => {
                       </Select>
                       <Button
                         color="amber"
-                        size="regular"
+                        size="md"
                         className="mb-8"
                         onClick={
                           jurusan === ""
@@ -327,8 +325,8 @@ const MhsDashboard = () => {
                       <Input
                         type="date"
                         color="amber"
-                        size="regular"
-                        outline={false}
+                        size="md"
+                        outline="false"
                         placeholder="Tanggal Awal"
                         label="Tanggal Awal"
                         onChange={(e) => {
@@ -339,8 +337,8 @@ const MhsDashboard = () => {
                       <Input
                         type="date"
                         color="amber"
-                        size="regular"
-                        outline={false}
+                        size="md"
+                        outline="false"
                         placeholder="Tanggal Akhir"
                         label="Tanggal Akhir"
                         onChange={(e) => {
@@ -350,7 +348,7 @@ const MhsDashboard = () => {
                       <Button
                         color="amber"
                         className="mb-8 mt-2"
-                        size="regular"
+                        size="md"
                         onClick={getSkripsiByDate}
                       >
                         Cari
@@ -359,7 +357,7 @@ const MhsDashboard = () => {
                     <div className="flex flex-col gap-4 mt-8">
                       <Button
                         color="amber"
-                        size="regular"
+                        size="md"
                         onClick={() => {
                           setSearchTerm("");
                           setJurusan("");

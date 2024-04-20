@@ -3,7 +3,7 @@ import Swal from "sweetalert2";
 import { useNavigate } from "react-router-dom";
 import {
   Navbar,
-  MobileNav,
+  Collapse,
   Typography,
   Button,
   Menu,
@@ -25,15 +25,15 @@ function ProfileMenu() {
   const [isMenuOpen, setIsMenuOpen] = React.useState(false);
   const Navigate = useNavigate();
   const closeMenu = () => setIsMenuOpen(false);
-  
+
   const profileMenuItems = [
     {
       label: "My Profile",
       icon: UserCircleIcon,
       clicked: () => {
         closeMenu();
-      Navigate('/mhs/profile')
-      }
+        Navigate("/mhs/profile");
+      },
     },
     {
       label: "Sign Out",
@@ -49,12 +49,10 @@ function ProfileMenu() {
         }).then(() => {
           Navigate("/login-mhs");
         });
-      }
+      },
     },
   ];
- 
 
- 
   return (
     <Menu open={isMenuOpen} handler={setIsMenuOpen} placement="bottom-end">
       <MenuHandler>
@@ -104,14 +102,13 @@ function ProfileMenu() {
     </Menu>
   );
 }
- 
 
 function NavList({ status_kelulusan }) {
   // nav list component
   const navListItems = [
     {
       label: "Beranda",
-      href: '/mhs/dashboard',
+      href: "/mhs/dashboard",
       icon: HomeModernIcon,
     },
   ];
@@ -120,7 +117,7 @@ function NavList({ status_kelulusan }) {
     navListItems.splice(1, 0, {
       label: "Unggah Skripsi",
       icon: CodeBracketSquareIcon,
-      href:'/mhs/upload-skripsi'
+      href: "/mhs/upload-skripsi",
     });
   }
   return (
@@ -143,19 +140,19 @@ function NavList({ status_kelulusan }) {
     </ul>
   );
 }
- 
+
 export function NavbarMahasiswaTemplate({ status_kelulusan }) {
   const [isNavOpen, setIsNavOpen] = React.useState(false);
- 
+
   const toggleIsNavOpen = () => setIsNavOpen((cur) => !cur);
- 
+
   React.useEffect(() => {
     window.addEventListener(
       "resize",
-      () => window.innerWidth >= 960 && setIsNavOpen(false),
+      () => window.innerWidth >= 960 && setIsNavOpen(false)
     );
   }, []);
- 
+
   return (
     <Navbar className="mx-auto max-w-screen-xl p-2 lg:rounded-full lg:pl-6">
       <div className="relative mx-auto flex items-center justify-between text-blue-gray-900">
@@ -167,7 +164,7 @@ export function NavbarMahasiswaTemplate({ status_kelulusan }) {
           Sistem Informasi Repository Skripsi
         </Typography>
         <div className="ml-32 hidden lg:block">
-          <NavList status_kelulusan={status_kelulusan}  />
+          <NavList status_kelulusan={status_kelulusan} />
         </div>
         <IconButton
           size="sm"
@@ -180,9 +177,9 @@ export function NavbarMahasiswaTemplate({ status_kelulusan }) {
         </IconButton>
         <ProfileMenu />
       </div>
-      <MobileNav open={isNavOpen} className="overflow-scroll">
-        <NavList />
-      </MobileNav>
+      <Collapse open={isNavOpen} className="overflow-scroll">
+        <NavList status_kelulusan={status_kelulusan} />
+      </Collapse>
     </Navbar>
   );
 }

@@ -122,10 +122,9 @@ const AdminDashboard = () => {
     </div>
   ) : (
     <div className="bg-gray-100">
-      <NavbarAdminTemplate
-      />
+      <NavbarAdminTemplate />
       <div className="container mx-auto">
-      <section>
+        <section>
           <div className="flex justify-center py-12 px-4 sm:px-6 lg:px-8">
             <div className="max-w-md w-full space-y-8">
               <div>
@@ -140,7 +139,7 @@ const AdminDashboard = () => {
           <div className="items-center px-10 py-10">
             <div className=" w-full space-y-8">
               <div>
-                <h2 className="mt-6 text-center text-xl font-extrabold text-gray-900 mt-8">
+                <h2 className=" text-center text-xl font-extrabold text-gray-900 mt-8">
                   Data Skripsi yang Belum Terkonfirmasi
                 </h2>
               </div>
