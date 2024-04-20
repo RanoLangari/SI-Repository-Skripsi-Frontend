@@ -9,8 +9,6 @@ import Navbar from "./template/Navbar";
 const UploadSkripsi = () => {
   const backendUrl = process.env.REACT_APP_API_URL;
   const Navigate = useNavigate();
-  const [showMenu, setShowMenu] = useState(false);
-  const [dropdownVisible, setDropdownVisible] = useState(false);
   const [pembimbing1, setPembimbing1] = useState("");
   const [pembimbing2, setPembimbing2] = useState("");
   const [penguji, setPenguji] = useState("");
@@ -121,13 +119,6 @@ const UploadSkripsi = () => {
       "Akuntansi Sektor Publik",
       "Akuntansi Manajemen",
     ],
-  };
-  const showMenuToggle = () => {
-    setShowMenu(!showMenu);
-  };
-
-  const toggleDropdown = () => {
-    setDropdownVisible(!dropdownVisible);
   };
 
   const getProfile = async () => {

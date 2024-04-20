@@ -19,9 +19,7 @@ import {
   ChevronDownIcon,
   PowerIcon,
   Bars2Icon,
-  UserIcon
 } from "@heroicons/react/24/solid";
-import { useAnimate } from "framer-motion";
 
 function ProfileMenu() {
   const [isMenuOpen, setIsMenuOpen] = React.useState(false);

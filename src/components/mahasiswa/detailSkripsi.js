@@ -8,19 +8,9 @@ import Navbar from "./template/Navbar";
 const DetailSkripsi = () => {
   const backendUrl = process.env.REACT_APP_API_URL;
   const Navigate = useNavigate();
-  const [showMenu, setShowMenu] = useState(false);
   const [data, setData] = useState([]);
-  const [dropdownVisible, setDropdownVisible] = useState(false);
   const [loading, setLoading] = useState(false);
   const [status_kelulusan, setStatusKelulusan] = useState("");
-
-  const showMenuToggle = () => {
-    setShowMenu(!showMenu);
-  };
-
-  const toggleDropdown = () => {
-    setDropdownVisible(!dropdownVisible);
-  };
 
   useEffect(() => {
     const token = localStorage.getItem("token");
@@ -44,7 +34,7 @@ const DetailSkripsi = () => {
         console.log(err);
         Navigate("/mhs/dashboard");
       });
-  }, []);
+  }, [Navigate, backendUrl]);
 
   return !loading ? (
     <div className="flex justify-center items-center h-screen">

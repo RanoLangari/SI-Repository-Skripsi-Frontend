@@ -19,9 +19,7 @@ import {
   ChevronDownIcon,
   PowerIcon,
   Bars2Icon,
-  UserIcon
 } from "@heroicons/react/24/solid";
-import { useAnimate } from "framer-motion";
 
 function ProfileMenu() {
   const [isMenuOpen, setIsMenuOpen] = React.useState(false);
@@ -109,9 +107,6 @@ function ProfileMenu() {
  
 
 function NavList({ status_kelulusan }) {
-  const [isMenuOpen, setIsMenuOpen] = React.useState(false);
-  const Navigate = useNavigate();
-  const closeMenu = () => setIsMenuOpen(false);
   // nav list component
   const navListItems = [
     {

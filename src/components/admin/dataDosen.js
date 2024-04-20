@@ -14,16 +14,8 @@ import { Spinner } from "@material-tailwind/react";
 const DataDosen = () => {
   const backendUrl = process.env.REACT_APP_API_URL;
   const Navigate = useNavigate();
-  const [showMenu, setShowMenu] = useState(false);
-  const [dropdownVisible, setDropdownVisible] = useState(false);
   const [data, setData] = useState([]);
   const [loading, setLoading] = useState(false);
-  const showMenuToggle = () => {
-    setShowMenu(!showMenu);
-  };
-  const toggleDropdown = () => {
-    setDropdownVisible(!dropdownVisible);
-  };
   const tambahDataDosen = () => {
     Swal.fire({
       title: "Tambah Data Dosen",
@@ -160,7 +152,7 @@ const DataDosen = () => {
         Navigate("/login-admin");
         Swal.close();
       });
-  }, []);
+  }, [backendUrl, useNavigate]);
 
   const columns = useMemo(
     () => [

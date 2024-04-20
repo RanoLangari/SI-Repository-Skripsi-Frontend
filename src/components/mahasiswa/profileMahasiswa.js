@@ -11,8 +11,6 @@ import Navbar from "./template/Navbar";
 const ProfileMahasiswa = () => {
   const backendUrl = process.env.REACT_APP_API_URL;
   const Navigate = useNavigate();
-  const [showMenu, setShowMenu] = useState(false);
-  const [dropdownVisible, setDropdownVisible] = useState(false);
   const [nama, setNama] = useState("");
   const [nim, setNim] = useState("");
   const [jurusan, setJurusan] = useState("");
@@ -24,14 +22,6 @@ const ProfileMahasiswa = () => {
   const [new_password, setNewPassword] = useState("");
   const [confirm_password, setConfirmPassword] = useState("");
   const [loading, setLoading] = useState(false);
-
-  const showMenuToggle = () => {
-    setShowMenu(!showMenu);
-  };
-
-  const toggleDropdown = () => {
-    setDropdownVisible(!dropdownVisible);
-  };
 
   const handleUpdate = async (e) => {
     try {
@@ -160,7 +150,7 @@ const ProfileMahasiswa = () => {
       .catch((err) => {
         Navigate("/login-mhs");
       });
-  }, []);
+  }, [Navigate, backendUrl]);
 
   useEffect(() => {
     const token = localStorage.getItem("token");
@@ -179,7 +169,7 @@ const ProfileMahasiswa = () => {
         Navigate("/login-mhs");
         console.log(err);
       });
-  }, []);
+  }, [Navigate, backendUrl]);
 
   return !loading ? (
     <div className="flex justify-center items-center h-screen">

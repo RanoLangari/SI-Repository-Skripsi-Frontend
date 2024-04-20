@@ -1,10 +1,10 @@
 import React, { useState } from "react";
-import axios from "axios";
 import { useNavigate } from "react-router-dom";
 import Swal from "sweetalert2";
 import { Input, Button } from "@material-tailwind/react";
 import validator from "validator";
 import { EyeIcon, EyeSlashIcon } from "@heroicons/react/24/outline";
+import { ForgotPassword } from "../../../services/adminDataServices";
 
 const LupaPasswordAdmin = () => {
   const backendUrl = process.env.REACT_APP_API_URL;
@@ -31,16 +31,13 @@ const LupaPasswordAdmin = () => {
       email,
     };
     try {
-      const response = await axios.post(
-        `${backendUrl}/api/admin/lupa-password`,
-        data
-      );
-      Swal.close();
+      const response = await ForgotPassword(backendUrl,'lupa-password', data)
+      console.log(response)
       if (response.status === 200) {
         Swal.fire({
           icon: "success",
           title: "Berhasil!",
-          text: response.data.message,
+          text: response.message,
           timer: 1000,
         }).then(() => {
           setActive(true);
@@ -69,16 +66,13 @@ const LupaPasswordAdmin = () => {
       otp,
     };
     try {
-      const response = await axios.post(
-        `${backendUrl}/api/admin/verify-otp`,
-        data
-      );
+      const response = await ForgotPassword(backendUrl, 'verify-otp', data)
       Swal.close();
       if (response.status === 200) {
         Swal.fire({
           icon: "success",
           title: "Berhasil!",
-          text: response.data.message,
+          text: response.message,
           timer: 1000,
         }).then(() => {
           setVerified(true);
@@ -87,7 +81,7 @@ const LupaPasswordAdmin = () => {
     } catch (error) {
       Swal.fire({
         icon: "error",
-        title: "Oops...",
+        title: "Oops...", 
         text: error.response.data.message,
         timer: 1000,
       });
@@ -117,16 +111,13 @@ const LupaPasswordAdmin = () => {
       password,
     };
     try {
-      const response = await axios.post(
-        `${backendUrl}/api/admin/reset-password`,
-        data
-      );
+      const response = await ForgotPassword(backendUrl, 'reset-password', data)
       Swal.close();
       if (response.status === 200) {
         Swal.fire({
           icon: "success",
           title: "Berhasil!",
-          text: response.data.message,
+          text: response.message,
           timer: 1000,
         }).then(() => {
           navigate("/login-admin");
@@ -166,6 +157,14 @@ const LupaPasswordAdmin = () => {
                 className="pr-20"
                 containerProps={{
                   className: "min-w-0",
+                }}
+                onKeyPress={(e) => {
+                  if (e.key === 'Enter') {
+                    e.preventDefault();
+                    if (validator.isEmail(email)) {
+                      handleLupaPassword(e);
+                    }
+                  }
                 }}
                 {...(active && { disabled: true })}
               />

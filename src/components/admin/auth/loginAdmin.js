@@ -1,8 +1,8 @@
-import React, { useState, useEffect } from "react";
-import axios from "axios";
+import React, { useState } from "react";
 import { useNavigate } from "react-router-dom";
 import Swal from "sweetalert2";
 import { Input } from "@material-tailwind/react";
+import { adminAuthSystem } from '../../../services/adminDataServices.js';
 const LoginAdmin = () => {
   const backendUrl = process.env.REACT_APP_API_URL;
   const navigate = useNavigate();
@@ -22,11 +22,11 @@ const LoginAdmin = () => {
       password,
     };
     try {
-      const response = await axios.post(`${backendUrl}/api/admin/login`, data);
+      const response = await adminAuthSystem(backendUrl,'login', data)
       Swal.close();
       if (response.status === 200) {
         localStorage.clear();
-        localStorage.setItem("token", response.data.token);
+        localStorage.setItem("token", response.token);
         Swal.fire({
           icon: "success",
           title: "Login berhasil!",

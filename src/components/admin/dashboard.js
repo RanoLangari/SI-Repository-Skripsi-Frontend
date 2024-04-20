@@ -9,19 +9,10 @@ import { createMRTColumnHelper } from "material-react-table";
 
 const AdminDashboard = () => {
   const navigate = useNavigate();
-  const [showMenu, setShowMenu] = useState(false);
   const [dataSkripsiProses, setDataSkripsiProses] = useState([]);
   const [dataSkripsiVerified, setDataSkripsiVerified] = useState([]);
-  const [dropdownVisible, setDropdownVisible] = useState(false);
   const [loading, setLoading] = useState(false);
   const columnHelper = createMRTColumnHelper();
-  const showMenuToggle = () => {
-    setShowMenu(!showMenu);
-  };
-  const toggleDropdown = () => {
-    setDropdownVisible(!dropdownVisible);
-  };
-
   useEffect(() => {
     const fetchData = async () => {
       try {

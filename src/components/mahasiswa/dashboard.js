@@ -14,16 +14,13 @@ import {
 } from "@material-tailwind/react";
 import { ArrowRightIcon, ArrowLeftIcon } from "@heroicons/react/24/outline";
 import NavbarMahasiswaTemplate from "./template/Navbar";
-import { faker } from "@faker-js/faker";
 const MhsDashboard = () => {
   // state Hooks
-  const [showMenu, setShowMenu] = useState(false);
   const [searchTerm, setSearchTerm] = useState("");
   const [jurusan, setJurusan] = useState("");
   const [peminatan, setPeminatan] = useState("");
   const [tanggalAwal, setTanggalAwal] = useState("");
   const [tanggalAkhir, setTanggalAkhir] = useState("");
-  const [dropdownVisible, setDropdownVisible] = useState(false);
   const [data, setData] = useState([]);
   const [status_kelulusan, setStatusKelulusan] = useState("");
   const [perPage] = useState(6);
@@ -59,26 +56,6 @@ const MhsDashboard = () => {
     const selectedPage = data.selected;
     setCurrentPage(selectedPage);
   };
-  const showMenuToggle = () => {
-    setShowMenu(!showMenu);
-  };
-  const toggleDropdown = () => {
-    setDropdownVisible(!dropdownVisible);
-  };
-  // const fetchData = async () => {
-  //   const data = [];
-  //   for (let i = 0; i < 2000; i++) {
-  //     data.push({
-  //       id: i,
-  //       nama: faker.animal.cat(),
-  //       jurusan: faker.company.name(),
-  //       judul_skripsi: faker.location.country(),
-  //     });
-  //   }
-  //   setData(data);
-  //   setLoading(true);
-  // };
-
   const fetchData = async () => {
     try {
       setLoading(false);
@@ -181,9 +158,7 @@ const MhsDashboard = () => {
     }
 
     fetchData();
-
-    // fetchData();
-  }, [window.location.search]);
+  }, [fetchData]);
 
   // pagination
   const indexOfLastItem = (currentPage + 1) * perPage;
