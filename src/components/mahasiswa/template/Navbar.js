@@ -1,211 +1,195 @@
 import React from "react";
-import { useNavigate, useLocation } from "react-router-dom";
 import Swal from "sweetalert2";
+import { useNavigate } from "react-router-dom";
+import {
+  Navbar,
+  MobileNav,
+  Typography,
+  Button,
+  Menu,
+  MenuHandler,
+  MenuList,
+  MenuItem,
+  IconButton,
+} from "@material-tailwind/react";
+import {
+  UserCircleIcon,
+  HomeModernIcon,
+  CodeBracketSquareIcon,
+  ChevronDownIcon,
+  PowerIcon,
+  Bars2Icon,
+  UserIcon
+} from "@heroicons/react/24/solid";
+import { useAnimate } from "framer-motion";
 
-const Navbar = ({
-  status_kelulusan,
-  showMenu,
-  toggleDropdown,
-  dropdownVisible,
-  showMenuToggle,
-}) => {
+function ProfileMenu() {
+  const [isMenuOpen, setIsMenuOpen] = React.useState(false);
   const Navigate = useNavigate();
-  const location = useLocation();
+  const closeMenu = () => setIsMenuOpen(false);
+  
+  const profileMenuItems = [
+    {
+      label: "My Profile",
+      icon: UserCircleIcon,
+      clicked: () => {
+        closeMenu();
+      Navigate('/mhs/profile')
+      }
+    },
+    {
+      label: "Sign Out",
+      icon: PowerIcon,
+      clicked: () => {
+        closeMenu();
+        localStorage.removeItem("token");
+        Swal.fire({
+          title: "Berhasil Log Out",
+          icon: "success",
+          timer: 800,
+          timerProgressBar: true,
+        }).then(() => {
+          Navigate("/login-mhs");
+        });
+      }
+    },
+  ];
+ 
 
+ 
   return (
-    <>
-      <nav className="bg-white shadow-lg">
-        <div className="max-w-6xl mx-auto px-4">
-          <div className="flex justify-between">
-            <div className="flex space-x-7">
-              <div className="flex space-x-7">
-                <a href="#" className="flex items-center py-4">
-                  <img
-                    src="https://feb.undana.ac.id/wp-content/uploads/2023/02/LOGO-FEB-black.png"
-                    alt="FEB"
-                    className="w-32"
-                  />
-                </a>
-              </div>
-              <div className="hidden md:flex items-center space-x-1">
-                <a href="#" className="flex items-center py-4">
-                  <span className="font-semibold text-gray-500 text-lg">
-                    Sistem Informasi Repository Skripsi
-                  </span>
-                </a>
-              </div>
-              <div className="hidden md:flex items-center space-x-1">
-                <a
-                  href="/mhs/dashboard"
-                  className={`py-4 px-2 font-semibold hover:text-yellow-300 transition duration-300 ${
-                    location.pathname === "/mhs/dashboard"
-                      ? "text-yellow-300 border-b-4 border-yellow-300"
-                      : "text-gray-500"
-                  }`}
-                >
-                  Beranda
-                </a>
-                {status_kelulusan === "Lulus" ? (
-                  <a
-                    href="/mhs/upload-skripsi"
-                    className={`py-4 px-2 font-semibold hover:text-yellow-300 transition duration-300 ${
-                      location.pathname === "/mhs/upload-skripsi"
-                        ? "text-yellow-300 border-b-4 border-yellow-300"
-                        : "text-gray-500"
-                    }`}
-                  >
-                    Unggah Skripsi
-                  </a>
-                ) : null}
-              </div>
-            </div>
-            <div className="hidden md:flex items-center space-x-3 ">
-              <div className="flex flex-col md:flex-row items-center md:space-x-3 ">
-                <div className="relative inline-block text-left">
-                  <div>
-                    <button
-                      type="button"
-                      className="inline-flex justify-center w-full rounded-md border border-gray-300 shadow-sm px-4 py-2 bg-white text-sm font-medium text-gray-500 hover:bg-yellow-300 hover:text-white transition duration-300"
-                      id="options-menu"
-                      aria-haspopup="true"
-                      aria-expanded="true"
-                      onClick={toggleDropdown}
-                    >
-                      <span>Profile</span>
-                      <svg
-                        className="w-5 h-5 ml-2 -mr-1"
-                        xmlns="http://www.w3.org/2000/svg"
-                        viewBox="0 0 20 20"
-                        fill="currentColor"
-                      >
-                        {/* chevron down icon */}
-                        <path
-                          fillRule="evenodd"
-                          d="M6.293 6.293a1 1 0 011.414 0L10
-                          8.586l2.293-2.293a1 1 0 111.414 1.414l-3
-                          3a1 1 0 01-1.414 0l-3-3a1 1 0
-                          010-1.414z"
-                          clipRule="evenodd"
-                        ></path>
-                      </svg>
-                    </button>
-                  </div>
-                  <div
-                    className={`origin-top-right absolute right-0 mt-2 w-40 rounded-md shadow-lg bg-white ring-1 ring-black ring-opacity-5 focus:outline-none ${
-                      dropdownVisible ? "block" : "hidden"
-                    }`}
-                    role="menu"
-                    aria-orientation="vertical"
-                    aria-labelledby="options-menu"
-                  >
-                    <div className="py-1" role="none">
-                      <button
-                        className="block px-4 py-2 text-sm text-gray-700 hover:bg-yellow-300 hover:text-white transition duration-300 w-full text-left"
-                        role="menuitem"
-                        onClick={() => Navigate("/mhs/profile")}
-                      >
-                        Profile
-                      </button>
-                      <button
-                        className="block px-4 py-2 text-sm text-gray-700 hover:bg-yellow-300 hover:text-white transition duration-300 w-full text-left"
-                        role="menuitem"
-                        onClick={() => {
-                          localStorage.removeItem("token");
-                          Swal.fire({
-                            title: "Berhasil Log Out",
-                            icon: "success",
-                            timer: 800,
-                            timerProgressBar: true,
-                            didOpen: (toast) => {
-                              toast.addEventListener(
-                                "mouseenter",
-                                Swal.stopTimer
-                              );
-                              toast.addEventListener(
-                                "mouseleave",
-                                Swal.resumeTimer
-                              );
-                            },
-                          }).then(() => {
-                            Navigate("/login-mhs");
-                          });
-                        }}
-                      >
-                        Log out
-                      </button>
-                    </div>
-                  </div>
-                </div>
-              </div>
-            </div>
-
-            <div className="md:hidden flex items-center">
-              <button
-                className="outline-none mobile-menu-button"
-                onClick={showMenuToggle}
+    <Menu open={isMenuOpen} handler={setIsMenuOpen} placement="bottom-end">
+      <MenuHandler>
+        <Button
+          variant="text"
+          color="blue-gray"
+          className="flex items-center gap-1 rounded-full py-0.5 pr-2 pl-0.5 lg:ml-auto"
+        >
+          <UserCircleIcon className="h-12 w-12" />
+          <ChevronDownIcon
+            strokeWidth={2.5}
+            className={`h-3 w-3 transition-transform ${
+              isMenuOpen ? "rotate-180" : ""
+            }`}
+          />
+        </Button>
+      </MenuHandler>
+      <MenuList className="p-1">
+        {profileMenuItems.map(({ label, icon, clicked }, key) => {
+          const isLastItem = key === profileMenuItems.length - 1;
+          return (
+            <MenuItem
+              key={label}
+              onClick={clicked}
+              className={`flex items-center gap-2 rounded ${
+                isLastItem
+                  ? "hover:bg-red-500/10 focus:bg-red-500/10 active:bg-red-500/10"
+                  : ""
+              }`}
+            >
+              {React.createElement(icon, {
+                className: `h-4 w-4 ${isLastItem ? "text-red-500" : ""}`,
+                strokeWidth: 2,
+              })}
+              <Typography
+                as="span"
+                variant="small"
+                className="font-normal"
+                color={isLastItem ? "red" : "inherit"}
               >
-                <svg
-                  className="w-6 h-6 text-gray-500 hover:text-yellow-300"
-                  fill="none"
-                  strokeLinecap="round"
-                  strokeLinejoin="round"
-                  strokeWidth="2"
-                  viewBox="0 0 24 24"
-                  stroke="currentColor"
-                >
-                  {showMenu ? (
-                    <path d="M6 18L18 6M6 6l12 12"></path>
-                  ) : (
-                    <path d="M4 6h16M4 12h16M4 18h16"></path>
-                  )}
-                </svg>
-              </button>
-            </div>
-          </div>
-          {showMenu && (
-            <div className="md:hidden mt-2">
-              <a
-                onClick={() => Navigate("/mhs/dashboard")}
-                className="block py-2 px-4 text-sm text-gray-500 hover:bg-yellow-300 hover:text-white transition duration-300"
-              >
-                Beranda
-              </a>
-              {status_kelulusan === "Lulus" ? (
-                <a
-                  onClick={() => Navigate("/mhs/upload-skripsi")}
-                  className="block py-2 px-4 text-sm text-gray-500 hover:bg-yellow-300 hover:text-white transition duration-300"
-                >
-                  Unggah Skripsi
-                </a>
-              ) : null}
-              <a
-                onClick={() => Navigate("/mhs/profile")}
-                className="block py-2 px-4 text-sm text-gray-500 hover:bg-yellow-300 hover:text-white transition duration-300"
-              >
-                Profile
-              </a>
-              <a
-                onClick={() => {
-                  localStorage.removeItem("token");
-                  Swal.fire({
-                    title: "Berhasil Log Out",
-                    icon: "success",
-                    timer: 800,
-                    timerProgressBar: true,
-                  }).then(() => {
-                    Navigate("/login-mhs");
-                  });
-                }}
-                className="block py-2 px-4 text-sm text-gray-500 hover:bg-yellow-300 hover:text-white transition duration-300"
-              >
-                Log out
-              </a>
-            </div>
-          )}
-        </div>
-      </nav>
-    </>
+                {label}
+              </Typography>
+            </MenuItem>
+          );
+        })}
+      </MenuList>
+    </Menu>
   );
-};
+}
+ 
 
-export default Navbar;
+function NavList({ status_kelulusan }) {
+  const [isMenuOpen, setIsMenuOpen] = React.useState(false);
+  const Navigate = useNavigate();
+  const closeMenu = () => setIsMenuOpen(false);
+  // nav list component
+  const navListItems = [
+    {
+      label: "Beranda",
+      href: '/mhs/dashboard',
+      icon: HomeModernIcon,
+    },
+  ];
+
+  if (status_kelulusan === "Lulus") {
+    navListItems.splice(1, 0, {
+      label: "Unggah Skripsi",
+      icon: CodeBracketSquareIcon,
+      href:'/mhs/upload-skripsi'
+    });
+  }
+  return (
+    <ul className="mt-2 mb-4 flex flex-col gap-2 lg:mb-0 lg:mt-0 lg:flex-row lg:items-center">
+      {navListItems.map(({ label, icon, href }, key) => (
+        <Typography
+          key={label}
+          as="a"
+          href={href}
+          variant="small"
+          color="gray"
+          className="font-medium text-blue-gray-500"
+        >
+          <MenuItem className="flex items-center gap-2 lg:rounded-full">
+            {React.createElement(icon, { className: "h-[18px] w-[18px]" })}{" "}
+            <span className="text-gray-900"> {label}</span>
+          </MenuItem>
+        </Typography>
+      ))}
+    </ul>
+  );
+}
+ 
+export function NavbarMahasiswaTemplate({ status_kelulusan }) {
+  const [isNavOpen, setIsNavOpen] = React.useState(false);
+ 
+  const toggleIsNavOpen = () => setIsNavOpen((cur) => !cur);
+ 
+  React.useEffect(() => {
+    window.addEventListener(
+      "resize",
+      () => window.innerWidth >= 960 && setIsNavOpen(false),
+    );
+  }, []);
+ 
+  return (
+    <Navbar className="mx-auto max-w-screen-xl p-2 lg:rounded-full lg:pl-6">
+      <div className="relative mx-auto flex items-center justify-between text-blue-gray-900">
+        <Typography
+          as="a"
+          href="#"
+          className="mr-4 ml-2 cursor-pointer py-1.5 font-medium"
+        >
+          Sistem Informasi Repository Skripsi
+        </Typography>
+        <div className="ml-32 hidden lg:block">
+          <NavList status_kelulusan={status_kelulusan}  />
+        </div>
+        <IconButton
+          size="sm"
+          color="blue-gray"
+          variant="text"
+          onClick={toggleIsNavOpen}
+          className="ml-auto mr-2 lg:hidden"
+        >
+          <Bars2Icon className="h-6 w-6" />
+        </IconButton>
+        <ProfileMenu />
+      </div>
+      <MobileNav open={isNavOpen} className="overflow-scroll">
+        <NavList />
+      </MobileNav>
+    </Navbar>
+  );
+}
+
+export default NavbarMahasiswaTemplate;

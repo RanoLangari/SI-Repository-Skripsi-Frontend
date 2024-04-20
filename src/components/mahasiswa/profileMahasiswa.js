@@ -189,10 +189,6 @@ const ProfileMahasiswa = () => {
     <div>
       <Navbar
         status_kelulusan={status_kelulusan}
-        showMenu={showMenu}
-        toggleDropdown={toggleDropdown}
-        dropdownVisible={dropdownVisible}
-        showMenuToggle={showMenuToggle}
       />
 
       <div className="pt-20 bg-gray-100 items-center justify-center">

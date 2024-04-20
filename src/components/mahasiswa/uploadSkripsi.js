@@ -170,10 +170,6 @@ const UploadSkripsi = () => {
     <div className="bg-gray-100 w-full min-h-screen">
       <Navbar
         status_kelulusan={"Lulus"}
-        showMenu={showMenu}
-        toggleDropdown={toggleDropdown}
-        dropdownVisible={dropdownVisible}
-        showMenuToggle={showMenuToggle}
       />
       <div className="bg-gray-100 py-20 px-10">
         <div className="container mx-auto">

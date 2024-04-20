@@ -131,10 +131,6 @@ const DetailDataSkripsi = () => {
   ) : (
     <div className="bg-gray-100 w-full min-h-screen">
       <NavbarAdmin
-        showMenu={showMenu}
-        toggleDropdown={toggleDropdown}
-        dropdownVisible={dropdownVisible}
-        showMenuToggle={showMenuToggle}
       />
       <section>
         <div className="flex flex-col items-center justify-center mt-24">
@@ -192,16 +188,15 @@ const DetailDataSkripsi = () => {
                 </div>
               </div>
               <div className="flex flex-col justify-center p-5 border-b border-gray-100">
-                <div className="flex flex-col">
+                <div className="flex flex-col items-center">
                   <span className="text-lg font-bold">
                     {data.judul_skripsi}
                   </span>
                   <span className="text-sm text-black"> Oleh {data.nama}</span>
                 </div>
               </div>
-              <div className="flex flex-col px-10 py-5">
-                <span className="text-sm text-black">Abstract</span>
-                <br />
+              <div className="flex flex-col px-10 py-5 items-center">
+                <span className="text-sm text-black font-bold">Abstract</span>
                 <span className="text-sm text-justify text-black">
                   {data.abstract}
                 </span>
