@@ -8,7 +8,7 @@ const PreviewSkripsi = () => {
   const [pdfURL, setPdfURL] = useState("");
   const [loading, setLoading] = useState(false);
   useEffect(() => {
-    const backendUrl = process.env.REACT_APP_API_URL;
+    const backendUrl = import.meta.env.VITE_BACKEND_URL;
     const getUrlSkripsi = async () => {
       try {
         const token = localStorage.getItem("token");

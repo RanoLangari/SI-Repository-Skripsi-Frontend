@@ -1,13 +1,13 @@
 import React, { useState } from "react";
+import axios from "axios";
 import { useNavigate } from "react-router-dom";
 import Swal from "sweetalert2";
 import { Input, Button } from "@material-tailwind/react";
-import validator from "validator";
 import { EyeIcon, EyeSlashIcon } from "@heroicons/react/24/outline";
-import { ForgotPassword } from "../../../services/adminDataServices";
+import validator from "validator";
 
-const LupaPasswordAdmin = () => {
-  const backendUrl = process.env.REACT_APP_API_URL;
+const LupaPassword = () => {
+  const backendUrl = import.meta.env.VITE_BACKEND_URL;
   const navigate = useNavigate();
   const [email, setEmail] = useState("");
   const [otp, setOtp] = useState("");
@@ -31,13 +31,16 @@ const LupaPasswordAdmin = () => {
       email,
     };
     try {
-      const response = await ForgotPassword(backendUrl,'lupa-password', data)
-      console.log(response)
+      const response = await axios.post(
+        `${backendUrl}/api/mahasiswa/lupa-password`,
+        data
+      );
+      Swal.close();
       if (response.status === 200) {
         Swal.fire({
           icon: "success",
           title: "Berhasil!",
-          text: response.message,
+          text: response.data.message,
           timer: 1000,
         }).then(() => {
           setActive(true);
@@ -66,13 +69,16 @@ const LupaPasswordAdmin = () => {
       otp,
     };
     try {
-      const response = await ForgotPassword(backendUrl, 'verify-otp', data)
+      const response = await axios.post(
+        `${backendUrl}/api/mahasiswa/verify-otp`,
+        data
+      );
       Swal.close();
       if (response.status === 200) {
         Swal.fire({
           icon: "success",
           title: "Berhasil!",
-          text: response.message,
+          text: response.data.message,
           timer: 1000,
         }).then(() => {
           setVerified(true);
@@ -81,7 +87,7 @@ const LupaPasswordAdmin = () => {
     } catch (error) {
       Swal.fire({
         icon: "error",
-        title: "Oops...", 
+        title: "Oops...",
         text: error.response.data.message,
         timer: 1000,
       });
@@ -90,13 +96,6 @@ const LupaPasswordAdmin = () => {
 
   const handleResetPassword = async (e) => {
     e.preventDefault();
-    Swal.fire({
-      title: "Loading...",
-      allowOutsideClick: false,
-      didOpen: () => {
-        Swal.showLoading();
-      },
-    });
     if (password !== confirmPasword) {
       Swal.fire({
         icon: "error",
@@ -106,21 +105,31 @@ const LupaPasswordAdmin = () => {
       });
       return;
     }
+    Swal.fire({
+      title: "Loading...",
+      allowOutsideClick: false,
+      didOpen: () => {
+        Swal.showLoading();
+      },
+    });
     const data = {
       email,
       password,
     };
     try {
-      const response = await ForgotPassword(backendUrl, 'reset-password', data)
+      const response = await axios.post(
+        `${backendUrl}/api/mahasiswa/reset-password`,
+        data
+      );
       Swal.close();
       if (response.status === 200) {
         Swal.fire({
           icon: "success",
           title: "Berhasil!",
-          text: response.message,
+          text: response.data.message,
           timer: 1000,
         }).then(() => {
-          navigate("/login-admin");
+          navigate("/login-mhs");
         });
       }
     } catch (error) {
@@ -146,7 +155,7 @@ const LupaPasswordAdmin = () => {
             className="text-gray-800 text-2xl flex justify-center  py-2 mb-8"
             style={{ fontFamily: "Roboto, sans-serif" }}
           >
-            Reset Password Admin
+            Reset Password Mahasiswa
           </div>
           <div className="mb-6">
             <div className="relative flex w-full max-w-[24rem]">
@@ -157,14 +166,6 @@ const LupaPasswordAdmin = () => {
                 className="pr-20"
                 containerProps={{
                   className: "min-w-0",
-                }}
-                onKeyPress={(e) => {
-                  if (e.key === 'Enter') {
-                    e.preventDefault();
-                    if (validator.isEmail(email)) {
-                      handleLupaPassword(e);
-                    }
-                  }
                 }}
                 {...(active && { disabled: true })}
               />
@@ -264,10 +265,18 @@ const LupaPasswordAdmin = () => {
           </div>
           <div className="flex items-end justify-end mt-4">
             <a
-              className="inline-block align-baseline font-normal text-sm text-blue-500 hover:text-blue-800"
-              href="/login-admin"
+              className=" align-baseline font-normal text-sm text-blue-500 hover:text-blue-800 text-right"
+              href="../register-mhs"
             >
-              Login Admin
+              Register Mahasiswa
+            </a>
+          </div>
+          <div className="flex items-end justify-end mt-4">
+            <a
+              className="inline-block align-baseline font-normal text-sm text-blue-500 hover:text-blue-800"
+              href="/login-mhs"
+            >
+              Login Mahasiswa
             </a>
           </div>
         </form>
@@ -279,4 +288,4 @@ const LupaPasswordAdmin = () => {
   );
 };
 
-export default LupaPasswordAdmin;
+export default LupaPassword;

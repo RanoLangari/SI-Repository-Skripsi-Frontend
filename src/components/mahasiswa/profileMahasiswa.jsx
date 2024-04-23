@@ -9,7 +9,7 @@ import validator from "validator";
 import Navbar from "./template/Navbar";
 
 const ProfileMahasiswa = () => {
-  const backendUrl = process.env.REACT_APP_API_URL;
+  const backendUrl = import.meta.env.VITE_BACKEND_URL;
   const Navigate = useNavigate();
   const [nama, setNama] = useState("");
   const [nim, setNim] = useState("");

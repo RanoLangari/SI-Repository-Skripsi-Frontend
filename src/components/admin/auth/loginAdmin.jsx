@@ -1,13 +1,12 @@
 import React, { useState } from "react";
-import axios from "axios";
 import { useNavigate } from "react-router-dom";
 import Swal from "sweetalert2";
 import { Input } from "@material-tailwind/react";
-
-const LoginMhs = () => {
-  const backendUrl = process.env.REACT_APP_API_URL;
+import { adminAuthSystem } from '../../../services/adminDataServices.js';
+const LoginAdmin = () => {
+  const backendUrl = import.meta.env.VITE_BACKEND_URL;
   const navigate = useNavigate();
-  const [nim, setNim] = useState("");
+  const [username, setUsername] = useState("");
   const [password, setPassword] = useState("");
   const handleLogin = async (e) => {
     e.preventDefault();
@@ -19,24 +18,21 @@ const LoginMhs = () => {
       },
     });
     const data = {
-      nim,
+      username,
       password,
     };
     try {
-      const response = await axios.post(
-        `${backendUrl}/api/mahasiswa/login`,
-        data
-      );
+      const response = await adminAuthSystem(backendUrl,'login', data)
       Swal.close();
       if (response.status === 200) {
         localStorage.clear();
-        localStorage.setItem("token", response.data.data.token);
+        localStorage.setItem("token", response.token);
         Swal.fire({
           icon: "success",
           title: "Login berhasil!",
           timer: 1000,
         }).then(() => {
-          navigate("/mhs/dashboard");
+          navigate("/admin/dashboard");
         });
       }
     } catch (error) {
@@ -48,37 +44,37 @@ const LoginMhs = () => {
       });
     }
   };
+
   return (
     <div className="flex items-center justify-center h-screen bg-gray-200">
       <div className="w-full max-w-md ml-4 mr-4">
         <img src="./FEB.png" alt="" className="mx-auto mb-4" />
-
         <form
-          className="bg-white shadow-lg rounded px-12 pt-6 pb-8 mb-4"
+          className="bg-white shadow-md rounded px-8 pt-6 pb-8 mb-4"
           onSubmit={handleLogin}
         >
           <div
-            className="text-gray-800 text-2xl flex justify-center  py-2 mb-8"
+            className="text-gray-800 text-2xl flex justify-center py-2 mb-8"
             style={{ fontFamily: "Roboto, sans-serif" }}
           >
-            Login Mahasiswa
+            Login Admin
           </div>
           <div className="mb-6">
             <Input
-              label="NIM"
+              label="Username"
               required
               onChange={(e) => {
-                setNim(e.target.value);
+                setUsername(e.target.value);
               }}
             />
           </div>
           <div className="mb-6">
             <div className="flex items-end justify-end text-sm text-blue-500 hover:text-blue-800">
-              <a href="mhs/lupa-password">Lupa Password?</a>
+              <a href="admin/lupa-password">Lupa Password?</a>
             </div>
             <Input
-              type="password"
               label="Password"
+              type="password"
               required
               onChange={(e) => {
                 setPassword(e.target.value);
@@ -94,17 +90,9 @@ const LoginMhs = () => {
             </button>
             <a
               className="inline-block align-baseline font-normal text-sm text-blue-500 hover:text-blue-800"
-              href="register-mhs"
+              href="login-mhs"
             >
-              Register Mahasiswa
-            </a>
-          </div>
-          <div className="flex items-end justify-end mt-4">
-            <a
-              className="inline-block align-baseline font-normal text-sm text-blue-500 hover:text-blue-800"
-              href="/login-admin"
-            >
-              Login Admin
+              Login Mahasiswa
             </a>
           </div>
         </form>
@@ -116,4 +104,4 @@ const LoginMhs = () => {
   );
 };
 
-export default LoginMhs;
+export default LoginAdmin;

@@ -7,7 +7,7 @@ import { Select, Textarea, Option, Input } from "@material-tailwind/react";
 import Navbar from "./template/Navbar";
 
 const UploadSkripsi = () => {
-  const backendUrl = process.env.REACT_APP_API_URL;
+  const backendUrl = import.meta.env.VITE_BACKEND_URL;
   const Navigate = useNavigate();
   const [pembimbing1, setPembimbing1] = useState("");
   const [pembimbing2, setPembimbing2] = useState("");

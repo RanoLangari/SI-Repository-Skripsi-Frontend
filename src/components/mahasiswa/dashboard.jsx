@@ -29,7 +29,7 @@ const MhsDashboard = () => {
   const [open, setOpen] = React.useState(false);
 
   // Variable
-  const backendUrl = process.env.REACT_APP_API_URL;
+  const backendUrl = import.meta.env.VITE_BACKEND_URL;
   const Navigate = useNavigate();
   const peminatanByJurusan = {
     "Ekonomi Pembangunan": [

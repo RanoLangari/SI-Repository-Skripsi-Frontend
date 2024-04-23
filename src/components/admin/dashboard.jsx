@@ -18,12 +18,12 @@ const AdminDashboard = () => {
       try {
         const token = localStorage.getItem("token");
         const dataProses = await fetchSkripsiData(
-          process.env.REACT_APP_API_URL,
+          import.meta.env.VITE_BACKEND_URL,
           "get-skripsi-process",
           token
         );
         const dataVerified = await fetchSkripsiData(
-          process.env.REACT_APP_API_URL,
+          import.meta.env.VITE_BACKEND_URL,
           "get-mahasiswa-skripsi-verified",
           token
         );

@@ -12,7 +12,7 @@ import NavbarAdmin from "./template/NavbarAdmin";
 import { Spinner } from "@material-tailwind/react";
 
 const DataDosen = () => {
-  const backendUrl = process.env.REACT_APP_API_URL;
+  const backendUrl = import.meta.env.VITE_BACKEND_URL;
   const Navigate = useNavigate();
   const [data, setData] = useState([]);
   const [loading, setLoading] = useState(false);

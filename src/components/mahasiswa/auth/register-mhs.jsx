@@ -4,7 +4,7 @@ import { useNavigate } from "react-router-dom";
 import Swal from "sweetalert2";
 import { Input, Select, Option } from "@material-tailwind/react";
 const RegisterMahasiswa = () => {
-  const backendUrl = process.env.REACT_APP_API_URL;
+  const backendUrl = import.meta.env.VITE_BACKEND_URL;
   const navigate = useNavigate();
   const [nim, setNim] = useState("");
   const [nama, setNama] = useState("");

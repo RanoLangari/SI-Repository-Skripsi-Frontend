@@ -7,7 +7,7 @@ import { Spinner } from "@material-tailwind/react";
 import NavbarAdmin from "./template/NavbarAdmin";
 
 const DetailDataSkripsi = () => {
-  const backendUrl = process.env.REACT_APP_API_URL;
+  const backendUrl = import.meta.env.VITE_BACKEND_URL;
   const Navigate = useNavigate();
   const [showMenu, setShowMenu] = useState(false);
   const [data, setData] = useState([]);
