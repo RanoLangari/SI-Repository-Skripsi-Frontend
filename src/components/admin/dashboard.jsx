@@ -6,6 +6,7 @@ import NavbarAdminTemplate from "./template/NavbarAdmin";
 import CustomMaterialTable from "../CustomMaterialTable";
 import { fetchSkripsiData } from "../../services/adminDataServices";
 import { createMRTColumnHelper } from "material-react-table";
+import FooterAdmin from "./template/FooterAdmin";
 
 const AdminDashboard = () => {
   const navigate = useNavigate();
@@ -166,6 +167,9 @@ const AdminDashboard = () => {
               </div>
             </div>
           </div>
+        </section>
+        <section>
+          <FooterAdmin/>
         </section>
       </div>
     </div>

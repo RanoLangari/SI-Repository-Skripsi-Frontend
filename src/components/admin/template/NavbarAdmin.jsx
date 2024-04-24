@@ -155,14 +155,14 @@ export function NavbarAdminTemplate() {
     <Navbar className="mx-auto max-w-screen-xl p-2 lg:rounded-full lg:pl-6 sticky top-0 z-50 bg-white">
       <div className="relative mx-auto flex items-center justify-between text-blue-gray-900">
         <img
-          src="../FEB.png"
+          src="https://feb.undana.ac.id/wp-content/uploads/2023/02/LOGO-FEB-black.png"
           alt=""
           className="mx-auto mb-4 w-28 mt-4 lg:ml-4 lg:mr-0"
         />
         <Typography
           as="a"
           href="#"
-          className="mr-4 ml-2 cursor-pointer py-1.5 font-medium"
+          className="mr-4 ml-2 cursor-pointer py-1.5 font-medium hidden lg:block"
         >
           Sistem Informasi Repository Skripsi
         </Typography>

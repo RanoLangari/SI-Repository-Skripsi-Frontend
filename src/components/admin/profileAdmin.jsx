@@ -7,6 +7,7 @@ import { Input } from "@material-tailwind/react";
 import { FaUserCircle } from "react-icons/fa";
 import validator from "validator";
 import NavbarAdmin from "./template/NavbarAdmin";
+import FooterAdmin from "./template/FooterAdmin";
 
 const ProfileMahasiswa = () => {
   const backendUrl = import.meta.env.VITE_BACKEND_URL;
@@ -290,14 +291,7 @@ const ProfileMahasiswa = () => {
             </div>
           </div>
         </div>
-        <div className="bg-white dark:bg-gray-800 w-11/12 md:w-1/2 lg:w-1/3 mx-auto rounded-lg shadow mt-5"></div>
-        <div className="flex justify-center items-center h-24 bg-gray-100">
-          <div className="text-center">
-            <p className="text-gray-500 text-xs">
-              &copy;2024 FEB UNDANA. All rights reserved.
-            </p>
-          </div>
-        </div>
+        <FooterAdmin/>
       </div>
     </div>
   );

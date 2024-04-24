@@ -4,6 +4,7 @@ import axios from "axios";
 import { FaFilePdf } from "react-icons/fa";
 import { Spinner } from "@material-tailwind/react";
 import Navbar from "./template/Navbar";
+import Footer from "./template/Footer";
 
 const DetailSkripsi = () => {
   const backendUrl = import.meta.env.VITE_BACKEND_URL;
@@ -52,8 +53,8 @@ const DetailSkripsi = () => {
             </div>
             <div className="flex flex-col bg-white shadow-md rounded my-2">
               <div className="flex flex-col justify-center p-5 border-b border-gray-100">
-                <div className="flex flex-col items-center">
-                  <span className="text-lg font-bold">
+                <div className="flex flex-col items-center justify-center">
+                  <span className="text-lg font-bold text-center">
                     {data.judul_skripsi}
                   </span>
                   <span className="text-sm text-black"> Oleh {data.nama}</span>
@@ -111,11 +112,9 @@ const DetailSkripsi = () => {
           </div>
         </div>
       </section>
-      <div className="flex justify-center items-center h-24 bg-gray-100">
-        <p className="text-gray-500 text-xs">
-          &copy;2024 FEB UNDANA. All rights reserved.
-        </p>
-      </div>
+     <section>
+      <Footer/>
+     </section>
     </div>
   );
 };

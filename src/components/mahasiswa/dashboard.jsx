@@ -14,6 +14,7 @@ import {
 } from "@material-tailwind/react";
 import { ArrowRightIcon, ArrowLeftIcon } from "@heroicons/react/24/outline";
 import NavbarMahasiswaTemplate from "./template/Navbar";
+import Footer from "./template/Footer";
 const MhsDashboard = () => {
   // state Hooks
   const [searchTerm, setSearchTerm] = useState("");
@@ -217,7 +218,7 @@ const MhsDashboard = () => {
       <Spinner className="h-12 w-12" color="amber" />
     </div>
   ) : (
-    <div className="bg-gray-100 w-full min-h-screen">
+    <div className="bg-gray-100 w-full ">
       <NavbarMahasiswaTemplate status_kelulusan={status_kelulusan} />
       <section className="bg-gray-100 py-20">
         <div className="max-w-6xl mx-auto px-4">
@@ -426,11 +427,9 @@ const MhsDashboard = () => {
           </div>
         </div>
       </section>
-      <div className="flex justify-center items-center h-24 bg-gray-100">
-        <p className="text-gray-500 text-xs">
-          &copy;2024 FEB UNDANA. All rights reserved.
-        </p>
-      </div>
+      <section>
+        <Footer/>
+      </section>
     </div>
   );
 };

@@ -5,6 +5,7 @@
   import { FaFilePdf } from "react-icons/fa";
   import { Spinner } from "@material-tailwind/react";
   import NavbarAdmin from "./template/NavbarAdmin";
+import FooterAdmin from "./template/FooterAdmin";
 
   const DetailDataSkripsi = () => {
     const backendUrl = import.meta.env.VITE_BACKEND_URL;
@@ -239,11 +240,9 @@
             </div>
           </div>
         </section>
-        <div className="flex justify-center items-center h-24 bg-gray-100">
-          <p className="text-gray-500 text-xs">
-            &copy;2024 FEB UNDANA. All rights reserved.
-          </p>
-        </div>
+        <section>
+          <FooterAdmin />
+        </section>
       </div>
     );
   };

@@ -5,6 +5,7 @@ import Swal from "sweetalert2";
 import { Spinner } from "@material-tailwind/react";
 import { Select, Textarea, Option, Input } from "@material-tailwind/react";
 import Navbar from "./template/Navbar";
+import Footer from "./template/Footer";
 
 const UploadSkripsi = () => {
   const backendUrl = import.meta.env.VITE_BACKEND_URL;
@@ -300,13 +301,9 @@ const UploadSkripsi = () => {
             </div>
           </div>
         </div>
-        <div className="flex justify-center items-center h-24 bg-gray-100">
-          <div className="text-center">
-            <p className="text-gray-500 text-xs">
-              &copy;2024 FEB UNDANA. All rights reserved.
-            </p>
-          </div>
-        </div>
+       <section>
+        <Footer/>
+       </section>
       </div>
     </div>
   );

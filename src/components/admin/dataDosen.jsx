@@ -10,6 +10,7 @@ import {
 import { FaPencilAlt, FaRegTrashAlt } from "react-icons/fa";
 import NavbarAdmin from "./template/NavbarAdmin";
 import { Spinner } from "@material-tailwind/react";
+import FooterAdmin from "./template/FooterAdmin";
 
 const DataDosen = () => {
   const backendUrl = import.meta.env.VITE_BACKEND_URL;
@@ -304,12 +305,11 @@ const DataDosen = () => {
     </div>
   ) : (
     <div className="bg-gray-100">
-      <NavbarAdmin
-      />
+      <NavbarAdmin />
       <div className="container mx-auto mt-8">
         <section>
           <div className="flex justify-center py-12 px-4 sm:px-6 lg:px-2">
-            <div className=" w-full space-y-8 px-10 bg-white py-10">
+            <div className="w-full space-y-8 px-10 bg-white py-10">
               <div>
                 <h2 className="mt-6 text-center text-xl font-extrabold text-gray-900">
                   Data Dosen
@@ -330,11 +330,9 @@ const DataDosen = () => {
             </div>
           </div>
         </section>
-      </div>
-      <div className="flex justify-center items-center py-20">
-        <p className="text-center text-gray-500 text-xs">
-          &copy;2024 FEB UNDANA. All rights reserved.
-        </p>
+        <section>
+          <FooterAdmin />
+        </section>
       </div>
     </div>
   );
