@@ -11,7 +11,7 @@ export default defineConfig(() => {
       },
     server: {
       port: 8080,
-      open: true,
+      // open: true,
     },
     build: {
       outDir: 'build',
