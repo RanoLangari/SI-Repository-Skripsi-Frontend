@@ -3,6 +3,7 @@ import axios from "axios";
 import { useNavigate } from "react-router-dom";
 import Swal from "sweetalert2";
 import { Input, Select, Option } from "@material-tailwind/react";
+import validator from "validator";
 const RegisterMahasiswa = () => {
   const backendUrl = import.meta.env.VITE_BACKEND_URL;
   const navigate = useNavigate();
@@ -58,7 +59,7 @@ const RegisterMahasiswa = () => {
         return Swal.fire({
           icon: "error",
           title: "Register gagal!",
-          text: "NIM harus angka",
+          text: "NIM tidak Valid",
           timer: 1000,
         });
       }
@@ -66,7 +67,15 @@ const RegisterMahasiswa = () => {
         return Swal.fire({
           icon: "error",
           title: "Register gagal!",
-          text: "panjang NIM harus 10 karakter",
+          text: "NIM tidak Valid",
+          timer: 1000,
+        });
+      }
+      if (!validator.isEmail(email)) {
+        return Swal.fire({
+          icon: "error",
+          title: "Register gagal!",
+          text: "Email tidak valid",
           timer: 1000,
         });
       }
@@ -186,6 +195,11 @@ const RegisterMahasiswa = () => {
                   setEmail(e.target.value);
                 }}
               />
+              {!validator.isEmail(email) && email && (
+              <p className="text-red-500 text-xs italic text-left mt-1">
+                Alamat email tidak valid
+              </p>
+            )}
             </div>
           </div>
           <div className="flex flex-col md:flex-row mt-6">

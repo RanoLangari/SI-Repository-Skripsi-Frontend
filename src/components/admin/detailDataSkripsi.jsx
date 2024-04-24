@@ -5,7 +5,6 @@
   import { FaFilePdf } from "react-icons/fa";
   import { Spinner } from "@material-tailwind/react";
   import NavbarAdmin from "./template/NavbarAdmin";
-import FooterAdmin from "./template/FooterAdmin";
 
   const DetailDataSkripsi = () => {
     const backendUrl = import.meta.env.VITE_BACKEND_URL;
