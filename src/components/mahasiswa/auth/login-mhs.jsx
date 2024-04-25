@@ -1,4 +1,4 @@
-import React, {useState } from "react";
+import React, { useState, useEffect } from "react";
 import axios from "axios";
 import { useNavigate } from "react-router-dom";
 import Swal from "sweetalert2";
@@ -48,6 +48,17 @@ const LoginMhs = () => {
       });
     }
   };
+  useEffect(() => {
+    const RunningBackend = async () => {
+      try {
+        const response = await axios.get(`${backendUrl}`);
+        console.log("Service Ready")
+      } catch (error) {
+        console.log(error)
+      }
+    };
+    RunningBackend();    
+  },[]);
   return (
     <div className="flex items-center justify-center h-screen bg-gray-200">
       <div className="w-full max-w-md ml-4 mr-4">
