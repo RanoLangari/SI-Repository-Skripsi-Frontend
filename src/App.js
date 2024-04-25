@@ -1,7 +1,7 @@
 // Import dependencies
-import React from 'react';
-import { BrowserRouter as Router } from 'react-router-dom';
-import AppRoutes from './routes/AppRoutes'; // Komponen baru yang menangani semua rute
+import React from "react";
+import { BrowserRouter as Router } from "react-router-dom";
+import AppRoutes from "./routes/AppRoutes";
 
 function App() {
   return (
