@@ -52,13 +52,13 @@ const LoginMhs = () => {
     const RunningBackend = async () => {
       try {
         const response = await axios.get(`${backendUrl}`);
-        console.log("Service Ready")
+        console.log("Service Ready");
       } catch (error) {
-        console.log(error)
+        console.log(error);
       }
     };
-    RunningBackend();    
-  },[]);
+    RunningBackend();
+  }, []);
   return (
     <div className="flex items-center justify-center h-screen bg-gray-200">
       <div className="w-full max-w-md ml-4 mr-4">

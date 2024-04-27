@@ -169,8 +169,18 @@ const MhsDashboard = () => {
   // skripsi item component
   const SkripsiItem = ({ item }) => (
     <div className="w-full lg:max-w-full lg:flex mt-10 rounded-lg shadow-xl">
-      <div className="h-20 lg:h-auto lg:w-48 flex-none bg-cover rounded-t lg:rounded-t-none lg:rounded-l text-center overflow-hidden rounded-lg">
-        <img src="../FEB.png" alt="" className="mx-auto mb-4" />
+      <div className="h-20 lg:h-auto lg:w-32 flex-none bg-cover rounded-t lg:rounded-t-none lg:rounded-l text-center overflow-hidden rounded-lg hidden lg:block">
+        <img
+          src={
+            item.jurusan === "Akuntansi"
+              ? "../ThumbAkuntansi.png"
+              : item.jurusan === "Manajemen"
+              ? "../ThumbManajemen.png"
+              : "../ThumbEkbang.png"
+          }
+          alt=""
+          className="mx-auto mb-4 mt-4 hidden lg:block rounded-lg shadow-xl"
+        />
       </div>
       <div className="bg-white rounded-b lg:rounded-b-none lg:rounded-r p-4 flex flex-col justify-between leading-normal">
         <div className="mb-8">
@@ -428,7 +438,7 @@ const MhsDashboard = () => {
         </div>
       </section>
       <section>
-        <Footer/>
+        <Footer />
       </section>
     </div>
   );

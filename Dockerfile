@@ -26,8 +26,6 @@ RUN npm install
 
 COPY . .
 
-ENV VITE_BACKEND_URL="example.com"
-
 RUN npm run build
 
 EXPOSE 8080
