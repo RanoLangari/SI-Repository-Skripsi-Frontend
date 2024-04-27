@@ -266,7 +266,7 @@ const DataDosen = () => {
             >
               <FaPencilAlt />
             </button>
-            <span className="mx-2"></span>
+            <span className="mx-2" />
             <button
               onClick={() => {
                 Swal.fire({

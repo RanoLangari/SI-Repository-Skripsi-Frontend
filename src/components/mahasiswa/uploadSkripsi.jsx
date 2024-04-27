@@ -195,8 +195,7 @@ const UploadSkripsi = () => {
                         placeholder="Pilih Pembimbing 1"
                         onChange={(e) => setPembimbing1(e)}
                       >
-                        {data &&
-                          data.map((item) => (
+                        {data?.map((item) => (
                             <Option key={item.nama} value={item.nama}>
                               {item.nama}
                             </Option>
