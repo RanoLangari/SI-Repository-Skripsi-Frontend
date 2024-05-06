@@ -115,6 +115,16 @@ const navListItems = [
     icon: CodeBracketSquareIcon,
     href: "/admin/dosen",
   },
+  {
+    label: "Data Mahasiswa",
+    icon: CodeBracketSquareIcon,
+    href: "/admin/data-mahasiswa",
+  },
+  {
+    label: "Data Skripsi",
+    icon: CodeBracketSquareIcon,
+    href: "/admin/data-skripsi",
+  },
 ];
 
 function NavList() {
@@ -159,13 +169,6 @@ export function NavbarAdminTemplate() {
           alt=""
           className="mx-auto mb-4 w-28 mt-4 lg:ml-4 lg:mr-0"
         />
-        <Typography
-          as="a"
-          href="#"
-          className="mr-4 ml-2 cursor-pointer py-1.5 font-medium hidden lg:block"
-        >
-          Sistem Informasi Repository Skripsi
-        </Typography>
         <div className="ml-24 hidden lg:block">
           <NavList />
         </div>

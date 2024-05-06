@@ -4,7 +4,6 @@ import NotFound from "../components/NotFound";
 
 // Import Komponen Mahasiswa
 import LoginMhs from "../components/mahasiswa/auth/login-mhs";
-import RegisterMahasiswa from "../components/mahasiswa/auth/register-mhs";
 import LupaPassword from "../components/mahasiswa/auth/lupa-password";
 import MhsDashboard from "../components/mahasiswa/dashboard";
 import ProfileMahasiswa from "../components/mahasiswa/profileMahasiswa";
@@ -32,7 +31,6 @@ const AppRoutes = () => {
       <Route path="/" element={<LoginMhs />} />
       <Route path="/login-mhs" element={<LoginMhs />} />
       <Route path="/mhs/lupa-password" element={<LupaPassword />} />
-      <Route path="/register-mhs" element={<RegisterMahasiswa />} />
       <Route path="/mhs/dashboard" element={<MhsDashboard />} />
       <Route path="/mhs/profile" element={<ProfileMahasiswa />} />
       <Route path="/mhs/upload-skripsi" element={<UploadSkripsi />} />

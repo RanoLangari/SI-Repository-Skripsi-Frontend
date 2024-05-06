@@ -103,20 +103,14 @@ const LoginMhs = () => {
             >
               Login
             </button>
-            <a
-              className="inline-block align-baseline font-normal text-sm text-blue-500 hover:text-blue-800"
-              href="register-mhs"
-            >
-              Register Mahasiswa
-            </a>
-          </div>
-          <div className="flex items-end justify-end mt-4">
-            <a
-              className="inline-block align-baseline font-normal text-sm text-blue-500 hover:text-blue-800"
-              href="/login-admin"
-            >
-              Login Admin
-            </a>
+            <div className="flex items-end justify-end">
+              <a
+                className="inline-block align-baseline font-normal text-sm text-blue-500 hover:text-blue-800"
+                href="/login-admin"
+              >
+                Login Admin
+              </a>
+            </div>
           </div>
         </form>
         <p className="text-center text-gray-500 text-xs">
