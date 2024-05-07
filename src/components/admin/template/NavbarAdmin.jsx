@@ -118,7 +118,7 @@ const navListItems = [
   {
     label: "Data Mahasiswa",
     icon: CodeBracketSquareIcon,
-    href: "/admin/data-mahasiswa",
+    href: "/admin/data-mhs",
   },
   {
     label: "Data Skripsi",

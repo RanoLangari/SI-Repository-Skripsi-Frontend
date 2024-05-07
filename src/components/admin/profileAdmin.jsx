@@ -8,24 +8,19 @@ import { FaUserCircle } from "react-icons/fa";
 import validator from "validator";
 import NavbarAdmin from "./template/NavbarAdmin";
 import FooterAdmin from "./template/FooterAdmin";
+import {
+  GetProfileAdmin,
+  UpdateProfileAdmin,
+} from "../../services/adminDataServices";
 
-const ProfileMahasiswa = () => {
-  const backendUrl = import.meta.env.VITE_BACKEND_URL;
+const ProfileAdmin = () => {
   const Navigate = useNavigate();
+  const backendUrl = import.meta.env.VITE_BACKEND_URL;
   const [data, setData] = useState([]);
-  const [showMenu, setShowMenu] = useState(false);
-  const [dropdownVisible, setDropdownVisible] = useState(false);
-  function showMenuToggle() {
-    setShowMenu(!showMenu);
-  }
   const [old_password, setOldPassword] = useState("");
   const [new_password, setNewPassword] = useState("");
   const [confirm_password, setConfirmPassword] = useState("");
   const [loading, setLoading] = useState(false);
-
-  function toggleDropdown() {
-    setDropdownVisible(!dropdownVisible);
-  }
 
   const UpdatePassword = async (e) => {
     e.preventDefault();
@@ -99,29 +94,20 @@ const ProfileMahasiswa = () => {
         },
       });
       const token = localStorage.getItem("token");
-      const config = {
-        headers: {
-          Authorization: `Bearer ${token}`,
-        },
-      };
-      const response = await axios.put(
-        `${backendUrl}/api/admin/profile`,
-        {
-          username: data.username,
-          email: data.email,
-        },
-        config
+      const updateProfileAdmin = await UpdateProfileAdmin(
+        backendUrl,
+        "profile",
+        { username: data.username, email: data.email },
+        token
       );
       Swal.close();
-      if (response.status === 200) {
-        Swal.fire({
-          icon: "success",
-          title: "Success!",
-          text: response.data.message,
-          showConfirmButton: false,
-          timer: 1500,
-        });
-      }
+      Swal.fire({
+        icon: "success",
+        title: "Success!",
+        text: updateProfileAdmin.message,
+        showConfirmButton: false,
+        timer: 1500,
+      });
     } catch (error) {
       Swal.fire({
         icon: "error",
@@ -136,16 +122,13 @@ const ProfileMahasiswa = () => {
     const fetchData = async () => {
       try {
         const token = localStorage.getItem("token");
-        const config = {
-          headers: {
-            Authorization: `Bearer ${token}`,
-          },
-        };
-        const res = await axios.get(`${backendUrl}/api/admin/getadmin`, config);
-        if (res.status === 200) {
-          setData(res.data.data);
-          setLoading(true);
-        }
+        const GetDataDosen = await GetProfileAdmin(
+          backendUrl,
+          "getadmin",
+          token
+        );
+        setData(GetDataDosen);
+        setLoading(true);
       } catch (err) {
         Navigate("/login-admin");
       }
@@ -291,10 +274,10 @@ const ProfileMahasiswa = () => {
             </div>
           </div>
         </div>
-        <FooterAdmin/>
+        <FooterAdmin />
       </div>
     </div>
   );
 };
 
-export default ProfileMahasiswa;
+export default ProfileAdmin;

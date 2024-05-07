@@ -121,7 +121,7 @@ function NavList({ status_kelulusan }) {
     });
   }
   return (
-    <ul className="mt-2 mb-4 flex flex-col gap-2 lg:mb-0 lg:mt-0 lg:flex-row lg:items-center">
+    <ul className="mt-2 mb-4 flex flex-col gap-2 lg:mb-0 lg:mt-0 lg:flex-row lg:items-center justify-center lg:gap-4">
       {navListItems.map(({ label, icon, href }, key) => (
         <Typography
           key={label}
@@ -161,14 +161,7 @@ export function NavbarMahasiswaTemplate({ status_kelulusan }) {
           alt=""
           className="mx-auto mb-4 w-28 mt-4 lg:ml-4 lg:mr-0"
         />
-        <Typography
-          as="a"
-          href="#"
-          className="mr-4 ml-2 cursor-pointer py-1.5 font-medium hidden lg:block"
-        >
-          Sistem Informasi Repository Skripsi
-        </Typography>
-        <div className=" ml-24 hidden lg:block">
+        <div className=" ml-36 hidden lg:block">
           <NavList status_kelulusan={status_kelulusan} />
         </div>
         <IconButton

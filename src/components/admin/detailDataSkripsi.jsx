@@ -73,48 +73,6 @@ const DetailDataSkripsi = () => {
     }
   };
 
-  const deleteSkripsi = async (e) => {
-    try {
-      Swal.fire({
-        title: "Loading Data",
-        text: "Please wait ...",
-        showConfirmButton: false,
-        allowOutsideClick: false,
-        willOpen: () => {
-          Swal.showLoading();
-        },
-      });
-      const token = localStorage.getItem("token");
-      const id = window.location.pathname.split("/")[3];
-      const config = {
-        headers: {
-          Authorization: `Bearer ${token}`,
-        },
-      };
-      console.log(token);
-      const res = await axios.put(
-        `${backendUrl}/api/admin/delete-skripsi/${id}`,
-        {},
-        config
-      );
-      Swal.fire({
-        icon: "success",
-        title: "Berhasil",
-        text: res.data.message,
-        timer: 1500,
-      }).then(() => {
-        Navigate("/admin/dashboard");
-      });
-    } catch (error) {
-      Swal.fire({
-        icon: "error",
-        title: "Gagal",
-        text: error.response.data.message,
-        timer: 1500,
-      });
-    }
-  };
-
   return !loading ? (
     <div className="flex justify-center items-center h-screen">
       <Spinner className="h-12 w-12" color="amber" />
@@ -147,7 +105,62 @@ const DetailDataSkripsi = () => {
                         cancelButtonColor: "#d33",
                       }).then((result) => {
                         if (result.isConfirmed) {
-                          deleteSkripsi();
+                          // tampilkan textfield untuk alasan penolakan
+                          Swal.fire({
+                            title: "Masukkan Alasan Penolakan",
+                            input: "text",
+                            inputPlaceholder: "Alasan Penolakan",
+                            showCancelButton: true,
+                            confirmButtonText: "Kirim",
+                            cancelButtonText: "Batal",
+                            confirmButtonColor: "#3085d6",
+                            cancelButtonColor: "#d33",
+                          }).then((result) => {
+                            if (result.isConfirmed) {
+                              Swal.fire({
+                                title: "Loading Data",
+                                text: "Please wait ...",
+                                showConfirmButton: false,
+                                allowOutsideClick: false,
+                                willOpen: () => {
+                                  Swal.showLoading();
+                                },
+                              });
+                              const token = localStorage.getItem("token");
+                              const id = window.location.pathname.split("/")[3];
+                              const config = {
+                                headers: {
+                                  Authorization: `Bearer ${token}`,
+                                },
+                              };
+                              axios
+                                .put(
+                                  `${backendUrl}/api/admin/delete-skripsi/${id}`,
+                                  {
+                                    alasan: result.value,
+                                  },
+                                  config
+                                )
+                                .then((res) => {
+                                  Swal.fire({
+                                    icon: "success",
+                                    title: "Berhasil",
+                                    text: res.data.message,
+                                    timer: 1500,
+                                  }).then(() => {
+                                    Navigate("/admin/dashboard");
+                                  });
+                                })
+                                .catch((err) => {
+                                  Swal.fire({
+                                    icon: "error",
+                                    title: "Gagal",
+                                    text: err.response.data.message,
+                                    timer: 1500,
+                                  });
+                                });
+                            }
+                          });
                         }
                       });
                     }}

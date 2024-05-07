@@ -18,6 +18,7 @@ const ProfileMahasiswa = () => {
   const [email, setEmail] = useState("");
   const [semester, setSemester] = useState("");
   const [status_kelulusan, setStatusKelulusan] = useState("");
+  const [alasan, setAlasan] = useState("");
   const [statusSkripsi, setStatusSkripsi] = useState("");
   const [old_password, setOldPassword] = useState("");
   const [new_password, setNewPassword] = useState("");
@@ -146,29 +147,13 @@ const ProfileMahasiswa = () => {
         setJurusan(res.data.data.jurusan);
         setSemester(res.data.data.semester);
         setStatusKelulusan(res.data.data.status_kelulusan);
-        setEmail(res.data.data.email);
-      })
-      .catch((err) => {
-        Navigate("/login-mhs");
-      });
-  }, [Navigate, backendUrl]);
-
-  useEffect(() => {
-    const token = localStorage.getItem("token");
-    const config = {
-      headers: {
-        Authorization: `Bearer ${token}`,
-      },
-    };
-    axios
-      .get(`${backendUrl}/api/mahasiswa/skripsi-status`, config)
-      .then((res) => {
+        res.data.data.email && setEmail(res.data.data.email);
         setStatusSkripsi(res.data.data.status_skripsi);
+        setAlasan(res.data.data.alasan_tolak);
         setLoading(true);
       })
       .catch((err) => {
         Navigate("/login-mhs");
-        console.log(err);
       });
   }, [Navigate, backendUrl]);
 
@@ -387,15 +372,23 @@ const ProfileMahasiswa = () => {
             </div>
             <div className="border-b px-4 pb-6">
               <h5>
-                Status Skripsi Anda <b>{statusSkripsi}</b>
+                <span className="font-bold text-dark">
+                  {statusSkripsi === "Terverifikasi"
+                    ? "Skripsi Anda Telah Terverifikasi"
+                    : null}
+                  {statusSkripsi === "proses" ? "Menunggu Konfirmasi" : null}
+                  {statusSkripsi === "Ditolak"
+                    ? `Skripsi anda telah ditolak dengan alasan ${alasan}. Mohon segera mengajukan ulang skripsi anda.`
+                    : null}
+                </span>
               </h5>
             </div>
           </div>
         ) : null}
 
-          <section>
-            <Footer />
-          </section>
+        <section>
+          <Footer />
+        </section>
       </div>
     </div>
   );

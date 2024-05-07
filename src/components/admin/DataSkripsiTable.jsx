@@ -6,9 +6,8 @@ import NavbarAdminTemplate from "./template/NavbarAdmin";
 import CustomMaterialTable from "../CustomMaterialTable";
 import { fetchSkripsiData } from "../../services/adminDataServices";
 import { createMRTColumnHelper } from "material-react-table";
-import FooterAdmin from "./template/FooterAdmin";
 
-const AdminDashboard = () => {
+const DataSkripsiTable = () => {
   const navigate = useNavigate();
   const [dataSkripsiProses, setDataSkripsiProses] = useState([]);
   const [dataSkripsiVerified, setDataSkripsiVerified] = useState([]);
@@ -122,58 +121,41 @@ const AdminDashboard = () => {
       <Spinner className="h-12 w-12" color="amber" />
     </div>
   ) : (
-    <div className="bg-gray-100">
-      <NavbarAdminTemplate />
-      <div className="container mx-auto">
-        <section>
-          <div className="flex justify-center py-12 px-4 sm:px-6 lg:px-8">
-            <div className="max-w-md w-full space-y-8">
-              <div>
-                <h2 className="mt-6 text-center text-3xl font-extrabold text-gray-900">
-                  Beranda Admin
-                </h2>
-              </div>
+    <div className="container mx-auto">
+      <section className="bg-white">
+        <div className="items-center px-10 py-10">
+          <div className=" w-full space-y-8">
+            <div>
+              <h2 className=" text-center text-xl font-extrabold text-gray-900 mt-8">
+                Data Skripsi yang Belum Terkonfirmasi
+              </h2>
+            </div>
+            <div className="flex flex-col ext-center text-xl font-extrabold text-gray-900">
+              <CustomMaterialTable
+                columns={columnsSkripsiProses}
+                data={dataSkripsiProses}
+              />
             </div>
           </div>
-        </section>
-        <section className="bg-white">
-          <div className="items-center px-10 py-10">
-            <div className=" w-full space-y-8">
-              <div>
-                <h2 className=" text-center text-xl font-extrabold text-gray-900 mt-8">
-                  Data Skripsi yang Belum Terkonfirmasi
-                </h2>
-              </div>
-              <div className="flex flex-col ext-center text-xl font-extrabold text-gray-900">
-                <CustomMaterialTable
-                  columns={columnsSkripsiProses}
-                  data={dataSkripsiProses}
-                />
-              </div>
+        </div>
+        <div className="flex justify-center py-12 px-4 sm:px-6 lg:px-2">
+          <div className=" w-full space-y-8 px-10">
+            <div>
+              <h2 className="mt-6 text-center text-xl font-extrabold text-gray-900">
+                Data Skripsi yang telah Terkonfirmasi
+              </h2>
+            </div>
+            <div className="flex flex-col ext-center text-xl font-extrabold text-gray-900">
+              <CustomMaterialTable
+                columns={columnsSkripsiVerified}
+                data={dataSkripsiVerified}
+              />
             </div>
           </div>
-          <div className="flex justify-center py-12 px-4 sm:px-6 lg:px-2">
-            <div className=" w-full space-y-8 px-10">
-              <div>
-                <h2 className="mt-6 text-center text-xl font-extrabold text-gray-900">
-                  Data Skripsi yang telah Terkonfirmasi
-                </h2>
-              </div>
-              <div className="flex flex-col ext-center text-xl font-extrabold text-gray-900">
-                <CustomMaterialTable
-                  columns={columnsSkripsiVerified}
-                  data={dataSkripsiVerified}
-                />
-              </div>
-            </div>
-          </div>
-        </section>
-        <section>
-          <FooterAdmin />
-        </section>
-      </div>
+        </div>
+      </section>
     </div>
   );
 };
 
-export default AdminDashboard;
+export default DataSkripsiTable;

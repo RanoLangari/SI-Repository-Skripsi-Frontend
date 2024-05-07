@@ -19,6 +19,8 @@ import ProfileAdmin from "../components/admin/profileAdmin";
 import DetailDataSkripsi from "../components/admin/detailDataSkripsi";
 import DataDosen from "../components/admin/dataDosen";
 import PreviewSkripsiAdmin from "../components/admin/PreviewSkripsiAdmin";
+import DataMahasiswa from "../components/admin/DataMahasiswa";
+import DataSkripsi from "../components/admin/DataSkripsi";
 // Import semua halaman lainnya...
 
 const AppRoutes = () => {
@@ -44,6 +46,8 @@ const AppRoutes = () => {
       <Route path="/admin/profile" element={<ProfileAdmin />} />
       <Route path="/admin/detail-skripsi/:id" element={<DetailDataSkripsi />} />
       <Route path="/admin/dosen" element={<DataDosen />} />
+      <Route path="/admin/data-mhs" element={<DataMahasiswa />} />
+      <Route path="/admin/data-skripsi" element={<DataSkripsi />} />
       <Route path="/admin/preview/:id" element={<PreviewSkripsiAdmin />} />
     </Routes>
   );
