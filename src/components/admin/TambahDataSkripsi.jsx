@@ -63,8 +63,9 @@ const TambahDataSkripsi = () => {
         title: "Berhasil",
         text: "Data skripsi berhasil ditambahkan",
         timer: 3000,
+      }).finally(() => {
+        Navigate("/admin/data-skripsi");
       });
-      Navigate("/admin/data-skripsi");
     } catch (error) {
       Swal.fire({
         icon: "error",

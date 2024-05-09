@@ -93,7 +93,7 @@ const UploadSkripsi = () => {
         icon: "error",
         title: "Gagal",
         text: error.response.data.message,
-        timer: 1000,
+        timer: 2500,
       });
     }
   };
@@ -128,7 +128,6 @@ const UploadSkripsi = () => {
   };
   useEffect(() => {
     getProfile();
-    // eslint-disable-next-line react-hooks/exhaustive-deps
   }, []);
   return !loading ? (
     <div className="flex justify-center items-center h-screen">
