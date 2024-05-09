@@ -48,7 +48,6 @@ const ProfileMahasiswa = () => {
           nim: nim,
           jurusan: jurusan,
           semester: semester,
-          status_kelulusan: status_kelulusan,
           email: email,
         },
         config
@@ -143,9 +142,9 @@ const ProfileMahasiswa = () => {
       .get(`${backendUrl}/api/mahasiswa/profile`, config)
       .then((res) => {
         setNama(res.data.data.nama);
+        setSemester(res.data.data.semester);
         setNim(res.data.data.nim);
         setJurusan(res.data.data.jurusan);
-        setSemester(res.data.data.semester);
         setStatusKelulusan(res.data.data.status_kelulusan);
         res.data.data.email && setEmail(res.data.data.email);
         setStatusSkripsi(res.data.data.status_skripsi);
@@ -254,23 +253,7 @@ const ProfileMahasiswa = () => {
                   </div>
 
                   <div className="flex flex-col md:flex-row mb-6">
-                    <div className="flex flex-col w-full md:w-1/2 md:pr-2 mt-6">
-                      <Select
-                        color="yellow"
-                        size="md"
-                        outline="false"
-                        label="Status Kelulusan"
-                        required
-                        onChange={(e) => {
-                          setStatusKelulusan(e);
-                        }}
-                        value={status_kelulusan}
-                      >
-                        <Option value="Lulus">Lulus</Option>
-                        <Option value="Belum Lulus">Belum Lulus</Option>
-                      </Select>
-                    </div>
-                    <div className="flex flex-col w-full md:w-1/2 md:pl-2 mt-6">
+                    <div className="flex flex-col w-full mt-6">
                       <Input
                         label="Email"
                         required
@@ -373,6 +356,9 @@ const ProfileMahasiswa = () => {
             <div className="border-b px-4 pb-6">
               <h5>
                 <span className="font-bold text-dark">
+                  {statusSkripsi === undefined
+                    ? "Anda Belum Mengupload Skripsi"
+                    : null}
                   {statusSkripsi === "Terverifikasi"
                     ? "Skripsi Anda Telah Terverifikasi"
                     : null}

@@ -10,10 +10,6 @@ import Footer from "./template/Footer";
 const UploadSkripsi = () => {
   const backendUrl = import.meta.env.VITE_BACKEND_URL;
   const Navigate = useNavigate();
-  const [pembimbing1, setPembimbing1] = useState("");
-  const [pembimbing2, setPembimbing2] = useState("");
-  const [penguji, setPenguji] = useState("");
-  const [judul, setJudul] = useState("");
   const [jurusan, setJurusan] = useState("");
   const [peminatan, setPeminatan] = useState("");
   const [abstract, setAbstract] = useState("");
@@ -29,15 +25,16 @@ const UploadSkripsi = () => {
     e.preventDefault();
 
     try {
-      if (!pembimbing1 || !pembimbing2 || !penguji || !judul || !abstract) {
+      if (!peminatan || !abstract) {
         Swal.fire({
           icon: "error",
           title: "Gagal",
-          text: "Semua field harus diisi",
+          text: "Data harus diisi",
           timer: 1000,
         });
         return;
       }
+
       if (!file) {
         Swal.fire({
           icon: "error",
@@ -65,14 +62,6 @@ const UploadSkripsi = () => {
           Swal.showLoading();
         },
       });
-      console.log({
-        pembimbing1,
-        pembimbing2,
-        penguji,
-        judul,
-        peminatan,
-        abstract,
-      });
       const token = localStorage.getItem("token");
       const config = {
         headers: {
@@ -80,10 +69,6 @@ const UploadSkripsi = () => {
         },
       };
       const formData = new FormData();
-      formData.append("pembimbing1", pembimbing1);
-      formData.append("pembimbing2", pembimbing2);
-      formData.append("penguji", penguji);
-      formData.append("judul_skripsi", judul);
       formData.append("peminatan", peminatan);
       formData.append("abstract", abstract);
       formData.append("file", file);
@@ -118,16 +103,8 @@ const UploadSkripsi = () => {
       "Perencanaan Pembangunan",
       "Moneter Perbankan",
     ],
-    Manajemen: [
-      "Manajemen Keuangan",
-      "Manajemen Sumberdaya Manusia",
-      "Manajemen Pemasaran",
-    ],
-    Akuntansi: [
-      "Akuntansi Keuangan",
-      "Akuntansi Sektor Publik",
-      "Akuntansi Manajemen",
-    ],
+    Manajemen: ["Keuangan", "Sumberdaya Manusia", "Pemasaran"],
+    Akuntansi: ["Keuangan", "Sektor Publik", "Manajemen", "pajak", "Audit"],
   };
 
   const getProfile = async () => {
@@ -142,17 +119,8 @@ const UploadSkripsi = () => {
         `${backendUrl}/api/mahasiswa/profile`,
         config
       );
-      const jurusan = profileResponse.data.data.jurusan;
-      setJurusan(jurusan);
-      if (profileResponse.data.data.status_kelulusan !== "Lulus") {
-        Navigate("/mhs/dashboard");
-      }
-      const dosenResponse = await axios.post(
-        `${backendUrl}/api/mahasiswa/get-dosen-by-jurusan`,
-        { jurusan },
-        config
-      );
-      setData(dosenResponse.data.data);
+      setData(profileResponse.data.data);
+      setJurusan(profileResponse.data.data.jurusan);
       setLoading(true);
     } catch (error) {
       Navigate("/login-mhs");
@@ -190,64 +158,6 @@ const UploadSkripsi = () => {
                       <Select
                         color="yellow"
                         size="md"
-                        label="Pilih Dosen Pembimbing 1"
-                        outline="false"
-                        placeholder="Pilih Pembimbing 1"
-                        onChange={(e) => setPembimbing1(e)}
-                      >
-                        {data?.map((item) => (
-                            <Option key={item.nama} value={item.nama}>
-                              {item.nama}
-                            </Option>
-                          ))}
-                      </Select>
-                    </div>
-                    <div className="flex flex-col mb-6 md:w-full">
-                      <Select
-                        color="yellow"
-                        size="md"
-                        label="Pilih Dosen Pembimbing 2"
-                        outline="false"
-                        placeholder="Pilih Pembimbing 2"
-                        onChange={(e) => setPembimbing2(e)}
-                      >
-                        {data.map((item) => (
-                          <Option key={item.nama} value={item.nama}>
-                            {item.nama}
-                          </Option>
-                        ))}
-                      </Select>
-                    </div>
-                    <div className="flex flex-col mb-6 md:w-full">
-                      <Select
-                        color="yellow"
-                        size="md"
-                        label="Pilih Dosen Penguji"
-                        outline="false"
-                        placeholder="Pilih Penguji"
-                        onChange={(e) => setPenguji(e)}
-                      >
-                        {data.map((item) => (
-                          <Option key={item.nama} value={item.nama}>
-                            {item.nama}
-                          </Option>
-                        ))}
-                      </Select>
-                    </div>
-                    <div className="flex flex-col mb-6 md:w-full">
-                      <Input
-                        label="Judul Skripsi"
-                        color="yellow"
-                        required
-                        onChange={(e) => {
-                          setJudul(e.target.value);
-                        }}
-                      />
-                    </div>
-                    <div className="flex flex-col mb-6 md:w-full">
-                      <Select
-                        color="yellow"
-                        size="md"
                         label="Pilih Peminatan"
                         outline="false"
                         placeholder="Pilih Peminatan"
@@ -263,7 +173,7 @@ const UploadSkripsi = () => {
                     <div className="flex flex-col mb-6 md:w-full">
                       <Textarea
                         color="yellow"
-                        size="md"
+                        size="lg"
                         outline="false"
                         label="Abstrak"
                         onChange={(e) => setAbstract(e.target.value)}
@@ -300,9 +210,9 @@ const UploadSkripsi = () => {
             </div>
           </div>
         </div>
-       <section>
-        <Footer/>
-       </section>
+        <section>
+          <Footer />
+        </section>
       </div>
     </div>
   );

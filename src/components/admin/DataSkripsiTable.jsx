@@ -1,11 +1,11 @@
 import React, { useState, useEffect } from "react";
 import { useNavigate } from "react-router-dom";
 import { FaEye } from "react-icons/fa";
-import { Spinner } from "@material-tailwind/react";
 import NavbarAdminTemplate from "./template/NavbarAdmin";
 import CustomMaterialTable from "../CustomMaterialTable";
 import { fetchSkripsiData } from "../../services/adminDataServices";
 import { createMRTColumnHelper } from "material-react-table";
+import { Typography } from "@material-tailwind/react";
 
 const DataSkripsiTable = () => {
   const navigate = useNavigate();
@@ -117,8 +117,42 @@ const DataSkripsiTable = () => {
     }),
   ];
   return !loading ? (
-    <div className="flex justify-center items-center h-screen">
-      <Spinner className="h-12 w-12" color="amber" />
+    <div className="max-w-full animate-pulse flex flex-col items-center justify-center">
+      <Typography
+        as="div"
+        variant="h1"
+        className="mb-4 h-3 w-72 rounded-full bg-gray-300"
+      >
+        &nbsp;
+      </Typography>
+      <Typography
+        as="div"
+        variant="paragraph"
+        className="mb-2 h-2 w-96 rounded-full bg-gray-300"
+      >
+        &nbsp;
+      </Typography>
+      <Typography
+        as="div"
+        variant="paragraph"
+        className="mb-2 h-2 w-96 rounded-full bg-gray-300"
+      >
+        &nbsp;
+      </Typography>
+      <Typography
+        as="div"
+        variant="paragraph"
+        className="mb-2 h-2 w-96 rounded-full bg-gray-300"
+      >
+        &nbsp;
+      </Typography>
+      <Typography
+        as="div"
+        variant="paragraph"
+        className="mb-2 h-2 w-96 rounded-full bg-gray-300"
+      >
+        &nbsp;
+      </Typography>
     </div>
   ) : (
     <div className="container mx-auto">

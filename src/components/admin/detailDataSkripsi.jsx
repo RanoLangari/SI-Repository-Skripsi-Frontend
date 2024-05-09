@@ -2,7 +2,7 @@ import React, { useState, useEffect } from "react";
 import { useNavigate } from "react-router-dom";
 import axios from "axios";
 import Swal from "sweetalert2";
-import { FaFilePdf } from "react-icons/fa";
+import { FaCheck, FaFilePdf, FaTimes } from "react-icons/fa";
 import { Spinner } from "@material-tailwind/react";
 import NavbarAdmin from "./template/NavbarAdmin";
 import FooterAdmin from "./template/FooterAdmin";
@@ -165,7 +165,7 @@ const DetailDataSkripsi = () => {
                       });
                     }}
                   >
-                    Tolak
+                    <FaTimes className="text-white" />
                   </button>
                   <button
                     className="bg-green-500 hover:bg-green-400 px-4 py-2 rounded-md text-white focus:outline-none"
@@ -186,7 +186,7 @@ const DetailDataSkripsi = () => {
                       });
                     }}
                   >
-                    Konfirmasi
+                    <FaCheck className="text-white" />
                   </button>
                 </div>
               </div>

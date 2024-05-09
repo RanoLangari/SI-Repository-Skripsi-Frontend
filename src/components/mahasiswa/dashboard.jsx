@@ -38,16 +38,8 @@ const MhsDashboard = () => {
       "Perencanaan Pembangunan",
       "Moneter Perbankan",
     ],
-    Manajemen: [
-      "Manajemen Keuangan",
-      "Manajemen Sumberdaya Manusia",
-      "Manajemen Pemasaran",
-    ],
-    Akuntansi: [
-      "Akuntansi Keuangan",
-      "Akuntansi Sektor Publik",
-      "Akuntansi Manajemen",
-    ],
+    Manajemen: ["Keuangan", "Sumberdaya Manusia", "Pemasaran"],
+    Akuntansi: ["Keuangan", "Sektor Publik", "Manajemen", "pajak", "Audit"],
   };
 
   // methods

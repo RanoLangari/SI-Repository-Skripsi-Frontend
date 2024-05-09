@@ -21,8 +21,8 @@ import DataDosen from "../components/admin/dataDosen";
 import PreviewSkripsiAdmin from "../components/admin/PreviewSkripsiAdmin";
 import DataMahasiswa from "../components/admin/DataMahasiswa";
 import DataSkripsi from "../components/admin/DataSkripsi";
-// Import semua halaman lainnya...
-
+import TambahDataSkripsi from "../components/admin/TambahDataSkripsi";
+import EditDataSkripsi from "../components/admin/EditDataSkripsi";
 const AppRoutes = () => {
   return (
     <Routes>
@@ -49,6 +49,14 @@ const AppRoutes = () => {
       <Route path="/admin/data-mhs" element={<DataMahasiswa />} />
       <Route path="/admin/data-skripsi" element={<DataSkripsi />} />
       <Route path="/admin/preview/:id" element={<PreviewSkripsiAdmin />} />
+      <Route
+        path="/admin/tambah-data-skripsi"
+        element={<TambahDataSkripsi />}
+      />
+      <Route
+        path="/admin/edit-data-skripsi/:id"
+        element={<EditDataSkripsi />}
+      />
     </Routes>
   );
 };

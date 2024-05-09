@@ -22,8 +22,12 @@ const DataMahasiswa = () => {
       title: "Tambah Data Mahasiswa",
       html: `<div class="flex flex-col gap-4">
         <div class="flex flex-col gap-2">
-          <label for="nama" class="text-sm">Nama Dosen</label>
+          <label for="nama" class="text-sm">Nama Mahasiswa</label>
           <input type="text" id="nama" class="shadow appearance-none border rounded w-full py-2 px-2 text-gray-700 mb-3 leading-tight focus:outline-none focus:shadow-outline">
+        </div>
+        <div class="flex flex-col gap-2">
+          <label for="jurusan" class="text-sm">NIM</label>
+          <input type="text" id="nim" class="shadow appearance-none border rounded w-full py-2 px-2 text-gray-700 mb-3 leading-tight focus:outline-none focus:shadow-outline">
         </div>
         <div class="flex flex-col gap-2">
           <label for="jurusan" class="text-sm">Jurusan</label>
@@ -42,7 +46,8 @@ const DataMahasiswa = () => {
       preConfirm: () => {
         const nama = Swal.getPopup().querySelector("#nama").value;
         const jurusan = Swal.getPopup().querySelector("#jurusan").value;
-        if (nama === "" || jurusan === "") {
+        const nim = Swal.getPopup().querySelector("#nim").value;
+        if (nama === "" || jurusan === "" || nim === "") {
           Swal.fire({
             icon: "error",
             title: "Gagal",
@@ -51,6 +56,16 @@ const DataMahasiswa = () => {
           });
           return false;
         }
+        if (nim.length !== 10) {
+          Swal.fire({
+            icon: "error",
+            title: "Gagal",
+            text: "NIM Tidak Valid",
+            timer: 1000,
+          });
+          return false;
+        }
+
         Swal.fire({
           title: "Loading Data",
           text: "Please wait ...",
@@ -63,6 +78,7 @@ const DataMahasiswa = () => {
         const data = {
           nama: nama,
           jurusan: jurusan,
+          nim: nim,
         };
         const token = localStorage.getItem("token");
         const config = {
@@ -71,7 +87,7 @@ const DataMahasiswa = () => {
           },
         };
         axios
-          .post(`${backendUrl}/api/admin/add-dosen`, data, config)
+          .post(`${backendUrl}/api/admin/add-mahasiswa`, data, config)
           .then((res) => {
             Swal.fire({
               icon: "success",
@@ -86,7 +102,7 @@ const DataMahasiswa = () => {
             Swal.fire({
               icon: "error",
               title: "Gagal",
-              text: "Data gagal ditambahkan",
+              text: err.response.data.message,
               timer: 1000,
             });
           });
@@ -174,7 +190,7 @@ const DataMahasiswa = () => {
     });
   };
 
-  const deleteDosen = (id) => {
+  const deleteMahasiswa = (id) => {
     Swal.close();
     Swal.fire({
       title: "Loading Data",
@@ -192,7 +208,7 @@ const DataMahasiswa = () => {
       },
     };
     axios
-      .delete(`${backendUrl}/api/admin/delete-dosen/${id}`, config)
+      .delete(`${backendUrl}/api/admin/delete-mahasiswa/${id}`, config)
       .then((res) => {
         Swal.fire({
           icon: "success",
@@ -267,12 +283,18 @@ const DataMahasiswa = () => {
             <button
               onClick={() => {
                 Swal.fire({
-                  title: "Edit Data Dosen",
+                  title: "Edit Data Mahasiswa",
                   html: `<div class="flex flex-col gap-4">
                   <div class="flex flex-col gap-2">
-                    <label for="nama" class="text-sm">Nama Dosen</label>
+                    <label for="nama" class="text-sm">Nama Mahasiswa</label>
                     <input type="text" id="nama" class="shadow appearance-none border rounded w-full py-2 px-3 text-gray-700 mb-3 leading-tight focus:outline-none focus:shadow-outline" value="${
                       row.original.nama
+                    }">
+                  </div>
+                  <div class="flex flex-col gap-2">
+                    <label for="nim" class="text-sm">NIM</label>
+                    <input type="text" id="nim" class="shadow appearance-none border rounded w-full py-2 px-3 text-gray-700 mb-3 leading-tight focus:outline-none focus:shadow-outline" value="${
+                      row.original.nim
                     }">
                   </div>
                   <div class="flex flex-col gap-2">
@@ -300,7 +322,9 @@ const DataMahasiswa = () => {
                     const nama = Swal.getPopup().querySelector("#nama").value;
                     const jurusan =
                       Swal.getPopup().querySelector("#jurusan").value;
+                    const nim = Swal.getPopup().querySelector("#nim").value;
                     const data = {
+                      nim: nim,
                       nama: nama,
                       jurusan: jurusan,
                     };
@@ -319,9 +343,28 @@ const DataMahasiswa = () => {
                         Swal.showLoading();
                       },
                     });
+                    if (nama === "" || jurusan === "" || nim === "") {
+                      Swal.fire({
+                        icon: "error",
+                        title: "Gagal",
+                        text: "Data tidak boleh kosong",
+                        timer: 1000,
+                      });
+                      return false;
+                    }
+                    if (nim.length !== 10 || isNaN(nim)) {
+                      Swal.fire({
+                        icon: "error",
+                        title: "Gagal",
+                        text: "NIM Tidak Valid",
+                        timer: 1000,
+                      });
+                      return false;
+                    }
+
                     axios
                       .put(
-                        `${backendUrl}/api/admin/edit-dosen/${row.original.id}`,
+                        `${backendUrl}/api/admin/edit-data-mahasiswa/${row.original.id}`,
                         data,
                         config
                       )
@@ -341,7 +384,7 @@ const DataMahasiswa = () => {
                         Swal.fire({
                           icon: "error",
                           title: "Gagal",
-                          text: "Data gagal diubah",
+                          text: err.response.data.message,
                           timer: 1000,
                         });
                       });
@@ -366,7 +409,7 @@ const DataMahasiswa = () => {
                   confirmButtonText: "Ya, Hapus!",
                 }).then((result) => {
                   if (result.isConfirmed) {
-                    deleteDosen(row.original.id);
+                    deleteMahasiswa(row.original.id);
                   }
                 });
               }}
@@ -391,7 +434,7 @@ const DataMahasiswa = () => {
       <Spinner className="h-12 w-12" color="amber" />
     </div>
   ) : (
-    <div className="bg-gray-100">
+    <div className="bg-gray-100 w-full min-h-screen">
       <NavbarAdmin />
       <div className="container mx-auto mt-8">
         <section>
