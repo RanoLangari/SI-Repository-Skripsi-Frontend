@@ -220,7 +220,7 @@ const MhsDashboard = () => {
       <Spinner className="h-12 w-12" color="amber" />
     </div>
   ) : (
-    <div className="bg-gray-100 w-full ">
+    <div className="bg-gray-100 w-full min-h-screen">
       <NavbarMahasiswaTemplate status_kelulusan={status_kelulusan} />
       <section className="bg-gray-100 py-20">
         <div className="max-w-6xl mx-auto px-4">

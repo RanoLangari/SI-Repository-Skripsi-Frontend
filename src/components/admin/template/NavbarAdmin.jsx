@@ -110,11 +110,11 @@ const navListItems = [
     href: "/admin/dashboard",
     icon: HomeModernIcon,
   },
-  {
-    label: "Data Dosen",
-    icon: CodeBracketSquareIcon,
-    href: "/admin/dosen",
-  },
+  // {
+  //   label: "Data Dosen",
+  //   icon: CodeBracketSquareIcon,
+  //   href: "/admin/dosen",
+  // },
   {
     label: "Data Mahasiswa",
     icon: CodeBracketSquareIcon,

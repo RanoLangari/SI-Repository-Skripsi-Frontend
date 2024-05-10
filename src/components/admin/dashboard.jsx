@@ -1,6 +1,7 @@
 import React, { useState, useEffect } from "react";
 import { useNavigate } from "react-router-dom";
 import { Spinner } from "@material-tailwind/react";
+import axios from "axios";
 import NavbarAdminTemplate from "./template/NavbarAdmin";
 import FooterAdmin from "./template/FooterAdmin";
 import {
@@ -15,98 +16,36 @@ import { Square3Stack3DIcon } from "@heroicons/react/24/outline";
 const AdminDashboard = () => {
   const navigate = useNavigate();
   const [loading, setLoading] = useState(true);
-  const chartConfigBar = {
-    type: "bar",
-    height: 240,
-    series: [
-      {
-        name: "Sales",
-        data: [50, 40, 300, 320, 500, 350, 200, 230, 500],
-      },
-    ],
-    options: {
-      chart: {
-        toolbar: {
-          show: false,
-        },
-      },
-      title: {
-        show: "",
-      },
-      dataLabels: {
-        enabled: false,
-      },
-      colors: ["#020617"],
-      plotOptions: {
-        bar: {
-          columnWidth: "40%",
-          borderRadius: 2,
-        },
-      },
-      xaxis: {
-        axisTicks: {
-          show: false,
-        },
-        axisBorder: {
-          show: false,
-        },
-        labels: {
-          style: {
-            colors: "#616161",
-            fontSize: "12px",
-            fontFamily: "inherit",
-            fontWeight: 400,
+  const [dataChart, setDataChart] = useState([]);
+  const [data, setData] = useState([]);
+  const backendUrl = import.meta.env.VITE_BACKEND_URL;
+  useEffect(() => {
+    const fetchData = async () => {
+      try {
+        const token = localStorage.getItem("token");
+        const config = {
+          headers: {
+            Authorization: `Bearer ${token}`,
           },
-        },
-        categories: [
-          "Apr",
-          "May",
-          "Jun",
-          "Jul",
-          "Aug",
-          "Sep",
-          "Oct",
-          "Nov",
-          "Dec",
-        ],
-      },
-      yaxis: {
-        labels: {
-          style: {
-            colors: "#616161",
-            fontSize: "12px",
-            fontFamily: "inherit",
-            fontWeight: 400,
-          },
-        },
-      },
-      grid: {
-        show: true,
-        borderColor: "#dddddd",
-        strokeDashArray: 5,
-        xaxis: {
-          lines: {
-            show: true,
-          },
-        },
-        padding: {
-          top: 5,
-          right: 20,
-        },
-      },
-      fill: {
-        opacity: 0.8,
-      },
-      tooltip: {
-        theme: "dark",
-      },
-    },
-  };
+        };
+        const response = await axios.get(
+          `${backendUrl}/api/admin/get-data-for-chart`,
+          config
+        );
+        setDataChart(Object.values(response.data.data));
+        setData(response.data.data);
+        setLoading(true);
+      } catch (error) {
+        navigate("/login-admin");
+      }
+    };
+    fetchData();
+  }, []);
   const chartConfig = {
     type: "pie",
     width: 280,
     height: 280,
-    series: [44, 55, 13, 43, 22],
+    series: dataChart,
     options: {
       chart: {
         toolbar: {
@@ -123,6 +62,7 @@ const AdminDashboard = () => {
       legend: {
         show: false,
       },
+      labels: Object.keys(data),
     },
   };
   return !loading ? (
