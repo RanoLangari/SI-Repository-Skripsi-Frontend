@@ -108,7 +108,7 @@ const LoginMhs = () => {
                 className="inline-block align-baseline font-normal text-sm text-blue-500 hover:text-blue-800"
                 href="/login-admin"
               >
-                Login Admin
+                Login Operator Fakultas
               </a>
             </div>
           </div>

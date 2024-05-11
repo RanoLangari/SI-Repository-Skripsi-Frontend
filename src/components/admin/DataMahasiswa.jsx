@@ -119,7 +119,7 @@ const DataMahasiswa = () => {
           <input type="file" id="file" class="shadow appearance-none border rounded w-full py-2 px-2 text-gray-700 mb-3 leading-tight focus:outline-none focus:shadow-outline">
         </div>
         <div class="flex flex-col gap-2">
-          <a href="./template-mhs.xlsx" download class="text-blue-500">Download Template Excel</a>
+          <a href="../template-mhs.xlsx" download class="text-blue-500">Download Template Excel</a>
         </div>
       </div>`,
       showCancelButton: true,

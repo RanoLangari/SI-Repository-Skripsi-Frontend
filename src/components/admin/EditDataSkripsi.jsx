@@ -134,6 +134,7 @@ const EditDataSkripsi = () => {
                           setData({ ...data, nim: e.target.value });
                         }}
                         value={data.nim}
+                        readOnly
                       />
                     </div>
                     <div className="flex flex-col mb-6 md:w-full">

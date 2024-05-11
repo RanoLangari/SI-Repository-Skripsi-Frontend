@@ -148,7 +148,7 @@ const ProfileAdmin = () => {
           <div className="py-4 px-8 mt-3">
             <div className="flex justify-between items-center">
               <h1 className="text-2xl font-bold text-gray-800 dark:text-white mt-4 text-center">
-                Profile Admin
+                Profile Operator Fakultas
               </h1>
             </div>
           </div>
@@ -231,6 +231,7 @@ const ProfileAdmin = () => {
                       color="yellow"
                       size="md"
                       outline="true"
+                      type="password"
                       placeholder="Password Lama"
                       label="Password Lama"
                       value={old_password}

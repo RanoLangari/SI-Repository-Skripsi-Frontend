@@ -31,8 +31,8 @@ const LupaPasswordAdmin = () => {
       email,
     };
     try {
-      const response = await ForgotPassword(backendUrl,'lupa-password', data)
-      console.log(response)
+      const response = await ForgotPassword(backendUrl, "lupa-password", data);
+      console.log(response);
       if (response.status === 200) {
         Swal.fire({
           icon: "success",
@@ -66,7 +66,7 @@ const LupaPasswordAdmin = () => {
       otp,
     };
     try {
-      const response = await ForgotPassword(backendUrl, 'verify-otp', data)
+      const response = await ForgotPassword(backendUrl, "verify-otp", data);
       Swal.close();
       if (response.status === 200) {
         Swal.fire({
@@ -81,7 +81,7 @@ const LupaPasswordAdmin = () => {
     } catch (error) {
       Swal.fire({
         icon: "error",
-        title: "Oops...", 
+        title: "Oops...",
         text: error.response.data.message,
         timer: 1000,
       });
@@ -111,7 +111,7 @@ const LupaPasswordAdmin = () => {
       password,
     };
     try {
-      const response = await ForgotPassword(backendUrl, 'reset-password', data)
+      const response = await ForgotPassword(backendUrl, "reset-password", data);
       Swal.close();
       if (response.status === 200) {
         Swal.fire({
@@ -146,7 +146,7 @@ const LupaPasswordAdmin = () => {
             className="text-gray-800 text-2xl flex justify-center  py-2 mb-8"
             style={{ fontFamily: "Roboto, sans-serif" }}
           >
-            Reset Password Admin
+            Reset Password Operator Fakultas
           </div>
           <div className="mb-6">
             <div className="relative flex w-full max-w-[24rem]">
@@ -159,7 +159,7 @@ const LupaPasswordAdmin = () => {
                   className: "min-w-0",
                 }}
                 onKeyPress={(e) => {
-                  if (e.key === 'Enter') {
+                  if (e.key === "Enter") {
                     e.preventDefault();
                     if (validator.isEmail(email)) {
                       handleLupaPassword(e);
@@ -267,7 +267,7 @@ const LupaPasswordAdmin = () => {
               className="inline-block align-baseline font-normal text-sm text-blue-500 hover:text-blue-800"
               href="/login-admin"
             >
-              Login Admin
+              Login Operator Fakultas
             </a>
           </div>
         </form>

@@ -2,7 +2,7 @@ import React, { useState } from "react";
 import { useNavigate } from "react-router-dom";
 import Swal from "sweetalert2";
 import { Input } from "@material-tailwind/react";
-import { adminAuthSystem } from '../../../services/adminDataServices.js';
+import { adminAuthSystem } from "../../../services/adminDataServices.js";
 const LoginAdmin = () => {
   const backendUrl = import.meta.env.VITE_BACKEND_URL;
   const navigate = useNavigate();
@@ -22,7 +22,7 @@ const LoginAdmin = () => {
       password,
     };
     try {
-      const response = await adminAuthSystem(backendUrl,'login', data)
+      const response = await adminAuthSystem(backendUrl, "login", data);
       Swal.close();
       if (response.status === 200) {
         localStorage.clear();
@@ -57,7 +57,7 @@ const LoginAdmin = () => {
             className="text-gray-800 text-2xl flex justify-center py-2 mb-8"
             style={{ fontFamily: "Roboto, sans-serif" }}
           >
-            Login Admin
+            Login Operator Fakultas
           </div>
           <div className="mb-6">
             <Input
