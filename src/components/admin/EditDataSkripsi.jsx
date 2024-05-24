@@ -39,16 +39,6 @@ const EditDataSkripsi = () => {
         });
         return;
       }
-      if (data.nim.length != 10 || isNaN(data.nim)) {
-        Swal.fire({
-          icon: "error",
-          title: "Oops...",
-          text: "NIM Tidak Valid",
-          timer: 1500,
-        });
-        return;
-      }
-
       const token = localStorage.getItem("token");
       const id = window.location.pathname.split("/")[3];
       const config = {

@@ -15,6 +15,7 @@ import {
 import { ArrowRightIcon, ArrowLeftIcon } from "@heroicons/react/24/outline";
 import NavbarMahasiswaTemplate from "./template/Navbar";
 import Footer from "./template/Footer";
+
 const MhsDashboard = () => {
   // state Hooks
   const [searchTerm, setSearchTerm] = useState("");
@@ -22,7 +23,7 @@ const MhsDashboard = () => {
   const [peminatan, setPeminatan] = useState("");
   const [tanggalAwal, setTanggalAwal] = useState("");
   const [tanggalAkhir, setTanggalAkhir] = useState("");
-  const [data, setData] = useState([]);
+  const [data, setData] = useState([]); // Initialized as an empty array
   const [status_kelulusan, setStatusKelulusan] = useState("");
   const [perPage] = useState(6);
   const [currentPage, setCurrentPage] = useState(0);
@@ -49,6 +50,7 @@ const MhsDashboard = () => {
     const selectedPage = data.selected;
     setCurrentPage(selectedPage);
   };
+
   const fetchData = async () => {
     try {
       setLoading(false);
@@ -68,14 +70,20 @@ const MhsDashboard = () => {
           `${backendUrl}/api/mahasiswa/get-skripsi`,
           config
         );
-        setData(res.data.data);
+        setData(res.data.data || []); // Ensure data is always an array
         setStatusKelulusan(response.data.data.status_kelulusan);
-        setLoading(true);
       }
+      setLoading(true);
     } catch (err) {
-      Navigate("/login-mhs");
+      if (err.response && err.response.status === 400) {
+        setData([]); // Setting data to an empty array to display "Data Tidak Ditemukan"
+        setLoading(true);
+      } else {
+        Navigate("/login-mhs");
+      }
     }
   };
+
   const getSkripsiByJurusan = async () => {
     try {
       setLoading(false);
@@ -95,13 +103,16 @@ const MhsDashboard = () => {
         config
       );
       if (response.status === 200) {
-        setData(response.data.data);
-        setLoading(true);
+        setData(response.data.data || []); // Ensure data is always an array
       }
+      setLoading(true);
     } catch (error) {
       console.log(error);
+      setData([]); // Ensure data is set to an array in case of error
+      setLoading(true);
     }
   };
+
   const getSkripsiByDate = async () => {
     try {
       setLoading(false);
@@ -121,11 +132,12 @@ const MhsDashboard = () => {
         config
       );
       if (response.status === 200) {
-        setData(response.data.data);
-        setLoading(true);
+        setData(response.data.data || []); // Ensure data is always an array
       }
+      setLoading(true);
     } catch (error) {
-      setData([]);
+      console.log(error);
+      setData([]); // Ensure data is set to an array in case of error
       setLoading(true);
     }
   };
@@ -136,6 +148,7 @@ const MhsDashboard = () => {
       value.toString().toLowerCase().includes(searchTerm.toLowerCase())
     )
   );
+
   useEffect(() => {
     const params = new URLSearchParams(window.location.search);
     const query = {};
@@ -177,7 +190,7 @@ const MhsDashboard = () => {
       <div className="bg-white rounded-b lg:rounded-b-none lg:rounded-r p-4 flex flex-col justify-between leading-normal">
         <div className="mb-8">
           <button
-            className=" text-black flex items-center align-middle text-bold font-bold uppercase text-start hover:text-yellow-300 transition duration-300 text-sm"
+            className="text-black flex items-center align-middle text-bold font-bold uppercase text-start hover:text-yellow-300 transition duration-300 text-sm"
             onClick={() => Navigate(`/mhs/detail-skripsi/${item.id}`)}
           >
             {item.judul_skripsi}

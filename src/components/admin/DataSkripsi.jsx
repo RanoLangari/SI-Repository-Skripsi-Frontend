@@ -249,7 +249,7 @@ const DataSkripsi = () => {
           <div className="flex justify-center py-12 px-4 sm:px-6 lg:px-2">
             <div className="w-full space-y-8 px-10 bg-white py-10">
               <div>
-                <h2 className="mt-6 text-center text-xl font-extrabold text-gray-900">
+                <h2 className="mt-6 text-center text-4xl font-extrabold text-gray-900">
                   Data Skripsi
                 </h2>
               </div>

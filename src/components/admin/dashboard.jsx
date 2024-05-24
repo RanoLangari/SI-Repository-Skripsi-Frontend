@@ -60,7 +60,7 @@ const AdminDashboard = () => {
       dataLabels: {
         enabled: false,
       },
-      colors: ["#020617", "#ff8f00", "#00897b", "#1e88e5", "#d81b60"],
+      colors: ["#651fff", "#1e88e5", "#d81b60"],
       legend: {
         show: false,
       },
@@ -94,10 +94,10 @@ const AdminDashboard = () => {
       },
       labels: [
         "Total Skripsi",
-        "Total Skripsi Yang telah Diajukan Admin Dan Belum DIajukan Oleh Mahasiswa",
-        "Total Skripsi Yang Ditolak Admin",
-        "Total Skripsi Yang Menunggu Verifikasi Admin",
+        "Total Skripsi Yang Menunggu Verifikasi Operator",
         "Total Skripsi Yang Telah Terverifikasi",
+        "Total Skripsi Yang Ditolak Operator",
+        "Total Skripsi Yang telah Diajukan Operator Dan Belum DIajukan Oleh Mahasiswa",
       ],
     },
   };
@@ -119,7 +119,7 @@ const AdminDashboard = () => {
       dataLabels: {
         enabled: false,
       },
-      colors: ["#020617", "#ff8f00", "#00897b", "#1e88e5", "#d81b60"],
+      colors: ["#ff1744", "#00e676", "#ff9100", "#651fff"],
       legend: {
         show: false,
       },

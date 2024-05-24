@@ -76,6 +76,7 @@ const LoginMhs = () => {
           </div>
           <div className="mb-6">
             <Input
+              type="number"
               label="NIM"
               required
               onChange={(e) => {
