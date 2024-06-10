@@ -40,9 +40,10 @@ const PreviewSkripsiAdmin = () => {
       {pdfURL && (
         <iframe
           src={`${pdfURL}#toolbar=0`}
+          style={{ pointerEvents: "none", userSelect: "none" }}
           width="100%"
           height="1000px"
-         />
+        />
       )}
     </div>
   );

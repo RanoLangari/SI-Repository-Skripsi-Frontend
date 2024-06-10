@@ -2,16 +2,18 @@ import React, { useState, useEffect } from "react";
 import { useNavigate } from "react-router-dom";
 import axios from "axios";
 import Swal from "sweetalert2";
-import { Input } from "@material-tailwind/react";
 import NavbarAdminTemplate from "./template/NavbarAdmin";
 import FooterAdmin from "./template/FooterAdmin";
 import { Spinner } from "@material-tailwind/react";
+import ReactSelect from "react-select";
 
 const EditDataSkripsi = () => {
   const backendUrl = import.meta.env.VITE_BACKEND_URL;
   const Navigate = useNavigate();
   const [data, setData] = useState([]);
+  const [dosen, setDosen] = useState([]);
   const [loading, setLoading] = useState(false);
+  const options = dosen.map((item) => ({ value: item.nama, label: item.nama }));
   const handleUpdateSkripsi = async (e) => {
     try {
       e.preventDefault();
@@ -46,7 +48,7 @@ const EditDataSkripsi = () => {
           Authorization: `Bearer ${token}`,
         },
       };
-      const response = await axios.put(
+      await axios.put(
         `${backendUrl}/api/admin/update-skripsi/${id}`,
         data,
         config
@@ -84,6 +86,11 @@ const EditDataSkripsi = () => {
           config
         );
         setData(response.data.data);
+        const DosenByJurusan = await axios.get(
+          `${backendUrl}/api/admin/get-dosen-by-jurusan?jurusan=${response.data.data.jurusan}`,
+          config
+        );
+        setDosen(DosenByJurusan.data.data);
         setLoading(true);
       } catch (error) {
         Navigate("/admin/data-skripsi");
@@ -116,59 +123,72 @@ const EditDataSkripsi = () => {
                     onSubmit={handleUpdateSkripsi}
                   >
                     <div className="flex flex-col mb-6 md:w-full">
-                      <Input
-                        label="NIM"
-                        color="yellow"
-                        required
-                        onChange={(e) => {
-                          setData({ ...data, nim: e.target.value });
-                        }}
+                      <label htmlFor="nim" className="mb-2 text-sm ml-2">
+                        NIM
+                      </label>
+                      <input
+                        type="number"
+                        className="w-full p-3 py-2 border border-gray-300 rounded-md"
                         value={data.nim}
-                        readOnly
+                        disabled
                       />
                     </div>
                     <div className="flex flex-col mb-6 md:w-full">
-                      <Input
-                        label="Pembimbing 1"
-                        color="yellow"
-                        required
-                        onChange={(e) => {
-                          setData({ ...data, pembimbing1: e.target.value });
+                      <label htmlFor="nim" className="mb-2 text-sm ml-2">
+                        Pembimbing 1
+                      </label>
+                      <ReactSelect
+                        options={options}
+                        value={{
+                          value: data.pembimbing1,
+                          label: data.pembimbing1,
                         }}
-                        value={data.pembimbing1}
-                      />
-                    </div>
-                    <div className="flex flex-col mb-6 md:w-full">
-                      <Input
-                        label="Pembimbing 2"
-                        color="yellow"
-                        required
                         onChange={(e) => {
-                          setData({ ...data, pembimbing2: e.target.value });
+                          setData({ ...data, pembimbing1: e.value });
                         }}
-                        value={data.pembimbing2}
                       />
                     </div>
                     <div className="flex flex-col mb-6 md:w-full">
-                      <Input
-                        label="Penguji"
-                        color="yellow"
-                        required
+                      <label htmlFor="nim" className="mb-2 text-sm ml-2">
+                        Pembimbing 2
+                      </label>
+                      <ReactSelect
+                        options={options}
+                        value={{
+                          value: data.pembimbing2,
+                          label: data.pembimbing2,
+                        }}
                         onChange={(e) => {
-                          setData({ ...data, penguji: e.target.value });
+                          setData({ ...data, pembimbing2: e.value });
                         }}
-                        value={data.penguji}
                       />
                     </div>
                     <div className="flex flex-col mb-6 md:w-full">
-                      <Input
-                        label="Judul Skripsi"
-                        color="yellow"
-                        required
+                      <label htmlFor="nim" className="mb-2 text-sm ml-2">
+                        Penguji
+                      </label>
+                      <ReactSelect
+                        options={options}
+                        value={{
+                          value: data.penguji,
+                          label: data.penguji,
+                        }}
+                        onChange={(e) => {
+                          setData({ ...data, penguji: e.value });
+                        }}
+                      />
+                    </div>
+                    <div className="flex flex-col mb-6 md:w-full">
+                      <label htmlFor="nim" className="mb-2 text-sm ml-2">
+                        Judul Skripsi
+                      </label>
+                      <input
+                        type="text"
+                        className="w-full p-3 py-2 border border-gray-300 rounded-md"
+                        value={data.judul_skripsi}
                         onChange={(e) => {
                           setData({ ...data, judul_skripsi: e.target.value });
                         }}
-                        value={data.judul_skripsi}
                       />
                     </div>
                     <div className="flex flex-row mb-4 md:w-full">

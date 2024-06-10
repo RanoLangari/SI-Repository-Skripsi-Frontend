@@ -15,7 +15,7 @@ export default defineConfig(() => {
     },
     preview: {
       host: "0.0.0.0",
-      port: 8000,
+      port: 8080,
     },
     build: {
       outDir: "build",

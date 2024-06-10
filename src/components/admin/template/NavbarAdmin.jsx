@@ -15,10 +15,12 @@ import {
 import {
   UserCircleIcon,
   HomeModernIcon,
-  CodeBracketSquareIcon,
+  DocumentChartBarIcon,
+  AcademicCapIcon,
   ChevronDownIcon,
   PowerIcon,
   Bars2Icon,
+  BookOpenIcon,
 } from "@heroicons/react/24/solid";
 
 function ProfileMenu() {
@@ -116,13 +118,18 @@ const navListItems = [
   //   href: "/admin/dosen",
   // },
   {
+    label: "Data Dosen",
+    icon: AcademicCapIcon,
+    href: "/admin/data-dosen",
+  },
+  {
     label: "Data Mahasiswa",
-    icon: CodeBracketSquareIcon,
+    icon: DocumentChartBarIcon,
     href: "/admin/data-mhs",
   },
   {
     label: "Data Skripsi",
-    icon: CodeBracketSquareIcon,
+    icon: BookOpenIcon,
     href: "/admin/data-skripsi",
   },
 ];

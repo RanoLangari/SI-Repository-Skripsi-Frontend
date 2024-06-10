@@ -70,13 +70,13 @@ const MhsDashboard = () => {
           `${backendUrl}/api/mahasiswa/get-skripsi`,
           config
         );
-        setData(res.data.data || []); // Ensure data is always an array
+        setData(res.data.data || []);
         setStatusKelulusan(response.data.data.status_kelulusan);
       }
       setLoading(true);
     } catch (err) {
       if (err.response && err.response.status === 400) {
-        setData([]); // Setting data to an empty array to display "Data Tidak Ditemukan"
+        setData([]);
         setLoading(true);
       } else {
         Navigate("/login-mhs");
@@ -103,12 +103,12 @@ const MhsDashboard = () => {
         config
       );
       if (response.status === 200) {
-        setData(response.data.data || []); // Ensure data is always an array
+        setData(response.data.data || []);
       }
       setLoading(true);
     } catch (error) {
       console.log(error);
-      setData([]); // Ensure data is set to an array in case of error
+      setData([]);
       setLoading(true);
     }
   };

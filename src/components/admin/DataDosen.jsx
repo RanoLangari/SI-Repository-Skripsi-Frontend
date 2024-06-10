@@ -11,37 +11,42 @@ import { FaPencilAlt, FaRegTrashAlt } from "react-icons/fa";
 import NavbarAdmin from "./template/NavbarAdmin";
 import { Spinner } from "@material-tailwind/react";
 import FooterAdmin from "./template/FooterAdmin";
-import DataSkripsiTable from "./DataSkripsiTable";
 
-const DataSkripsi = () => {
+const DataDosen = () => {
   const backendUrl = import.meta.env.VITE_BACKEND_URL;
   const Navigate = useNavigate();
   const [data, setData] = useState([]);
   const [loading, setLoading] = useState(false);
-
-  const UploadDataSkripsi = () => {
+  const tambahDataDosen = () => {
     Swal.fire({
-      title: "Upload Data Skripsi",
+      title: "Tambah Data Dosen",
       html: `<div class="flex flex-col gap-4">
         <div class="flex flex-col gap-2">
-          <label for="file" class="text-sm">File Excel</label>
-          <input type="file" id="file" class="shadow appearance-none border rounded w-full py-2 px-2 text-gray-700 mb-3 leading-tight focus:outline-none focus:shadow-outline">
+          <label for="nama" class="text-sm">Nama Dosen</label>
+          <input type="text" id="nama" class="shadow appearance-none border rounded w-full py-2 px-2 text-gray-700 mb-3 leading-tight focus:outline-none focus:shadow-outline">
         </div>
         <div class="flex flex-col gap-2">
-          <a href="../Template-Upload-Data-Skripsi.xlsx" download class="text-blue-500">Download Template</a>
+          <label for="jurusan" class="text-sm">Jurusan</label>
+          <select id="jurusan" class="shadow appearance-none border rounded w-full py-2 px-2 text-gray-700 mb-3 leading-tight focus:outline-none focus:shadow-outline">
+          <option value="">Pilih Jurusan</option>
+            <option value="Manajemen">Manajemen</option>
+            <option value="Akuntansi">Akuntansi</option>
+            <option value="Ekonomi Pembangunan">Ekonomi Pembangunan</option>
+          </select>
         </div>
       </div>`,
       showCancelButton: true,
-      confirmButtonText: "Upload",
+      confirmButtonText: "Simpan",
       cancelButtonText: "Batal",
       showLoaderOnConfirm: true,
       preConfirm: () => {
-        const file = Swal.getPopup().querySelector("#file").files[0];
-        if (!file) {
+        const nama = Swal.getPopup().querySelector("#nama").value;
+        const jurusan = Swal.getPopup().querySelector("#jurusan").value;
+        if (nama === "" || jurusan === "") {
           Swal.fire({
             icon: "error",
             title: "Gagal",
-            text: "File tidak boleh kosong",
+            text: "Data tidak boleh kosong",
             timer: 1000,
           });
           return false;
@@ -55,8 +60,10 @@ const DataSkripsi = () => {
             Swal.showLoading();
           },
         });
-        const formData = new FormData();
-        formData.append("file", file);
+        const data = {
+          nama: nama,
+          jurusan: jurusan,
+        };
         const token = localStorage.getItem("token");
         const config = {
           headers: {
@@ -64,12 +71,12 @@ const DataSkripsi = () => {
           },
         };
         axios
-          .post(`${backendUrl}/api/admin/upload-data-skripsi`, formData, config)
+          .post(`${backendUrl}/api/admin/add-dosen`, data, config)
           .then((res) => {
             Swal.fire({
               icon: "success",
               title: "Berhasil",
-              text: "Data berhasil diupload",
+              text: "Data berhasil ditambahkan",
               timer: 1000,
             }).then(() => {
               window.location.reload();
@@ -79,15 +86,15 @@ const DataSkripsi = () => {
             Swal.fire({
               icon: "error",
               title: "Gagal",
-              text: err.response.data.message,
+              text: "Data gagal ditambahkan",
               timer: 1000,
             });
           });
       },
+      allowOutsideClick: () => !Swal.isLoading(),
     });
   };
-
-  const deleteSkripsi = (id) => {
+  const deleteDosen = (id) => {
     Swal.close();
     Swal.fire({
       title: "Loading Data",
@@ -105,7 +112,7 @@ const DataSkripsi = () => {
       },
     };
     axios
-      .delete(`${backendUrl}/api/admin/delete-skripsi/${id}`, config)
+      .delete(`${backendUrl}/api/admin/delete-dosen/${id}`, config)
       .then((res) => {
         Swal.fire({
           icon: "success",
@@ -134,7 +141,7 @@ const DataSkripsi = () => {
     };
 
     axios
-      .get(`${backendUrl}/api/admin/get-all-skripsi`, config)
+      .get(`${backendUrl}/api/admin/get-dosen`, config)
       .then((res) => {
         const newData = res.data.data.map((item, index) => ({
           ...item,
@@ -157,13 +164,8 @@ const DataSkripsi = () => {
         size: 50,
       },
       {
-        accessorKey: "nim",
-        header: "NIM",
-        size: 50,
-      },
-      {
         accessorKey: "nama",
-        header: "Nama",
+        header: "Nama Dosen",
         size: 150,
       },
       {
@@ -172,34 +174,95 @@ const DataSkripsi = () => {
         size: 150,
       },
       {
-        accessorKey: "pembimbing1",
-        header: "Pembimbing 1",
-        size: 150,
-      },
-      {
-        accessorKey: "pembimbing2",
-        header: "Pembimbing 2",
-        size: 150,
-      },
-      {
-        accessorKey: "penguji",
-        header: "Penguji",
-        size: 150,
-      },
-      {
-        accessorKey: "judul_skripsi",
-        header: "Judul Skripsi",
-        size: 150,
-      },
-      {
         header: "Action",
         size: 150,
         Cell: ({ row }) => (
           <div>
             <button
-              onClick={() =>
-                Navigate(`/admin/edit-data-skripsi/${row.original.id}`)
-              }
+              onClick={() => {
+                Swal.fire({
+                  title: "Edit Data Dosen",
+                  html: `<div class="flex flex-col gap-4">
+                  <div class="flex flex-col gap-2">
+                    <label for="nama" class="text-sm">Nama Dosen</label>
+                    <input type="text" id="nama" class="shadow appearance-none border rounded w-full py-2 px-3 text-gray-700 mb-3 leading-tight focus:outline-none focus:shadow-outline" value="${
+                      row.original.nama
+                    }">
+                  </div>
+                  <div class="flex flex-col gap-2">
+                    <label for="jurusan" class="text-sm">Jurusan</label>
+                    <select id="jurusan" class="shadow appearance-none border rounded w-full py-2 px-3 text-gray-700 mb-3 leading-tight focus:outline-none focus:shadow-outline">
+                      <option value="Manajemen" ${
+                        row.original.jurusan === "Manajemen" ? "selected" : ""
+                      }>Manajemen</option>
+                      <option value="Akuntansi" ${
+                        row.original.jurusan === "Akuntansi" ? "selected" : ""
+                      }>Akuntansi</option>
+                      <option value="Ekonomi Pembangunan" ${
+                        row.original.jurusan === "Ekonomi Pembangunan"
+                          ? "selected"
+                          : ""
+                      }>Ekonomi Pembangunan</option>
+                    </select>
+                  </div>
+                </div>`,
+                  showCancelButton: true,
+                  confirmButtonText: "Simpan",
+                  cancelButtonText: "Batal",
+                  showLoaderOnConfirm: true,
+                  preConfirm: () => {
+                    const nama = Swal.getPopup().querySelector("#nama").value;
+                    const jurusan =
+                      Swal.getPopup().querySelector("#jurusan").value;
+                    const data = {
+                      nama: nama,
+                      jurusan: jurusan,
+                    };
+                    const token = localStorage.getItem("token");
+                    const config = {
+                      headers: {
+                        Authorization: `Bearer ${token}`,
+                      },
+                    };
+                    Swal.fire({
+                      title: "Loading Data",
+                      text: "Please wait ...",
+                      showConfirmButton: false,
+                      allowOutsideClick: false,
+                      willOpen: () => {
+                        Swal.showLoading();
+                      },
+                    });
+                    axios
+                      .put(
+                        `${backendUrl}/api/admin/edit-dosen/${row.original.id}`,
+                        data,
+                        config
+                      )
+                      .then((res) => {
+                        Swal.close();
+                        Swal.fire({
+                          icon: "success",
+                          title: "Berhasil",
+                          text: "Data berhasil diubah",
+                          timer: 1000,
+                        }).then(() => {
+                          window.location.reload();
+                        });
+                      })
+                      .catch((err) => {
+                        Swal.close();
+                        Swal.fire({
+                          icon: "error",
+                          title: "Gagal",
+                          text: "Data gagal diubah",
+                          timer: 1000,
+                        });
+                      });
+                  },
+                  allowOutsideClick: () => !Swal.isLoading(),
+                });
+              }}
               className="bg-yellow-300 hover:bg-yellow-400 text-white font-bold py-2 px-4 rounded inline-flex items-center"
             >
               <FaPencilAlt />
@@ -217,7 +280,7 @@ const DataSkripsi = () => {
                   confirmButtonText: "Ya, Hapus!",
                 }).then((result) => {
                   if (result.isConfirmed) {
-                    deleteSkripsi(row.original.id);
+                    deleteDosen(row.original.id);
                   }
                 });
               }}
@@ -250,80 +313,15 @@ const DataSkripsi = () => {
             <div className="w-full space-y-8 px-10 bg-white py-10">
               <div>
                 <h2 className="mt-6 text-center text-4xl font-extrabold text-gray-900">
-                  Data Skripsi
+                  Data Dosen
                 </h2>
               </div>
               <div className="flex justify-start">
                 <button
-                  onClick={() => {
-                    Swal.fire({
-                      title: "Tambah Data Skripsi",
-                      html: `<div class="flex flex-col gap-2">
-                        <label for="nim" class="text-sm">Masukan NIM mahasiswa</label>
-                        <input type="number" id="nim" class="shadow appearance-none border rounded w-full py-2 px-1 text-gray-700 mb-3 leading-tight focus:outline-none focus:shadow-outline">
-                        </div>`,
-                      showCancelButton: true,
-                      confirmButtonText: "Tambah",
-                      cancelButtonText: "Batal",
-                      showLoaderOnConfirm: true,
-                      preConfirm: () => {
-                        const nim = Swal.getPopup().querySelector("#nim").value;
-                        if (!nim || nim.length < 10) {
-                          Swal.fire({
-                            icon: "error",
-                            title: "Gagal",
-                            text: "NIM Tidak Valid",
-                            timer: 1000,
-                          });
-                          return false;
-                        }
-                        Swal.fire({
-                          title: "Loading Data",
-                          text: "Please wait ...",
-                          showConfirmButton: false,
-                          allowOutsideClick: false,
-                          willOpen: () => {
-                            Swal.showLoading();
-                          },
-                        });
-                        const token = localStorage.getItem("token");
-                        const config = {
-                          headers: {
-                            Authorization: `Bearer ${token}`,
-                          },
-                        };
-                        axios
-                          .post(
-                            `${backendUrl}/api/admin/cek-nim-add-mahasiswa`,
-                            { nim },
-                            config
-                          )
-                          .then((res) => {
-                            Swal.close();
-                            Navigate(
-                              `/admin/tambah-data-skripsi/${res.data.data}`
-                            );
-                          })
-                          .catch((err) => {
-                            Swal.fire({
-                              icon: "error",
-                              title: "Gagal",
-                              text: err.response.data.message,
-                              timer: 5000,
-                            });
-                          });
-                      },
-                    });
-                  }}
+                  onClick={tambahDataDosen}
                   className="bg-yellow-300 hover:bg-yellow-400 text-white font-bold py-2 px-4 rounded inline-flex items-center"
                 >
-                  Tambah Data Skripsi
-                </button>
-                <button
-                  onClick={UploadDataSkripsi}
-                  className="bg-yellow-300 hover:bg-yellow-400 text-white font-bold py-2 px-4 rounded inline-flex items-center ml-4"
-                >
-                  Upload Data
+                  Tambah Data Dosen
                 </button>
               </div>
 
@@ -332,7 +330,6 @@ const DataSkripsi = () => {
               </div>
             </div>
           </div>
-          <DataSkripsiTable />
         </section>
         <section>
           <FooterAdmin />
@@ -342,4 +339,4 @@ const DataSkripsi = () => {
   );
 };
 
-export default DataSkripsi;
+export default DataDosen;
