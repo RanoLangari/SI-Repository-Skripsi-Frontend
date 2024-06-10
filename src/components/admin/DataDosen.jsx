@@ -94,6 +94,85 @@ const DataDosen = () => {
       allowOutsideClick: () => !Swal.isLoading(),
     });
   };
+  const UploadDataDosen = () => {
+    Swal.fire({
+      title: "Upload Data Dosen",
+      html: `<div class="flex flex-col gap-4">
+        <div class="flex flex-col gap-2">
+          <label for="file" class="text-sm">File Excel</label>
+          <input type="file" id="file" class="shadow appearance-none border rounded w-full py-2 px-2 text-gray-700 mb-3 leading-tight focus:outline-none focus:shadow-outline">
+        </div>
+        <div class="flex flex-col gap-2">
+          <a href="../template-upload-dosen.xlsx" download class="text-blue-500">Download Template Excel</a>
+        </div>
+      </div>`,
+      showCancelButton: true,
+      confirmButtonText: "Upload",
+      cancelButtonText: "Batal",
+      showLoaderOnConfirm: true,
+      preConfirm: () => {
+        const file = Swal.getPopup().querySelector("#file").files[0];
+        if (!file) {
+          Swal.fire({
+            icon: "error",
+            title: "Gagal",
+            text: "File tidak boleh kosong",
+            timer: 1000,
+          });
+          return false;
+        }
+        if (!file.name.includes(".xls") && !file.name.includes(".xlsx")) {
+          Swal.fire({
+            icon: "error",
+            title: "Gagal",
+            text: "File harus berformat .xls atau .xlsx",
+            timer: 1000,
+          });
+          return false;
+        }
+        Swal.fire({
+          title: "Loading Data",
+          text: "Please wait ...",
+          showConfirmButton: false,
+          allowOutsideClick: false,
+          willOpen: () => {
+            Swal.showLoading();
+          },
+        });
+        const formData = new FormData();
+        formData.append("file", file);
+
+        const token = localStorage.getItem("token");
+        const config = {
+          headers: {
+            Authorization: `Bearer ${token}`,
+            "Content-Type": "multipart/form-data",
+          },
+        };
+        axios
+          .post(`${backendUrl}/api/admin/import-excel-dosen`, formData, config)
+          .then((res) => {
+            Swal.fire({
+              icon: "success",
+              title: "Berhasil",
+              text: "Data berhasil diupload",
+              timer: 1000,
+            }).then(() => {
+              window.location.reload();
+            });
+          })
+          .catch((err) => {
+            Swal.fire({
+              icon: "error",
+              title: "Gagal",
+              text: err.response.data.message,
+              timer: 3000,
+            });
+          });
+      },
+      allowOutsideClick: () => !Swal.isLoading(),
+    });
+  };
   const deleteDosen = (id) => {
     Swal.close();
     Swal.fire({
@@ -317,11 +396,19 @@ const DataDosen = () => {
                 </h2>
               </div>
               <div className="flex justify-start">
+                <div className="flex flex-row gap-4">
+                  <button
+                    onClick={tambahDataDosen}
+                    className="bg-yellow-300 hover:bg-yellow-400 text-white font-bold py-2 px-4 rounded inline-flex items-center"
+                  >
+                    Tambah Data Dosen
+                  </button>
+                </div>
                 <button
-                  onClick={tambahDataDosen}
-                  className="bg-yellow-300 hover:bg-yellow-400 text-white font-bold py-2 px-4 rounded inline-flex items-center"
+                  onClick={UploadDataDosen}
+                  className="bg-yellow-300 hover:bg-yellow-400 text-white font-bold py-2 px-4 rounded inline-flex items-center ml-4"
                 >
-                  Tambah Data Dosen
+                  Upload Data
                 </button>
               </div>
 
