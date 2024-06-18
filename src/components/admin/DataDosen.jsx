@@ -155,7 +155,7 @@ const DataDosen = () => {
             Swal.fire({
               icon: "success",
               title: "Berhasil",
-              text: "Data berhasil diupload",
+              text: res.data.message,
               timer: 1000,
             }).then(() => {
               window.location.reload();
